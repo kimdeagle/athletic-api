@@ -79,7 +79,7 @@ public class AuthService {
     public TokenDto login(AdminRequestDto adminRequestDto) {
         UsernamePasswordAuthenticationToken authenticationToken = adminRequestDto.toAuthentication();
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        AdminResponseDto adminResponseDto = adminRepository.findById(authentication.getName()).map(AdminResponseDto::of).orElseThrow(() -> new RuntimeException("일치하는 계정이 없습니다."));
+        AdminResponseDto adminResponseDto = adminRepository.findById(authentication.getName()).map(AdminResponseDto::of).orElseThrow(() -> new RuntimeException("아이디 또는 비밀번호를 확인하세요."));
         if (StringUtils.equals(adminResponseDto.getAprvStCd(), Const.APRV_ST_CD_WAIT)) throw new RuntimeException("가입대기 상태의 계정입니다.");
         long now = (new Date()).getTime();
         Date accessTokenExpiresIn = new Date(now + Const.ACCESS_TOKEN_EXPIRE_TIME);

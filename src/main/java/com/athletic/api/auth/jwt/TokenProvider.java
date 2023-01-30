@@ -44,6 +44,7 @@ public class TokenProvider {
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(Const.AUTHORITIES_KEY, authorities)
+                .claim("adminNo", authentication.getName())
                 .claim("adminNm", adminNm)
                 .setExpiration(expiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)

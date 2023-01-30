@@ -32,7 +32,7 @@ public class AuthController {
         return ResponseEntity.ok(authService.resetPassword(adminRequestDto));
     }
 
-    @PostMapping("/issue/access")
+    @PostMapping("/re-issue/access")
     public ResponseEntity<TokenDto> reIssueAccessToken() {
         return ResponseEntity.ok(authService.reIssueAccessToken());
     }
