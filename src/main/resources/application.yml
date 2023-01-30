@@ -1,0 +1,70 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /api
+
+spring:
+  # Mail
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ENC(QFxZYaBdhKOAkzFY5qy6m9gs0vHv+0SPUJN2Yad3EzI=)
+    password: ENC(uCniqQg1UmFeSfXUbdEInJz3w0NDn3DIH7WgYs/vznE=)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.gmail.com
+            protocols: TLSv1.2
+
+  # Database
+  datasource:
+    url: jdbc:postgresql://localhost:5432/athletic
+    username: ENC(zXI+DBXIg/ZDuveT/JZ3rA==)
+    password: ENC(Eoyllw+djw11ZIpn7XvfM/joPccRmUXF)
+    driver-class-name: org.postgresql.Driver
+
+  # JPA
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+# Log
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
+# JWT
+jwt:
+  header: Authorization
+  secret: cXdlcnR5YXNkZnp4Y3Zxd2VydHlhc2RmenhjdnF3ZXJ0eWFzZGZ6eGN2cXdlcnR5YXNkZnp4Y3Y=
+
+# Jasypt
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    pool-size: 1
+    password: athletic
+    algorithm: PBEWithMD5AndDES
+    string-output-type: base64
+    key-obtention-iterations: 1000
+    salt-generator-classname: org.jasypt.salt.RandomSaltGenerator
+
+# Crypt
+crypt:
+  aes256:
+    key: ENC(OiuHmRGjgAp7y6LINg8lfRcwEXgAvypD3zaOHe2Uu2z5WtRFZhi1Lg==)
+    algorithm: ENC(K3Mn7TtANd2rQ/f+uphvYw9K5GBvFsRmB7zukPFAVh4=)
