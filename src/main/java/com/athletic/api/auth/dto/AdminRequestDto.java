@@ -21,6 +21,7 @@ public class AdminRequestDto {
     private String mobileNo;
     private String loginId;
     private String loginPw;
+    private String changePw;
     private String authNo;
     private String aprvStCd;
     private String regId;

@@ -15,6 +15,8 @@ import lombok.Setter;
 public class AdminResponseDto {
     private String adminNm;
     private String email;
+    private String mobileNo;
+    private String loginId;
     private String authNo;
     private String aprvStCd;
     private TokenDto tokenDto;
@@ -23,6 +25,8 @@ public class AdminResponseDto {
         return AdminResponseDto.builder()
                 .adminNm(admin.getAdminNm())
                 .email(admin.getEmail())
+                .mobileNo(admin.getMobileNo())
+                .loginId(admin.getLoginId())
                 .authNo(admin.getAuthNo())
                 .aprvStCd(admin.getAprvStCd())
                 .build();

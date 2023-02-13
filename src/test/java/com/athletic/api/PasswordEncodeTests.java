@@ -1,15 +1,16 @@
 package com.athletic.api;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class PasswordEncodeTests {
     @Test
     void encode() {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String pw = "1";
-        System.out.println("encoded password : " + encoder.encode(pw));
+        System.out.println("encoded password : " + passwordEncoder.encode(pw));
 
     }
 }
