@@ -1,4 +1,4 @@
-package com.athletic.api.auth.entity;
+package com.athletic.api.member.entity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -32,6 +32,8 @@ public class Member {
     @Column
     private String addressDtl;
     @Column(nullable = false)
+    private String joinDt;
+    @Column(nullable = false)
     private String regId;
     @Column(nullable = false)
     private Date regDt;
@@ -40,7 +42,7 @@ public class Member {
     @Column(nullable = false)
     private Date modDt;
 
-    public Member(String memberNo, String memberNm, String email, String mobileNo, String birthday, String address, String addressDtl, String regId, Date regDt, String modId, Date modDt) {
+    public Member(String memberNo, String memberNm, String email, String mobileNo, String birthday, String address, String addressDtl, String joinDt, String regId, Date regDt, String modId, Date modDt) {
         this.memberNo = memberNo;
         this.memberNm = memberNm;
         this.email = email;
@@ -48,6 +50,7 @@ public class Member {
         this.birthday = birthday;
         this.address = address;
         this.addressDtl = addressDtl;
+        this.joinDt = joinDt;
         this.regId = regId;
         this.regDt = regDt;
         this.modId = modId;
