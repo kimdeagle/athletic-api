@@ -1,5 +1,6 @@
 package com.athletic.api.auth.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ public class CryptUtil {
 
     public String encryptAES256(String text) {
         try {
+            if (StringUtils.isBlank(text)) return text;
             Cipher cipher = Cipher.getInstance(algorithm);
             SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "AES");
             String iv = key.substring(0, 16);
@@ -43,6 +45,7 @@ public class CryptUtil {
 
     public String decryptAES256(String text) {
         try {
+            if (StringUtils.isBlank(text)) return text;
             Cipher cipher = Cipher.getInstance(algorithm);
             SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "AES");
             String iv = key.substring(0, 16);

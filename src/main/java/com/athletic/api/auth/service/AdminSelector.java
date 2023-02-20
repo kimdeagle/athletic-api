@@ -4,6 +4,8 @@ import com.athletic.api.auth.config.SecurityUtil;
 import com.athletic.api.auth.dto.AdminResponseDto;
 import com.athletic.api.auth.repository.AdminRepository;
 import com.athletic.api.auth.util.CryptUtil;
+import com.athletic.api.exception.CustomException;
+import com.athletic.api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,6 @@ public class AdminSelector {
                     return admin;
                 })
                 .map(AdminResponseDto::of)
-                .orElseThrow(() -> new RuntimeException("로그인 정보가 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
     }
 }

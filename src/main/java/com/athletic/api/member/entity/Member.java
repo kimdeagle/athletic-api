@@ -3,6 +3,7 @@ package com.athletic.api.member.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import java.util.Date;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 public class Member {
@@ -21,7 +23,7 @@ public class Member {
     private String memberNo;
     @Column(nullable = false)
     private String memberNm;
-    @Column(nullable = false)
+    @Column
     private String email;
     @Column(nullable = false)
     private String mobileNo;

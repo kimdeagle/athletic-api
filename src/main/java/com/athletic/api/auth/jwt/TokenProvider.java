@@ -1,5 +1,7 @@
 package com.athletic.api.auth.jwt;
 
+import com.athletic.api.exception.CustomException;
+import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.util.constant.Const;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -60,7 +62,7 @@ public class TokenProvider {
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 
-        if (claims.get(Const.AUTHORITIES_KEY) == null) throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+        if (claims.get(Const.AUTHORITIES_KEY) == null) throw new CustomException(ErrorCode.UNAUTHORIZED_TOKEN);
 
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get(Const.AUTHORITIES_KEY).toString().split(","))

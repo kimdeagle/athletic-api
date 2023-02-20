@@ -6,6 +6,8 @@ import com.athletic.api.auth.entity.Admin;
 import com.athletic.api.auth.repository.AdminRepository;
 import com.athletic.api.auth.util.CryptUtil;
 import com.athletic.api.common.dto.ResponseDto;
+import com.athletic.api.exception.CustomException;
+import com.athletic.api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +24,14 @@ public class AdminService {
 
     public ResponseDto changePassword(AdminRequestDto adminRequestDto) {
         String adminNo = SecurityUtil.getCurrentAdminNo();
-        Admin admin = adminRepository.findById(adminNo).orElseThrow(() -> new RuntimeException("일치하는 계정이 없습니다."));
+        Admin admin = adminRepository.findById(adminNo).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
 
         String prevLoginPw = adminRequestDto.getLoginPw();
         String encPrevLoginPw = admin.getLoginPw();
-        if (!cryptUtil.passwordEncoder().matches(prevLoginPw, encPrevLoginPw)) throw new RuntimeException("현재 비밀번호가 일치하지 않습니다.");
+        if (!cryptUtil.passwordEncoder().matches(prevLoginPw, encPrevLoginPw)) throw new CustomException(ErrorCode.NOT_MATCH_CURRENT_PASSWORD);
 
         String nextLoginPw = adminRequestDto.getChangePw();
-        if (cryptUtil.passwordEncoder().matches(nextLoginPw, prevLoginPw)) throw new RuntimeException("기존과 동일한 비밀번호로 변경할 수 없습니다.");
+        if (cryptUtil.passwordEncoder().matches(nextLoginPw, prevLoginPw)) throw new CustomException(ErrorCode.CANNOT_CHANGE_SAME_PASSWORD);
 
         admin.setLoginPw(cryptUtil.passwordEncoder().encode(nextLoginPw));
         admin.setModId(adminNo);

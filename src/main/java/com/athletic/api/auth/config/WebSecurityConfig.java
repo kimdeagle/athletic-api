@@ -1,7 +1,7 @@
 package com.athletic.api.auth.config;
 
 import com.athletic.api.auth.jwt.JwtAccessDeniedHandler;
-import com.athletic.api.auth.jwt.JwtAuthenticationEntrypoint;
+import com.athletic.api.auth.jwt.JwtAuthenticationEntryPoint;
 import com.athletic.api.auth.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class WebSecurityConfig {
     private final TokenProvider tokenProvider;
-    private final JwtAuthenticationEntrypoint jwtAuthenticationEntrypoint;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
@@ -28,7 +28,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntrypoint)
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
                 .authorizeRequests()
