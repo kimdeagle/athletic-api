@@ -1,9 +1,9 @@
 package com.athletic.api.auth.controller;
 
-import com.athletic.api.auth.dto.AdminRequestDto;
-import com.athletic.api.auth.dto.AdminResponseDto;
+import com.athletic.api.admin.dto.AdminRequestDto;
 import com.athletic.api.auth.dto.TokenDto;
 import com.athletic.api.auth.service.AuthService;
+import com.athletic.api.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,12 +23,12 @@ public class AuthController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<AdminResponseDto> join(@RequestBody AdminRequestDto adminRequestDto) {
+    public ResponseEntity<ResponseDto> join(@RequestBody AdminRequestDto adminRequestDto) {
         return ResponseEntity.ok(authService.join(adminRequestDto));
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<AdminResponseDto> resetPassword(@RequestBody AdminRequestDto adminRequestDto) {
+    public ResponseEntity<ResponseDto> resetPassword(@RequestBody AdminRequestDto adminRequestDto) {
         return ResponseEntity.ok(authService.resetPassword(adminRequestDto));
     }
 

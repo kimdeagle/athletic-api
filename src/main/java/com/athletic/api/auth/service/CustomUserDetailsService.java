@@ -1,11 +1,10 @@
 package com.athletic.api.auth.service;
 
-import com.athletic.api.auth.entity.Admin;
+import com.athletic.api.admin.entity.Admin;
 import com.athletic.api.auth.entity.Authority;
-import com.athletic.api.auth.util.CryptUtil;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
-import com.athletic.api.auth.repository.AdminRepository;
+import com.athletic.api.admin.repository.AdminRepository;
 import com.athletic.api.auth.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +21,6 @@ import java.util.Collections;
 public class CustomUserDetailsService implements UserDetailsService {
     private final AdminRepository adminRepository;
     private final AuthRepository authRepository;
-    private final CryptUtil cryptUtil;
 
     @Override
     public UserDetails loadUserByUsername(String username) {

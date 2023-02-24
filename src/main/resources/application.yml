@@ -38,9 +38,15 @@ spring:
         show_sql: true
         format_sql: true
 
+  mvc:
+    log-resolved-exception: false
+
 # Log
 logging:
   level:
+    com:
+      athletic:
+        api: info
     org:
       hibernate:
         type:

@@ -1,7 +1,7 @@
 package com.athletic.api.menu.controller;
 
 import com.athletic.api.menu.dto.MenuResponseDto;
-import com.athletic.api.menu.service.MenuService;
+import com.athletic.api.menu.service.MenuSelector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +14,11 @@ import java.util.List;
 @RequestMapping("/menu")
 @RequiredArgsConstructor
 public class MenuController {
-    private final MenuService menuService;
+    private final MenuSelector menuSelector;
 
     @GetMapping("")
     public ResponseEntity<List<MenuResponseDto>> getMenuList() {
         //TODO 추후 권한번호로 메뉴 리스트 가져오기
-        return ResponseEntity.ok(menuService.getMenuList());
+        return ResponseEntity.ok(menuSelector.getMenuList());
     }
 }

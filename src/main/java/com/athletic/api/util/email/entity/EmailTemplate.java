@@ -1,31 +1,42 @@
 package com.athletic.api.util.email.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class EmailTemplate {
     @Id
     private String templateCd;
-    @Column
+
+    @Column(nullable = false)
     private String templateNm;
-    @Column
+
+    @Column(nullable = false)
     private String title;
-    @Column
+
+    @Column(nullable = false)
     private String content;
-    @Column
+
+    @Column(updatable = false)
     private String regId;
-    @Column
-    private Date regDt;
-    @Column
+
+    @Column(updatable = false)
+    private LocalDateTime regDt;
+
+    @Column(nullable = false)
     private String modId;
-    @Column
-    private Date modDt;
+
+    @Column(nullable = false)
+    private LocalDateTime modDt;
 }

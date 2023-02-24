@@ -1,5 +1,7 @@
 package com.athletic.api.util.email.service;
 
+import com.athletic.api.exception.CustomException;
+import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.util.email.dto.EmailDto;
 import com.athletic.api.util.email.entity.EmailTemplate;
 import com.athletic.api.util.email.handler.EmailHandler;
@@ -22,7 +24,7 @@ public class EmailService {
     private String from;
 
     private void processTemplate(EmailDto emailDto) {
-        EmailTemplate template = templateRepository.findById(emailDto.getTemplateCd()).orElseThrow(() -> new RuntimeException("cannot find email template"));
+        EmailTemplate template = templateRepository.findById(emailDto.getTemplateCd()).orElseThrow(() -> new CustomException(ErrorCode.EMAIL_TEMPLATE_NOT_FOUND));
 
         emailDto.setSubject(template.getTitle());
 

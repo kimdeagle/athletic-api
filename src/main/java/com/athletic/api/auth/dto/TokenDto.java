@@ -6,14 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class TokenDto {
     private String grantType;
     private String accessToken;
     private String refreshToken;
-//    private Long accessTokenExpireTime;
     private Long accessTokenExpiresIn;
     private Long refreshTokenExpiresIn;
 }

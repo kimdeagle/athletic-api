@@ -1,4 +1,4 @@
-package com.athletic.api.auth.config;
+package com.athletic.api.auth.util;
 
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;

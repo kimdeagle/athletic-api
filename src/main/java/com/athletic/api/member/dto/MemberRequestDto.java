@@ -1,17 +1,17 @@
 package com.athletic.api.member.dto;
 
+import com.athletic.api.auth.util.SecurityUtil;
 import com.athletic.api.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class MemberRequestDto {
     private String memberNo;
     private String memberNm;
@@ -22,9 +22,9 @@ public class MemberRequestDto {
     private String addressDtl;
     private String joinDt;
     private String regId;
-    private Date regDt;
+    private LocalDateTime regDt;
     private String modId;
-    private Date modDt;
+    private LocalDateTime modDt;
 
     public Member toMember() {
         return Member.builder()
@@ -36,10 +36,25 @@ public class MemberRequestDto {
                 .address(address)
                 .addressDtl(addressDtl)
                 .joinDt(joinDt)
-                .regId(regId)
-                .regDt(regDt)
-                .modId(modId)
-                .modDt(modDt)
+                .regId(SecurityUtil.getCurrentAdminNo())
+                .regDt(LocalDateTime.now())
+                .modId(SecurityUtil.getCurrentAdminNo())
+                .modDt(LocalDateTime.now())
+                .build();
+    }
+
+    public Member toUpdateMember() {
+        return Member.builder()
+                .memberNo(memberNo)
+                .memberNm(memberNm)
+                .email(email)
+                .mobileNo(mobileNo)
+                .birthday(birthday)
+                .address(address)
+                .addressDtl(addressDtl)
+                .joinDt(joinDt)
+                .modId(SecurityUtil.getCurrentAdminNo())
+                .modDt(LocalDateTime.now())
                 .build();
     }
 }

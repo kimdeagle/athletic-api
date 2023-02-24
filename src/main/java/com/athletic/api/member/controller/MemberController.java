@@ -2,6 +2,7 @@ package com.athletic.api.member.controller;
 
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.member.dto.MemberRequestDto;
+import com.athletic.api.member.dto.MemberResponseDto;
 import com.athletic.api.member.entity.Member;
 import com.athletic.api.member.service.MemberSelector;
 import com.athletic.api.member.service.MemberService;
@@ -25,22 +26,22 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("")
-    public ResponseEntity<List<Member>> getMemberList() {
+    public ResponseEntity<List<MemberResponseDto>> getMemberList() {
         return ResponseEntity.ok(memberSelector.getMemberList());
     }
 
     @PostMapping("")
-    public ResponseDto addMember(@RequestBody MemberRequestDto memberRequestDto) {
-        return memberService.addMember(memberRequestDto);
+    public ResponseEntity<ResponseDto> addMember(@RequestBody MemberRequestDto memberRequestDto) {
+        return ResponseEntity.ok(memberService.addMember(memberRequestDto));
     }
 
     @GetMapping("/{memberNo}")
-    public ResponseEntity<Member> getMember(@PathVariable("memberNo") String memberNo) {
+    public ResponseEntity<MemberResponseDto> getMember(@PathVariable("memberNo") String memberNo) {
         return ResponseEntity.ok(memberSelector.getMember(memberNo));
     }
 
     @PutMapping("")
-    public Member updateMember(@RequestBody MemberRequestDto memberRequestDto) {
+    public ResponseDto updateMember(@RequestBody MemberRequestDto memberRequestDto) {
         return memberService.updateMember(memberRequestDto);
     }
 }

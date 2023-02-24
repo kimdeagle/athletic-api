@@ -1,61 +1,64 @@
 package com.athletic.api.member.entity;
 
+import com.athletic.api.util.converter.CryptoConverter;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String memberNo;
-    @Column(nullable = false)
+
+    @Column(nullable = false, updatable = false)
     private String memberNm;
+
     @Column
+    @Convert(converter = CryptoConverter.class)
     private String email;
+
     @Column(nullable = false)
+    @Convert(converter = CryptoConverter.class)
     private String mobileNo;
+
     @Column
     private String birthday;
+
     @Column
     private String address;
+
     @Column
+    @Convert(converter = CryptoConverter.class)
     private String addressDtl;
+
     @Column(nullable = false)
     private String joinDt;
-    @Column(nullable = false)
+
+    @Column(updatable = false)
     private String regId;
-    @Column(nullable = false)
-    private Date regDt;
+
+    @Column(updatable = false)
+    private LocalDateTime regDt;
+
     @Column(nullable = false)
     private String modId;
-    @Column(nullable = false)
-    private Date modDt;
 
-    public Member(String memberNo, String memberNm, String email, String mobileNo, String birthday, String address, String addressDtl, String joinDt, String regId, Date regDt, String modId, Date modDt) {
-        this.memberNo = memberNo;
-        this.memberNm = memberNm;
-        this.email = email;
-        this.mobileNo = mobileNo;
-        this.birthday = birthday;
-        this.address = address;
-        this.addressDtl = addressDtl;
-        this.joinDt = joinDt;
-        this.regId = regId;
-        this.regDt = regDt;
-        this.modId = modId;
-        this.modDt = modDt;
-    }
+    @Column(nullable = false)
+    private LocalDateTime modDt;
+
+    public void setMobileNo(String mobileNo) { this.mobileNo = mobileNo; }
 }

@@ -1,62 +1,76 @@
-package com.athletic.api.auth.entity;
+package com.athletic.api.admin.entity;
 
+import com.athletic.api.util.converter.CryptoConverter;
+import com.athletic.api.util.converter.PasswordConverter;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String adminNo;
+
     @Column(nullable = false)
     private String adminNm;
+
     @Column(nullable = false)
+    @Convert(converter = CryptoConverter.class)
     private String email;
+
     @Column(nullable = false)
+    @Convert(converter = CryptoConverter.class)
     private String mobileNo;
-    @Column(nullable = false)
+
+    @Column(unique = true, nullable = false)
     private String loginId;
+
     @Column(nullable = false)
+    @Convert(converter = PasswordConverter.class)
     private String loginPw;
+
     @Column(nullable = false)
     private String authNo;
+
     @Column(nullable = false)
     private String aprvStCd;
-    @Column(nullable = false)
+
+    @Column(updatable = false)
     private String regId;
-    @Column(nullable = false)
-    private Date regDt;
+
+    @Column(updatable = false)
+    private LocalDateTime regDt;
+
     @Column(nullable = false)
     private String modId;
-    @Column(nullable = false)
-    private Date modDt;
 
-    public Admin(String adminNo, String adminNm, String email, String mobileNo, String loginId, String loginPw, String authNo, String aprvStCd, String regId, Date regDt, String modId, Date modDt) {
-        this.adminNo = adminNo;
-        this.adminNm = adminNm;
-        this.email = email;
-        this.mobileNo = mobileNo;
-        this.loginId = loginId;
+    @Column(nullable = false)
+    private LocalDateTime modDt;
+
+    public void setLoginPw(String loginPw) {
         this.loginPw = loginPw;
-        this.authNo = authNo;
-        this.aprvStCd = aprvStCd;
-        this.regId = regId;
-        this.regDt = regDt;
-        this.modId = modId;
-        this.modDt = modDt;
     }
 
+    public void setModId(String modId) {
+        this.modId = modId;
+    }
+
+    public void setModDt(LocalDateTime modDt) {
+        this.modDt = modDt;
+    }
 }

@@ -1,25 +1,35 @@
 package com.athletic.api.auth.config;
 
+import com.athletic.api.auth.handler.CustomLogoutSuccessHandler;
 import com.athletic.api.auth.jwt.JwtAccessDeniedHandler;
 import com.athletic.api.auth.jwt.JwtAuthenticationEntryPoint;
+import com.athletic.api.auth.jwt.JwtFilter;
 import com.athletic.api.auth.jwt.TokenProvider;
+import com.athletic.api.util.constant.Const;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.stereotype.Component;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-@Component
+@RequiredArgsConstructor
 public class WebSecurityConfig {
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final CustomLogoutSuccessHandler logoutSuccessHandler;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -32,10 +42,14 @@ public class WebSecurityConfig {
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/join", "/reset-password", "/auth/**").permitAll()
+                .antMatchers(Const.PERMIT_PATH_LIST).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .logout()
+                .logoutUrl(Const.LOGOUT_URL)
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .and()
+                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

@@ -3,13 +3,12 @@ package com.athletic.api.menu.dto;
 import com.athletic.api.menu.entity.Menu;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MenuResponseDto {
     private String menuNo;
     private String menuNm;
@@ -20,9 +19,9 @@ public class MenuResponseDto {
     private Long sortSeq;
     private String useYn;
     private String regId;
-    private Date regDt;
+    private LocalDateTime regDt;
     private String modId;
-    private Date modDt;
+    private LocalDateTime modDt;
 
     public static MenuResponseDto of (Menu menu) {
         return MenuResponseDto.builder()

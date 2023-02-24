@@ -1,12 +1,11 @@
 package com.athletic.api.auth.service;
 
-import com.athletic.api.auth.dto.AdminRequestDto;
-import com.athletic.api.auth.dto.AdminResponseDto;
+import com.athletic.api.admin.dto.AdminRequestDto;
 import com.athletic.api.auth.dto.TokenDto;
-import com.athletic.api.auth.entity.Admin;
+import com.athletic.api.admin.entity.Admin;
 import com.athletic.api.auth.jwt.TokenProvider;
-import com.athletic.api.auth.repository.AdminRepository;
-import com.athletic.api.auth.util.CryptUtil;
+import com.athletic.api.admin.repository.AdminRepository;
+import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.util.constant.Const;
@@ -19,8 +18,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,41 +35,29 @@ public class AuthService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final AdminRepository adminRepository;
     private final TokenProvider tokenProvider;
-    private final CryptUtil cryptUtil;
+    private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    public AdminResponseDto join(AdminRequestDto adminRequestDto) {
-        if (adminRepository.existsByLoginId(adminRequestDto.getLoginId())) {
+    public ResponseDto join(AdminRequestDto adminRequestDto) {
+        if (adminRepository.existsByLoginId(adminRequestDto.getLoginId()))
             throw new CustomException(ErrorCode.EXIST_LOGIN_ID);
-        }
-
-        setDefaultJoinAdminRequestDto(adminRequestDto);
 
         Admin admin = adminRequestDto.toAdmin();
-        AdminResponseDto resultDto = AdminResponseDto.of(adminRepository.save(admin));
+
+        adminRepository.save(admin);
 
         sendJoinEmail(admin);
 
-        return resultDto;
-    }
-
-    private void setDefaultJoinAdminRequestDto(AdminRequestDto adminRequestDto) {
-        adminRequestDto.setRegId(Const.DEFAULT_ADMIN_ID);
-        adminRequestDto.setRegDt(new Date());
-        adminRequestDto.setModId(Const.DEFAULT_ADMIN_ID);
-        adminRequestDto.setModDt(new Date());
-        adminRequestDto.setAuthNo(Const.AUTH_NO_MANAGER);
-        adminRequestDto.setAprvStCd(Const.APRV_ST_CD_WAIT);
-        //encrypt
-        adminRequestDto.setEmail(cryptUtil.encryptAES256(adminRequestDto.getEmail()));
-        adminRequestDto.setMobileNo(cryptUtil.encryptAES256(adminRequestDto.getMobileNo().replaceAll("[^0-9]", "")));
-        adminRequestDto.setLoginPw(cryptUtil.passwordEncoder().encode(adminRequestDto.getLoginPw()));
+        return ResponseDto.builder()
+                .code(ResponseDto.SUCCESS)
+                .message(admin.getAdminNm() + "님. 회원가입 요청이 완료되었습니다.")
+                .build();
     }
 
     private void sendJoinEmail(Admin admin) {
         EmailDto emailDto = new EmailDto();
 
-        emailDto.setTo(cryptUtil.decryptAES256(admin.getEmail()));
+        emailDto.setTo(admin.getEmail());
         emailDto.setTemplateCd(Const.EMAIL_TEMPLATE_CD_JOIN);
 
         Map<String, String> templateMap = new HashMap<>();
@@ -79,7 +69,7 @@ public class AuthService {
 
     public TokenDto login(AdminRequestDto adminRequestDto) {
         Admin admin = adminRepository.findByLoginId(adminRequestDto.getLoginId()).orElseThrow(() -> new CustomException(ErrorCode.INVALID_ID_OR_PASSWORD));
-        if (!cryptUtil.passwordEncoder().matches(adminRequestDto.getLoginPw(), admin.getLoginPw())) throw new CustomException(ErrorCode.INVALID_ID_OR_PASSWORD);
+        if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), admin.getLoginPw())) throw new CustomException(ErrorCode.INVALID_ID_OR_PASSWORD);
         if (StringUtils.equals(admin.getAprvStCd(), Const.APRV_ST_CD_WAIT)) throw new CustomException(ErrorCode.WAIT_ADMIN_STATUS);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(adminRequestDto.getLoginId(), adminRequestDto.getLoginPw());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -100,21 +90,23 @@ public class AuthService {
 
     }
 
-    public AdminResponseDto resetPassword(AdminRequestDto adminRequestDto) {
-        adminRequestDto.setEmail(cryptUtil.encryptAES256(adminRequestDto.getEmail()));
-
+    public ResponseDto resetPassword(AdminRequestDto adminRequestDto) {
         Admin admin = adminRepository.findByLoginIdAndEmail(adminRequestDto.getLoginId(), adminRequestDto.getEmail()).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
 
         String tempPassword = getTempPassword();
-        admin.setLoginPw(cryptUtil.passwordEncoder().encode(tempPassword));
+
+        admin.setLoginPw(tempPassword);
         admin.setModId(admin.getAdminNo());
-        admin.setModDt(new Date());
+        admin.setModDt(LocalDateTime.now());
 
-        AdminResponseDto responseDto = AdminResponseDto.of(adminRepository.save(admin));
+        adminRepository.save(admin);
 
-        sendTempPasswordEmail(adminRequestDto, tempPassword);
+        sendTempPasswordEmail(adminRequestDto.getEmail(), tempPassword);
 
-        return responseDto;
+        return ResponseDto.builder()
+                .code(ResponseDto.SUCCESS)
+                .message("임시 비밀번호를 이메일로 전송했습니다.\n확인 후 로그인 하세요.")
+                .build();
     }
 
     private String getTempPassword() {
@@ -124,10 +116,10 @@ public class AuthService {
         return RandomStringUtils.randomAlphanumeric(8) + randomSpecialCharacter;
     }
 
-    private void sendTempPasswordEmail(AdminRequestDto adminRequestDto, String tempPassword) {
+    private void sendTempPasswordEmail(String email, String tempPassword) {
         EmailDto emailDto = new EmailDto();
 
-        emailDto.setTo(cryptUtil.decryptAES256(adminRequestDto.getEmail()));
+        emailDto.setTo(email);
         emailDto.setTemplateCd(Const.EMAIL_TEMPLATE_CD_RESET_PASSWORD);
 
         Map<String, String> templateMap = new HashMap<>();
@@ -147,6 +139,14 @@ public class AuthService {
                 .grantType(Const.BEARER_TYPE)
                 .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
+                .build();
+    }
+
+    //TODO 로그아웃 처리하기..
+    public ResponseDto logout() {
+        return ResponseDto.builder()
+                .code(ResponseDto.SUCCESS)
+                .message("로그아웃 되었습니다.")
                 .build();
     }
 

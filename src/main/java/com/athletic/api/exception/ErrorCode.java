@@ -16,7 +16,9 @@ public enum ErrorCode {
     EXIST_LOGIN_ID(907, "이미 존재하는 아이디입니다."),
     SECURITY_CONTEXT_NOT_FOUND(908, "Security Context에 인증 정보가 없습니다."),
     WAIT_ADMIN_STATUS(909, "가입대기 상태의 계정입니다."),
-    EXIST_MEMBER(910, "이미 존재하는 회원입니다.\n회원명 또는 휴대폰 번호를 확인해주세요.")
+    MEMBER_NOT_FOUND(910, "존재하지 않는 회원입니다."),
+    EXIST_MEMBER(911, "이미 존재하는 회원입니다.\n회원명 또는 휴대폰 번호를 확인해주세요."),
+    EMAIL_TEMPLATE_NOT_FOUND(912, "이메일 템플릿을 찾을 수 없습니다.")
     ;
 
     private final int status;
