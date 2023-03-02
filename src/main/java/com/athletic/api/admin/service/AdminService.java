@@ -48,4 +48,19 @@ public class AdminService {
                 .message("비밀번호 변경을 완료하였습니다.")
                 .build();
     }
+
+    public ResponseDto out(AdminRequestDto adminRequestDto) {
+        String adminNo = SecurityUtil.getCurrentAdminNo();
+        Admin admin = adminRepository.findById(adminNo).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
+        String encLoginPw = admin.getLoginPw();
+        if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), encLoginPw))
+            throw new CustomException(ErrorCode.NOT_MATCH_CURRENT_PASSWORD);
+
+        adminRepository.deleteById(adminNo);
+
+        return ResponseDto.builder()
+                .code(ResponseDto.SUCCESS)
+                .message("계정이 삭제되었습니다.")
+                .build();
+    }
 }

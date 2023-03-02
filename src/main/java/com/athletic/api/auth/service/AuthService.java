@@ -5,7 +5,6 @@ import com.athletic.api.auth.dto.TokenDto;
 import com.athletic.api.admin.entity.Admin;
 import com.athletic.api.auth.jwt.TokenProvider;
 import com.athletic.api.admin.repository.AdminRepository;
-import com.athletic.api.auth.util.SecurityUtil;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
@@ -51,7 +50,7 @@ public class AuthService {
 
         return ResponseDto.builder()
                 .code(ResponseDto.SUCCESS)
-                .message(admin.getAdminNm() + "님. 회원가입 요청이 완료되었습니다.")
+                .message(admin.getAdminNm() + "님. 계정생성 요청이 완료되었습니다.")
                 .build();
     }
 
@@ -143,18 +142,4 @@ public class AuthService {
                 .build();
     }
 
-    public ResponseDto out(AdminRequestDto adminRequestDto) {
-        String adminNo = SecurityUtil.getCurrentAdminNo();
-        Admin admin = adminRepository.findById(adminNo).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
-        String encLoginPw = admin.getLoginPw();
-        if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), encLoginPw))
-            throw new CustomException(ErrorCode.NOT_MATCH_CURRENT_PASSWORD);
-
-        adminRepository.deleteById(adminNo);
-
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message("회원탈퇴 처리되었습니다.")
-                .build();
-    }
 }

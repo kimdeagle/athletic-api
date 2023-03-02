@@ -37,6 +37,4 @@ public class AuthController {
         return ResponseEntity.ok(authService.reIssueAccessToken());
     }
 
-    @PostMapping("/out")
-    public ResponseEntity<ResponseDto> out(@RequestBody AdminRequestDto adminRequestDto) { return ResponseEntity.ok(authService.out(adminRequestDto)); }
 }

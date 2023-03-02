@@ -8,6 +8,7 @@ import com.athletic.api.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,5 +30,8 @@ public class AdminController {
     public ResponseEntity<ResponseDto> changePassword(@RequestBody AdminRequestDto adminRequestDto) {
         return ResponseEntity.ok(adminService.changePassword(adminRequestDto));
     }
+
+    @PostMapping("/out")
+    public ResponseEntity<ResponseDto> out(@RequestBody AdminRequestDto adminRequestDto) { return ResponseEntity.ok(adminService.out(adminRequestDto)); }
 
 }
