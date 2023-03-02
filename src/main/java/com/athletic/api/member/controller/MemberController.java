@@ -8,6 +8,7 @@ import com.athletic.api.member.service.MemberSelector;
 import com.athletic.api.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +42,12 @@ public class MemberController {
     }
 
     @PutMapping("")
-    public ResponseDto updateMember(@RequestBody MemberRequestDto memberRequestDto) {
-        return memberService.updateMember(memberRequestDto);
+    public ResponseEntity<ResponseDto> updateMember(@RequestBody MemberRequestDto memberRequestDto) {
+        return ResponseEntity.ok(memberService.updateMember(memberRequestDto));
+    }
+
+    @DeleteMapping("")
+    public ResponseEntity<ResponseDto> deleteMember(@RequestBody List<String> memberNoList) {
+        return ResponseEntity.ok(memberService.deleteMember(memberNoList));
     }
 }

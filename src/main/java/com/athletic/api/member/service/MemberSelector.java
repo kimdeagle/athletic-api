@@ -32,7 +32,8 @@ public class MemberSelector {
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
     }
 
+    /* MobileNoConverter에 의해 하이픈 적용된 상태라 마지막 substring은 9번째부터 */
     private String maskMobileNo(String mobileNo) {
-        return mobileNo.substring(0, 3) + "-****-" + mobileNo.substring(7);
+        return mobileNo.substring(0, 3) + "-****-" + mobileNo.substring(9);
     }
 }

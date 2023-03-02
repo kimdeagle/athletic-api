@@ -1,6 +1,8 @@
 package com.athletic.api.member.entity;
 
 import com.athletic.api.util.converter.CryptoConverter;
+import com.athletic.api.util.converter.MobileNoConverter;
+import com.athletic.api.util.converter.StringDateConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,10 +34,11 @@ public class Member {
     private String email;
 
     @Column(nullable = false)
-    @Convert(converter = CryptoConverter.class)
+    @Convert(converter = MobileNoConverter.class)
     private String mobileNo;
 
     @Column
+    @Convert(converter = StringDateConverter.class)
     private String birthday;
 
     @Column
@@ -46,6 +49,7 @@ public class Member {
     private String addressDtl;
 
     @Column(nullable = false)
+    @Convert(converter = StringDateConverter.class)
     private String joinDt;
 
     @Column(updatable = false)

@@ -1,6 +1,7 @@
 package com.athletic.api.admin.entity;
 
 import com.athletic.api.util.converter.CryptoConverter;
+import com.athletic.api.util.converter.MobileNoConverter;
 import com.athletic.api.util.converter.PasswordConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +35,7 @@ public class Admin {
     private String email;
 
     @Column(nullable = false)
-    @Convert(converter = CryptoConverter.class)
+    @Convert(converter = MobileNoConverter.class)
     private String mobileNo;
 
     @Column(unique = true, nullable = false)

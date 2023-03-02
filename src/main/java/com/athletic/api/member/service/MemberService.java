@@ -8,6 +8,7 @@ import com.athletic.api.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Service
@@ -34,6 +35,14 @@ public class MemberService {
         return ResponseDto.builder()
                 .code(ResponseDto.SUCCESS)
                 .message("회원이 수정되었습니다.")
+                .build();
+    }
+
+    public ResponseDto deleteMember(List<String> memberNoList) {
+        memberRepository.deleteAllByIdInBatch(memberNoList);
+        return ResponseDto.builder()
+                .code(ResponseDto.SUCCESS)
+                .message(memberNoList.size() + "명의 회원이 삭제되었습니다.")
                 .build();
     }
 }

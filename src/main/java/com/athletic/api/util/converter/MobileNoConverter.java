@@ -9,15 +9,19 @@ import javax.persistence.Converter;
 
 @Converter
 @RequiredArgsConstructor
-public class CryptoConverter implements AttributeConverter<String, String> {
+public class MobileNoConverter implements AttributeConverter<String, String> {
     private final Crypto crypto;
     @Override
     public String convertToDatabaseColumn(String attribute) {
-        return StringUtils.isNotBlank(attribute) ? crypto.encryptAES256(attribute) : "";
+        return StringUtils.isNotBlank(attribute) ? crypto.encryptAES256(attribute.replaceAll("[^0-9]", "")) : "";
     }
 
     @Override
     public String convertToEntityAttribute(String dbData) {
-        return StringUtils.isNotBlank(dbData) ? crypto.decryptAES256(dbData) : "";
+        return StringUtils.isNotBlank(dbData) ? insertHyphenMobileNo(crypto.decryptAES256(dbData)) : "";
+    }
+
+    private String insertHyphenMobileNo(String mobileNo) {
+        return mobileNo.substring(0, 3) + "-" + mobileNo.substring(3, 7) + "-" + mobileNo.substring(7);
     }
 }
