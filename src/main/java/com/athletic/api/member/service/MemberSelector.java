@@ -4,11 +4,14 @@ import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.member.dto.MemberResponseDto;
 import com.athletic.api.member.repository.MemberRepository;
+import com.athletic.api.util.excel.ExcelFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,5 +38,11 @@ public class MemberSelector {
     /* MobileNoConverter에 의해 하이픈 적용된 상태라 마지막 substring은 9번째부터 */
     private String maskMobileNo(String mobileNo) {
         return mobileNo.substring(0, 3) + "-****-" + mobileNo.substring(9);
+    }
+
+    public void downloadExcel(HttpServletResponse response) {
+        List<MemberResponseDto> list = getMemberList();
+        ExcelFile excelFile = new ExcelFile(LocalDate.now() + " Member List", list, MemberResponseDto.class);
+        excelFile.write(response);
     }
 }

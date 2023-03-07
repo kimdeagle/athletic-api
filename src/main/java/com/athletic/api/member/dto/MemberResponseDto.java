@@ -1,6 +1,8 @@
 package com.athletic.api.member.dto;
 
 import com.athletic.api.member.entity.Member;
+import com.athletic.api.util.excel.ExcelAlign;
+import com.athletic.api.util.excel.ExcelColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberResponseDto {
+    @ExcelColumn(headerName = "회원번호", align = ExcelAlign.RIGHT_BOTTOM, width = 8000)
     private String memberNo;
+    @ExcelColumn(headerName = "회원명")
     private String memberNm;
     private String email;
     private String mobileNo;
