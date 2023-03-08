@@ -42,7 +42,7 @@ public class MemberSelector {
 
     public void downloadExcel(HttpServletResponse response) {
         List<MemberResponseDto> list = getMemberList();
-        ExcelFile excelFile = new ExcelFile(LocalDate.now() + " Member List", list, MemberResponseDto.class);
+        ExcelFile excelFile = new ExcelFile("Member List", list, MemberResponseDto.class);
         excelFile.write(response);
     }
 }

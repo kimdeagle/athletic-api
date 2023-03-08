@@ -1,7 +1,7 @@
 package com.athletic.api.member.dto;
 
 import com.athletic.api.member.entity.Member;
-import com.athletic.api.util.excel.ExcelAlign;
+import com.athletic.api.util.excel.style.ExcelCellStyle;
 import com.athletic.api.util.excel.ExcelColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,15 +13,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberResponseDto {
-    @ExcelColumn(headerName = "회원번호", align = ExcelAlign.RIGHT_BOTTOM, width = 8000)
+    @ExcelColumn(headerName = "회원번호", sort = 0, width = 15)
     private String memberNo;
-    @ExcelColumn(headerName = "회원명")
+    @ExcelColumn(headerName = "회원명", sort = 1, bodyStyle = ExcelCellStyle.TEST_BODY)
     private String memberNm;
     private String email;
     private String mobileNo;
+    @ExcelColumn(headerName = "생년월일", sort = 2)
     private String birthday;
     private String address;
     private String addressDtl;
+    @ExcelColumn(headerName = "입회일자", sort = 3)
     private String joinDt;
 
     public static MemberResponseDto of(Member member) {

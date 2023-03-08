@@ -1,4 +1,4 @@
-package com.athletic.api.util.excel;
+package com.athletic.api.util.excel.style.align;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +17,7 @@ public enum ExcelAlign {
     RIGHT_TOP(HorizontalAlignment.RIGHT, VerticalAlignment.TOP),
     RIGHT_CENTER(HorizontalAlignment.RIGHT, VerticalAlignment.CENTER),
     RIGHT_BOTTOM(HorizontalAlignment.RIGHT, VerticalAlignment.BOTTOM),
+    GENERAL(HorizontalAlignment.GENERAL, VerticalAlignment.CENTER),
     ;
 
     private final HorizontalAlignment horizontalAlignment;
