@@ -13,17 +13,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberResponseDto {
-    @ExcelColumn(headerName = "회원번호", sort = 0, width = 15)
     private String memberNo;
-    @ExcelColumn(headerName = "회원명", sort = 1, bodyStyle = ExcelCellStyle.TEST_BODY)
+
+    @ExcelColumn(headerName = "회원명", sort = 0, width = 12, bodyStyle = ExcelCellStyle.CENTER_BODY)
     private String memberNm;
+
+    @ExcelColumn(headerName = "이메일", sort = 1, width = 20)
     private String email;
+
+    @ExcelColumn(headerName = "휴대폰 번호", sort = 2, width = 15, bodyStyle = ExcelCellStyle.CENTER_BODY)
     private String mobileNo;
-    @ExcelColumn(headerName = "생년월일", sort = 2)
+
+    @ExcelColumn(headerName = "생년월일", sort = 3, width = 12, bodyStyle = ExcelCellStyle.CENTER_BODY)
     private String birthday;
+
+    @ExcelColumn(headerName = "주소", sort = 4, width = 25)
     private String address;
+
     private String addressDtl;
-    @ExcelColumn(headerName = "입회일자", sort = 3)
+
+    @ExcelColumn(headerName = "입회일자", sort = 5, width = 12, bodyStyle = ExcelCellStyle.CENTER_BODY)
     private String joinDt;
 
     public static MemberResponseDto of(Member member) {

@@ -15,14 +15,14 @@ public class ErrorResponseEntity {
     private String error;
     private String message;
 
-    public static ResponseEntity<ErrorResponseEntity> toResponseEntity(ErrorCode e) {
+    public static ResponseEntity<ErrorResponseEntity> toResponseEntity(int status, String name, String message) {
         return ResponseEntity
-                .status(e.getStatus())
+                .status(status)
                 .body(ErrorResponseEntity.builder()
-                        .status(e.getStatus())
-                        .error(e.name())
-                        .code(e.name())
-                        .message(e.getMessage())
+                        .status(status)
+                        .error(name)
+                        .code(name)
+                        .message(message)
                         .build());
     }
 }

@@ -5,7 +5,6 @@ import com.athletic.api.member.dto.MemberRequestDto;
 import com.athletic.api.member.dto.MemberResponseDto;
 import com.athletic.api.member.service.MemberSelector;
 import com.athletic.api.member.service.MemberService;
-import com.athletic.api.util.excel.ExcelFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -54,7 +54,10 @@ public class MemberController {
     }
 
     @GetMapping("/excel")
-    public void downloadExcel(HttpServletResponse response) {
-        memberSelector.downloadExcel(response);
+    public void downloadExcel() {
+        memberSelector.downloadExcel();
     }
+
+    @PostMapping("/excel")
+    public ResponseEntity<ResponseDto> uploadExcel(MultipartFile file) throws IOException { return ResponseEntity.ok(memberService.uploadExcel(file)); }
 }

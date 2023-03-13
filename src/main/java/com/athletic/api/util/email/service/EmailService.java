@@ -52,6 +52,7 @@ public class EmailService {
             emailHandler.send();
         } catch (Exception e) {
             e.printStackTrace();
+            throw new CustomException(ErrorCode.FAIL_SEND_EMAIL);
         }
     }
 }

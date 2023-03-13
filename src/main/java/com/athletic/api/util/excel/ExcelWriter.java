@@ -2,29 +2,32 @@ package com.athletic.api.util.excel;
 
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
+import com.athletic.api.util.constant.Const;
 import com.athletic.api.util.excel.style.ExcelCellStyle;
 import com.athletic.api.util.excel.style.align.ExcelAlign;
 import com.athletic.api.util.excel.style.border.ExcelBorder;
-import com.athletic.api.util.excel.style.color.ExcelColor;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
-import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ExcelFile {
+public class ExcelWriter {
 
     private static final float DEFAULT_ROW_HEIGHT = 20;
 
@@ -32,9 +35,9 @@ public class ExcelFile {
     private static final String INTEGER_FORMAT = "#,##0";
     private static final String DEFAULT_FORMAT = "";
 
-    private static final String EXCEL_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private static final String FILE_EXTENSION = ".xlsx";
     private static final String DEFAULT_FILENAME = "Excel Download";
+    private static final String DEFAULT_SHEETNAME = "Sheet1";
 
     private XSSFWorkbook workbook;
     private Sheet sheet;
@@ -48,13 +51,17 @@ public class ExcelFile {
     private static final int COLUMN_START_INDEX = 1;
     private int rowIndex = ROW_START_INDEX;
 
-    public ExcelFile(List<?> list, Class<?> clazz) {
-        this(DEFAULT_FILENAME, list, clazz);
+    public ExcelWriter(List<?> list, Class<?> clazz) {
+        this(DEFAULT_FILENAME, DEFAULT_SHEETNAME, list, clazz);
     }
 
-    public ExcelFile(String filename, List<?> list, Class<?> clazz) {
+    public ExcelWriter(String filename, List<?> list, Class<?> clazz) {
+        this(filename, DEFAULT_SHEETNAME, list, clazz);
+    }
+
+    public ExcelWriter(String filename, String sheetname, List<?> list, Class<?> clazz) {
         validateData(list);
-        initialize(filename, list, clazz);
+        initialize(filename, sheetname, list, clazz);
         renderHeader();
         renderBody();
     }
@@ -63,15 +70,15 @@ public class ExcelFile {
     private void validateData(List<?> list) {
         int maxRows = SpreadsheetVersion.EXCEL2007.getMaxRows();
         if (list.size() > maxRows)
-            throw new CustomException(ErrorCode.OVERFLOW_MAX_ROWS_DOWNLOAD_EXCEL);
+            throw new CustomException(ErrorCode.OVERFLOW_MAX_ROWS_EXCEL_DOWNLOAD, NumberFormat.getInstance().format(maxRows));
     }
 
     /* initialize excel */
-    private void initialize(String filename, List<?> list, Class<?> clazz) {
+    private void initialize(String filename, String sheetname, List<?> list, Class<?> clazz) {
         //create workbook
         workbook = new XSSFWorkbook();
         //create sheet
-        sheet = workbook.createSheet();
+        sheet = workbook.createSheet(sheetname);
         //set filename
         this.filename = LocalDate.now() + " " + filename.replaceAll(".xlsx|.xls", "");
         //set list
@@ -129,17 +136,16 @@ public class ExcelFile {
         cellStyle = workbook.createCellStyle();
 
         //set align
-        ExcelAlign align = style.getExcelAlign();
+        ExcelAlign align = style.getAlign();
         cellStyle.setAlignment(align.getHorizontalAlignment());
         cellStyle.setVerticalAlignment(align.getVerticalAlignment());
 
-        //set foreground
-        ExcelColor color = style.getExcelColor();
-        cellStyle.setFillForegroundColor(color.getColorIndex());
-        cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND); //추후 변경
+        //set foreground color and pattern
+        cellStyle.setFillForegroundColor(style.getColor().getColorIndex());
+        cellStyle.setFillPattern(style.getFillPattern());
 
         //set border
-        ExcelBorder border = style.getExcelBorder();
+        ExcelBorder border = style.getBorder();
         cellStyle.setBorderTop(border.getBorderTop());
         cellStyle.setBorderRight(border.getBorderRight());
         cellStyle.setBorderBottom(border.getBorderBottom());
@@ -177,6 +183,7 @@ public class ExcelFile {
                 cell.setCellStyle(cellStyle);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
+                throw new CustomException(ErrorCode.FAIL_EXCEL_DOWNLOAD);
             }
         }
     }
@@ -228,14 +235,17 @@ public class ExcelFile {
     }
 
     /* write excel file */
-    public void write(HttpServletResponse response) {
+    public void write() {
         try {
-            response.setContentType(EXCEL_CONTENT_TYPE);
-            response.setHeader("Content-Disposition", "attachment;filename=" + filename + FILE_EXTENSION);
-            workbook.write(response.getOutputStream());
-        } catch (IOException e) {
-            throw new CustomException(ErrorCode.FAIL_DOWNLOAD_EXCEL);
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpServletResponse response = attributes.getResponse();
+            if (response != null) {
+                response.setContentType(Const.EXCEL_CONTENT_TYPE);
+                response.setHeader("Content-Disposition", "attachment;filename=" + filename + FILE_EXTENSION);
+                workbook.write(response.getOutputStream());
+            }
+        } catch (Exception e) {
+            throw new CustomException(ErrorCode.FAIL_EXCEL_DOWNLOAD);
         }
     }
-
 }

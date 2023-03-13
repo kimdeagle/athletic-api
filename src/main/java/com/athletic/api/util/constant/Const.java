@@ -23,4 +23,11 @@ public class Const {
     public static final String AUTH_NO_MANAGER = "10001";
     public static final String EMAIL_TEMPLATE_CD_JOIN = "10";
     public static final String EMAIL_TEMPLATE_CD_RESET_PASSWORD = "20";
+
+    public static final String EXCEL_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+    //regex
+    public static final String EMAIL_REGEX = "^[a-zA-Z0-9+\\-\\\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+    public static final String MOBILE_NO_REGEX = "^01[016789][0-9]{3,4}[0-9]{4}$";
+    public static final String YYYYMMDD_REGEX = "^(19[0-9][0-9]|20\\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$";
 }

@@ -1,5 +1,7 @@
 package com.athletic.api.util.email.handler;
 
+import com.athletic.api.exception.CustomException;
+import com.athletic.api.exception.ErrorCode;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -49,11 +51,7 @@ public class EmailHandler {
     }
 
     public void send() {
-        try {
-            javaMailSender.send(mimeMessage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        javaMailSender.send(mimeMessage);
     }
 
 }

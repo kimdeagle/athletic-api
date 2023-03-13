@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -38,7 +37,7 @@ public class Admin {
     @Convert(converter = MobileNoConverter.class)
     private String mobileNo;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String loginId;
 
     @Column(nullable = false)

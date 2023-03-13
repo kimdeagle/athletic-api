@@ -1,10 +1,21 @@
 package com.athletic.api.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
+import java.util.List;
+
 @Getter
 public class CustomException extends RuntimeException {
     private final ErrorCode errorCode;
+    private final Object parameter;
+
+    public CustomException(ErrorCode errorCode, String... parameter) {
+        this.errorCode = errorCode;
+        this.parameter = parameter;
+    }
+
+    public CustomException(ErrorCode errorCode, List<String> parameter) {
+        this.errorCode = errorCode;
+        this.parameter = parameter;
+    }
 }
