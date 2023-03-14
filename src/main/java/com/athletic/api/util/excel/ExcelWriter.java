@@ -13,14 +13,16 @@ import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -39,60 +41,53 @@ public class ExcelWriter {
     private static final String DEFAULT_FILENAME = "Excel Download";
     private static final String DEFAULT_SHEETNAME = "Sheet1";
 
-    private XSSFWorkbook workbook;
-    private Sheet sheet;
-    private Class<?> clazz;
-    private List<?> list;
-    private String filename;
-    private CellStyle cellStyle;
-    private List<Field> excelFields;
+    private static Workbook workbook;
+    private static Sheet sheet;
+    private static CellStyle cellStyle;
+    private static List<Field> excelFields;
 
     private static final int ROW_START_INDEX = 1;
     private static final int COLUMN_START_INDEX = 1;
-    private int rowIndex = ROW_START_INDEX;
+    private static int rowIndex;
 
-    public ExcelWriter(List<?> list, Class<?> clazz) {
-        this(DEFAULT_FILENAME, DEFAULT_SHEETNAME, list, clazz);
+    public static void write(List<?> list, Class<?> clazz) {
+        write(DEFAULT_FILENAME, DEFAULT_SHEETNAME, list, clazz);
     }
 
-    public ExcelWriter(String filename, List<?> list, Class<?> clazz) {
-        this(filename, DEFAULT_SHEETNAME, list, clazz);
+    public static void write(String filename, List<?> list, Class<?> clazz) {
+        write(filename, DEFAULT_SHEETNAME, list, clazz);
     }
 
-    public ExcelWriter(String filename, String sheetname, List<?> list, Class<?> clazz) {
+    public static void write(String filename, String sheetname, List<?> list, Class<?> clazz) {
         validateData(list);
-        initialize(filename, sheetname, list, clazz);
+        initialize(sheetname, clazz);
         renderHeader();
-        renderBody();
+        renderBody(list);
+        writeToResponse(filename);
     }
+
 
     /* check list size */
-    private void validateData(List<?> list) {
+    private static void validateData(List<?> list) {
         int maxRows = SpreadsheetVersion.EXCEL2007.getMaxRows();
         if (list.size() > maxRows)
             throw new CustomException(ErrorCode.OVERFLOW_MAX_ROWS_EXCEL_DOWNLOAD, NumberFormat.getInstance().format(maxRows));
     }
 
     /* initialize excel */
-    private void initialize(String filename, String sheetname, List<?> list, Class<?> clazz) {
+    private static void initialize(String sheetname, Class<?> clazz) {
         //create workbook
         workbook = new XSSFWorkbook();
         //create sheet
         sheet = workbook.createSheet(sheetname);
-        //set filename
-        this.filename = LocalDate.now() + " " + filename.replaceAll(".xlsx|.xls", "");
-        //set list
-        this.list = list;
-        //set clazz
-        this.clazz = clazz;
         //get fields
-        this.excelFields = getExcelFields();
+        excelFields = getExcelFields(clazz);
         //set default row height
         sheet.setDefaultRowHeightInPoints(DEFAULT_ROW_HEIGHT);
     }
 
     /* get excel fields by clazz */
-    private List<Field> getExcelFields() {
+    private static List<Field> getExcelFields(Class<?> clazz) {
         return Arrays.stream(clazz.getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(ExcelColumn.class))
                 .sorted((field1, field2) -> {
@@ -104,7 +99,8 @@ public class ExcelWriter {
     }
 
     /* render header row */
-    private void renderHeader() {
+    private static void renderHeader() {
+        rowIndex = ROW_START_INDEX;
         Row row = sheet.createRow(rowIndex++);
         int columnIndex = COLUMN_START_INDEX;
 
@@ -121,18 +117,18 @@ public class ExcelWriter {
     }
 
     /* set column width */
-    private void setColumnWidth(int columnIndex, int width) {
+    private static void setColumnWidth(int columnIndex, int width) {
         sheet.setColumnWidth(columnIndex, width * 256);
     }
 
     /* set header cell style */
-    private void setHeaderCellStyle(ExcelCellStyle headerCellStyle) {
+    private static void setHeaderCellStyle(ExcelCellStyle headerCellStyle) {
         setCellStyle(headerCellStyle);
         setHeaderFont();
     }
 
     /* set cell style */
-    private void setCellStyle(ExcelCellStyle style) {
+    private static void setCellStyle(ExcelCellStyle style) {
         cellStyle = workbook.createCellStyle();
 
         //set align
@@ -153,21 +149,21 @@ public class ExcelWriter {
     }
 
     /* set header font */
-    private void setHeaderFont() {
+    private static void setHeaderFont() {
         Font font = workbook.createFont();
         font.setBold(true);
         cellStyle.setFont(font);
     }
 
     /* render body rows */
-    private void renderBody() {
+    private static void renderBody(List<?> list) {
         for (Object data : list) {
             renderBodyRow(data);
         }
     }
 
     /* render body row */
-    private void renderBodyRow(Object data) {
+    private static void renderBodyRow(Object data) {
         Row row = sheet.createRow(rowIndex++);
         int columnIndex = COLUMN_START_INDEX;
 
@@ -189,7 +185,7 @@ public class ExcelWriter {
     }
 
     /* set cell value */
-    private void setCellValue(Cell cell, Object cellValue) {
+    private static void setCellValue(Cell cell, Object cellValue) {
         if (cellValue instanceof Number) {
             Number number = (Number) cellValue;
             cell.setCellValue(number.doubleValue());
@@ -199,7 +195,7 @@ public class ExcelWriter {
     }
 
     /* set body cell style */
-    private void setBodyCellStyle(ExcelColumn excelColumn, Class<?> type) {
+    private static void setBodyCellStyle(ExcelColumn excelColumn, Class<?> type) {
         setCellStyle(excelColumn.bodyStyle());
 
         //set data format
@@ -208,7 +204,7 @@ public class ExcelWriter {
     }
 
     /* get data format */
-    private short getDataFormat(DataFormat dataFormat, Class<?> type) {
+    private static short getDataFormat(DataFormat dataFormat, Class<?> type) {
         if (isFloatType(type))
             return dataFormat.getFormat(FLOAT_FORMAT);
 
@@ -219,7 +215,7 @@ public class ExcelWriter {
     }
 
     /* check float type */
-    private boolean isFloatType(Class<?> type) {
+    private static boolean isFloatType(Class<?> type) {
         List<Class<?>> floatTypes = Arrays.asList(
                 Float.class, float.class, Double.class, double.class
         );
@@ -227,25 +223,32 @@ public class ExcelWriter {
     }
 
     /* check integer type */
-    private boolean isIntegerType(Class<?> type) {
+    private static boolean isIntegerType(Class<?> type) {
         List<Class<?>> integerTypes = Arrays.asList(
                 Byte.class, byte.class, Short.class, short.class, Integer.class, int.class, Long.class, long.class
         );
         return integerTypes.contains(type);
     }
 
-    /* write excel file */
-    public void write() {
-        try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpServletResponse response = attributes.getResponse();
-            if (response != null) {
-                response.setContentType(Const.EXCEL_CONTENT_TYPE);
-                response.setHeader("Content-Disposition", "attachment;filename=" + filename + FILE_EXTENSION);
-                workbook.write(response.getOutputStream());
-            }
+    /* write excel to response */
+    private static void writeToResponse(String filename) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpServletResponse response = attributes.getResponse();
+
+        if (response == null)
+            throw new CustomException(ErrorCode.FAIL_EXCEL_DOWNLOAD);
+
+        try (OutputStream os = response.getOutputStream()) {
+            response.setContentType(Const.EXCEL_CONTENT_TYPE);
+            response.setHeader("Content-Disposition", "attachment;filename=" + getEncodedFilename(filename));
+            workbook.write(os);
         } catch (Exception e) {
             throw new CustomException(ErrorCode.FAIL_EXCEL_DOWNLOAD);
         }
+    }
+
+    /* get encoded filename (한글 깨짐 방지) */
+    private static String getEncodedFilename(String filename) {
+        return URLEncoder.encode(LocalDate.now() + " " + filename.replaceAll(".xlsx|.xls", "") + FILE_EXTENSION, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
     }
 }

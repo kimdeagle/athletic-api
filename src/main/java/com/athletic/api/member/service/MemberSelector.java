@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,10 +40,6 @@ public class MemberSelector {
 
     public void downloadExcel() {
         List<MemberResponseDto> list = getMemberList();
-        ExcelWriter excelWriter = new ExcelWriter("Member List", list, MemberResponseDto.class);
-        excelWriter.write();
-
-        //TODO change ExcelWriter -> static class
-        //ExcelWriter.download("회원 리스트", list, MemberResponseDto.class);
+        ExcelWriter.write("회원 리스트", list, MemberResponseDto.class);
     }
 }
