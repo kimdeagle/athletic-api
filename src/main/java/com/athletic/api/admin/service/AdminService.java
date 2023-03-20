@@ -12,9 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -38,8 +35,7 @@ public class AdminService {
             throw new CustomException(ErrorCode.CANNOT_CHANGE_SAME_PASSWORD);
 
         admin.setLoginPw(nextRawLoginPw);
-        admin.setModId(adminNo);
-        admin.setModDt(LocalDateTime.now());
+        admin.setModColumnsDefaultValue();
 
         adminRepository.save(admin);
 

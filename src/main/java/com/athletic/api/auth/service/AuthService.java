@@ -22,7 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -96,8 +95,7 @@ public class AuthService {
         String tempPassword = getTempPassword();
 
         admin.setLoginPw(tempPassword);
-        admin.setModId(admin.getAdminNo());
-        admin.setModDt(LocalDateTime.now());
+        admin.setModColumnsDefaultValue();
 
         adminRepository.save(admin);
 

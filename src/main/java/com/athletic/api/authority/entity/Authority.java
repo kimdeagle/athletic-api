@@ -1,23 +1,23 @@
-package com.athletic.api.auth.entity;
+package com.athletic.api.authority.entity;
 
+import com.athletic.api.common.entity.BaseEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Authority {
+public class Authority extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String authNo;
@@ -25,15 +25,4 @@ public class Authority {
     @Column(nullable = false)
     private String authNm;
 
-    @Column(updatable = false)
-    private String regId;
-
-    @Column(updatable = false)
-    private LocalDateTime regDt;
-
-    @Column(nullable = false)
-    private String modId;
-
-    @Column(nullable = false)
-    private LocalDateTime modDt;
 }

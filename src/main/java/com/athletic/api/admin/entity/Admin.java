@@ -1,12 +1,13 @@
 package com.athletic.api.admin.entity;
 
+import com.athletic.api.common.entity.BaseEntity;
 import com.athletic.api.util.converter.CryptoConverter;
 import com.athletic.api.util.converter.MobileNoConverter;
 import com.athletic.api.util.converter.PasswordConverter;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -14,14 +15,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Admin {
+public class Admin extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String adminNo;
@@ -50,27 +50,8 @@ public class Admin {
     @Column(nullable = false)
     private String aprvStCd;
 
-    @Column(updatable = false)
-    private String regId;
-
-    @Column(updatable = false)
-    private LocalDateTime regDt;
-
-    @Column(nullable = false)
-    private String modId;
-
-    @Column(nullable = false)
-    private LocalDateTime modDt;
-
     public void setLoginPw(String loginPw) {
         this.loginPw = loginPw;
     }
 
-    public void setModId(String modId) {
-        this.modId = modId;
-    }
-
-    public void setModDt(LocalDateTime modDt) {
-        this.modDt = modDt;
-    }
 }

@@ -1,19 +1,19 @@
 package com.athletic.api.menu.entity;
 
+import com.athletic.api.common.entity.BaseEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Menu {
+public class Menu extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String menuNo;
@@ -23,6 +23,9 @@ public class Menu {
 
     @Column
     private String upMenuNo;
+
+    @Column
+    private String upMenuNm;
 
     @Column
     private String menuUrl;
@@ -39,15 +42,8 @@ public class Menu {
     @Column(nullable = false)
     private String useYn;
 
-    @Column(updatable = false)
-    private String regId;
+    public void setUpMenuNm(String upMenuNm) {
+        this.upMenuNm = upMenuNm;
+    }
 
-    @Column(updatable = false)
-    private LocalDateTime regDt;
-
-    @Column(nullable = false)
-    private String modId;
-
-    @Column(nullable = false)
-    private LocalDateTime modDt;
 }

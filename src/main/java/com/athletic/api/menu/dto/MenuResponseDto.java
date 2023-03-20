@@ -13,6 +13,7 @@ public class MenuResponseDto {
     private String menuNo;
     private String menuNm;
     private String upMenuNo;
+    private String upMenuNm;
     private String menuUrl;
     private String iconNm;
     private Long menuLevel;
@@ -28,6 +29,7 @@ public class MenuResponseDto {
                 .menuNo(menu.getMenuNo())
                 .menuNm(menu.getMenuNm())
                 .upMenuNo(menu.getUpMenuNo())
+                .upMenuNm(menu.getUpMenuNm())
                 .menuUrl(menu.getMenuUrl())
                 .iconNm(menu.getIconNm())
                 .menuLevel(menu.getMenuLevel())

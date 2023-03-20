@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Getter
@@ -16,6 +17,7 @@ public class MenuRequestDto {
     private String menuNo;
     private String menuNm;
     private String upMenuNo;
+    private String upMenuNm;
     private String menuUrl;
     private String iconNm;
     private Long menuLevel;
@@ -25,12 +27,14 @@ public class MenuRequestDto {
     private LocalDateTime regDt;
     private String modId;
     private LocalDateTime modDt;
+    private List<String> authNoList;
 
     public Menu toMenu() {
         return Menu.builder()
                 .menuNo(menuNo)
                 .menuNm(menuNm)
                 .upMenuNo(upMenuNo)
+                .upMenuNm(upMenuNm)
                 .menuUrl(menuUrl)
                 .iconNm(iconNm)
                 .menuLevel(menuLevel)
@@ -48,6 +52,7 @@ public class MenuRequestDto {
                 .menuNo(menuNo)
                 .menuNm(menuNm)
                 .upMenuNo(upMenuNo)
+                .upMenuNm(upMenuNm)
                 .menuUrl(menuUrl)
                 .iconNm(iconNm)
                 .menuLevel(menuLevel)

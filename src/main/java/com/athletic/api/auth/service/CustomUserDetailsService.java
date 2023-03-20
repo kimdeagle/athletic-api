@@ -1,11 +1,11 @@
 package com.athletic.api.auth.service;
 
 import com.athletic.api.admin.entity.Admin;
-import com.athletic.api.auth.entity.Authority;
+import com.athletic.api.authority.entity.Authority;
+import com.athletic.api.authority.repository.AuthorityRepository;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.admin.repository.AdminRepository;
-import com.athletic.api.auth.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +20,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
     private final AdminRepository adminRepository;
-    private final AuthRepository authRepository;
+    private final AuthorityRepository authorityRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails createUserDetails(Admin admin) {
-        String authNm = authRepository.findById(admin.getAuthNo())
+        String authNm = authorityRepository.findById(admin.getAuthNo())
                 .map(Authority::getAuthNm)
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_NOT_FOUND));
 

@@ -1,12 +1,13 @@
 package com.athletic.api.member.entity;
 
+import com.athletic.api.common.entity.BaseEntity;
 import com.athletic.api.util.converter.CryptoConverter;
 import com.athletic.api.util.converter.MobileNoConverter;
 import com.athletic.api.util.converter.StringDateConverter;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -14,14 +15,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String memberNo;
@@ -51,18 +51,6 @@ public class Member {
     @Column(nullable = false)
     @Convert(converter = StringDateConverter.class)
     private String joinDt;
-
-    @Column(updatable = false)
-    private String regId;
-
-    @Column(updatable = false)
-    private LocalDateTime regDt;
-
-    @Column(nullable = false)
-    private String modId;
-
-    @Column(nullable = false)
-    private LocalDateTime modDt;
 
     public void setMobileNo(String mobileNo) { this.mobileNo = mobileNo; }
 }
