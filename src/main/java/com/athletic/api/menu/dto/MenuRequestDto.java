@@ -14,51 +14,52 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MenuRequestDto {
-    private String menuNo;
-    private String menuNm;
-    private String upMenuNo;
-    private String upMenuNm;
+    private String id;
+    private String name;
+    private String upMenuId;
+    private String upMenuName;
     private String menuUrl;
     private String iconNm;
     private Long menuLevel;
     private Long sortSeq;
     private String useYn;
+    private List<String> authorities;
     private String regId;
     private LocalDateTime regDt;
     private String modId;
     private LocalDateTime modDt;
-    private List<String> authNoList;
 
     public Menu toMenu() {
         return Menu.builder()
-                .menuNo(menuNo)
-                .menuNm(menuNm)
-                .upMenuNo(upMenuNo)
-                .upMenuNm(upMenuNm)
+                .name(name)
+                .upMenuId(upMenuId)
+                .upMenuName(upMenuName)
                 .menuUrl(menuUrl)
                 .iconNm(iconNm)
                 .menuLevel(menuLevel)
                 .sortSeq(sortSeq)
                 .useYn(useYn)
-                .regId(SecurityUtil.getCurrentAdminNo())
+                .authorities(authorities)
+                .regId(SecurityUtil.getCurrentId())
                 .regDt(LocalDateTime.now())
-                .modId(SecurityUtil.getCurrentAdminNo())
+                .modId(SecurityUtil.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }
 
     public Menu toUpdateMenu() {
         return Menu.builder()
-                .menuNo(menuNo)
-                .menuNm(menuNm)
-                .upMenuNo(upMenuNo)
-                .upMenuNm(upMenuNm)
+                .id(id)
+                .name(name)
+                .upMenuId(upMenuId)
+                .upMenuName(upMenuName)
                 .menuUrl(menuUrl)
                 .iconNm(iconNm)
                 .menuLevel(menuLevel)
                 .sortSeq(sortSeq)
                 .useYn(useYn)
-                .modId(SecurityUtil.getCurrentAdminNo())
+                .authorities(authorities)
+                .modId(SecurityUtil.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }

@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityUtil {
     private SecurityUtil() {}
-    public static String getCurrentAdminNo() {
+    public static String getCurrentId() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication.getName() == null) {
             throw new CustomException(ErrorCode.SECURITY_CONTEXT_NOT_FOUND);

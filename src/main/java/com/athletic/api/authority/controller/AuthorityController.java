@@ -1,6 +1,5 @@
 package com.athletic.api.authority.controller;
 
-import com.athletic.api.authority.dto.AuthorityMenuResponseDto;
 import com.athletic.api.authority.dto.AuthorityResponseDto;
 import com.athletic.api.authority.service.AuthoritySelector;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +21,4 @@ public class AuthorityController {
         return ResponseEntity.ok(authoritySelector.getAuthorities());
     }
 
-    @GetMapping("/menu")
-    public ResponseEntity<List<AuthorityMenuResponseDto>> getAuthorityMenuList() {
-        return ResponseEntity.ok(authoritySelector.getAuthorityMenuList());
-    }
 }

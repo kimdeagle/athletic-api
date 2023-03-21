@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberRequestDto {
-    private String memberNo;
+    private String id;
 
     @ExcelUploadColumn(colIndex = 1, required = true)
-    private String memberNm;
+    private String name;
 
     @ExcelUploadColumn(colIndex = 2, validationRegex = Const.EMAIL_REGEX, errorMessage = ErrorMessage.ExcelUpload.INVALID_EMAIL)
     private String email;
@@ -49,32 +49,31 @@ public class MemberRequestDto {
 
     public Member toMember() {
         return Member.builder()
-                .memberNo(memberNo)
-                .memberNm(memberNm)
+                .name(name)
                 .email(email)
                 .mobileNo(mobileNo)
                 .birthday(birthday)
                 .address(address)
                 .addressDtl(addressDtl)
                 .joinDt(joinDt)
-                .regId(SecurityUtil.getCurrentAdminNo())
+                .regId(SecurityUtil.getCurrentId())
                 .regDt(LocalDateTime.now())
-                .modId(SecurityUtil.getCurrentAdminNo())
+                .modId(SecurityUtil.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }
 
     public Member toUpdateMember() {
         return Member.builder()
-                .memberNo(memberNo)
-                .memberNm(memberNm)
+                .id(id)
+                .name(name)
                 .email(email)
                 .mobileNo(mobileNo)
                 .birthday(birthday)
                 .address(address)
                 .addressDtl(addressDtl)
                 .joinDt(joinDt)
-                .modId(SecurityUtil.getCurrentAdminNo())
+                .modId(SecurityUtil.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }

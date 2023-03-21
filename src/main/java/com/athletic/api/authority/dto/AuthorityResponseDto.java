@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthorityResponseDto {
-    private String authNo;
-    private String authNm;
+    private String id;
+    private String name;
     private String regId;
     private LocalDateTime regDt;
     private String modId;
@@ -24,8 +24,8 @@ public class AuthorityResponseDto {
 
     public static AuthorityResponseDto of(Authority authority) {
         return AuthorityResponseDto.builder()
-                .authNo(authority.getAuthNo())
-                .authNm(authority.getAuthNm())
+                .id(authority.getId())
+                .name(authority.getName())
                 .regId(authority.getRegId())
                 .regDt(authority.getRegDt())
                 .modId(authority.getModId())

@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberResponseDto {
-    private String memberNo;
+    private String id;
 
     @ExcelColumn(headerName = "회원명", sort = 0, width = 12, bodyStyle = ExcelCellStyle.CENTER_BODY)
-    private String memberNm;
+    private String name;
 
     @ExcelColumn(headerName = "이메일", sort = 1, width = 20)
     private String email;
@@ -37,8 +37,8 @@ public class MemberResponseDto {
 
     public static MemberResponseDto of(Member member) {
         return MemberResponseDto.builder()
-                .memberNo(member.getMemberNo())
-                .memberNm(member.getMemberNm())
+                .id(member.getId())
+                .name(member.getName())
                 .email(member.getEmail())
                 .mobileNo(member.getMobileNo())
                 .birthday(member.getBirthday())

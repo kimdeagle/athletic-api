@@ -27,7 +27,7 @@ public abstract class BaseEntity {
     private LocalDateTime modDt;
 
     public void setModColumnsDefaultValue() {
-        this.modId = SecurityUtil.getCurrentAdminNo();
+        this.modId = SecurityUtil.getCurrentId();
         this.modDt = LocalDateTime.now();
     }
 }

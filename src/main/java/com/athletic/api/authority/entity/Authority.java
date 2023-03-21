@@ -20,9 +20,12 @@ import javax.persistence.Id;
 public class Authority extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String authNo;
+    private String id;
 
     @Column(nullable = false)
-    private String authNm;
+    private String name;
+
+    @Column(nullable = false)
+    private String displayName;
 
 }

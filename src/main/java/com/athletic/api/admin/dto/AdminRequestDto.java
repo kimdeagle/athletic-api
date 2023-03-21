@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminRequestDto {
-    private String adminNo;
-    private String adminNm;
+    private String id;
+    private String name;
     private String email;
     private String mobileNo;
     private String loginId;
@@ -31,8 +31,7 @@ public class AdminRequestDto {
 
     public Admin toAdmin() {
         return Admin.builder()
-                .adminNo(adminNo)
-                .adminNm(adminNm)
+                .name(name)
                 .email(email)
                 .mobileNo(mobileNo)
                 .loginId(loginId)
@@ -48,15 +47,15 @@ public class AdminRequestDto {
 
     public Admin toUpdateAdmin() {
         return Admin.builder()
-                .adminNo(adminNo)
-                .adminNm(adminNm)
+                .id(id)
+                .name(name)
                 .email(email)
                 .mobileNo(mobileNo)
                 .loginId(loginId)
                 .loginPw(loginPw)
                 .authNo(authNo)
                 .aprvStCd(aprvStCd)
-                .modId(SecurityUtil.getCurrentAdminNo())
+                .modId(SecurityUtil.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }

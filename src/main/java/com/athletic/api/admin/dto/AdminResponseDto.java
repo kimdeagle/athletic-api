@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminResponseDto {
-    private String adminNo;
-    private String adminNm;
+    private String id;
+    private String name;
     private String email;
     private String mobileNo;
     private String loginId;
@@ -29,8 +29,8 @@ public class AdminResponseDto {
 
     public static AdminResponseDto of(Admin admin) {
         return AdminResponseDto.builder()
-                .adminNo(admin.getAdminNo())
-                .adminNm(admin.getAdminNm())
+                .id(admin.getId())
+                .name(admin.getName())
                 .email(admin.getEmail())
                 .mobileNo(admin.getMobileNo())
                 .loginId(admin.getLoginId())

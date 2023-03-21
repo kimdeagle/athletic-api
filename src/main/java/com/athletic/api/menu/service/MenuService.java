@@ -1,7 +1,5 @@
 package com.athletic.api.menu.service;
 
-import com.athletic.api.authority.dto.AuthorityMenuRequestDto;
-import com.athletic.api.authority.repository.AuthorityMenuRepository;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.menu.dto.MenuRequestDto;
 import com.athletic.api.menu.entity.Menu;
@@ -19,14 +17,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class MenuService {
     private final MenuRepository menuRepository;
-    private final AuthorityMenuRepository authorityMenuRepository;
 
-    public ResponseDto deleteMenu(String menuNo) {
-        List<String> childMenuNoList = menuRepository.findAllByUpMenuNo(menuNo).stream().map(Menu::getMenuNo).collect(Collectors.toList());
+    public ResponseDto deleteMenu(String id) {
+        List<String> childIdList = menuRepository.findAllByUpMenuId(id).stream().map(Menu::getId).collect(Collectors.toList());
         //delete children
-        menuRepository.deleteAllByIdInBatch(childMenuNoList);
+        menuRepository.deleteAllByIdInBatch(childIdList);
         //delete menu
-        menuRepository.deleteById(menuNo);
+        menuRepository.deleteById(id);
 
         return ResponseDto.builder()
                 .code(ResponseDto.SUCCESS)
@@ -35,20 +32,16 @@ public class MenuService {
     }
 
     public ResponseDto saveMenu(MenuRequestDto dto) {
-        if (StringUtils.isBlank(dto.getMenuNo())) {
+        if (StringUtils.isBlank(dto.getId())) {
             menuRepository.save(dto.toMenu());
         } else {
             //update menu
             menuRepository.save(dto.toUpdateMenu());
-            //delete authority menu
-            authorityMenuRepository.deleteAllByMenuNo(dto.getMenuNo());
-            //save authority menu
-            dto.getAuthNoList().forEach(authNo -> saveAuthorityMenu(dto.getMenuNo(), authNo));
             //update children
-            List<Menu> children = menuRepository.findAllByUpMenuNo(dto.getMenuNo());
+            List<Menu> children = menuRepository.findAllByUpMenuId(dto.getId());
             if (children.size() > 0) {
                 children.forEach(child -> {
-                    child.setUpMenuNm(dto.getMenuNm());
+                    child.setUpMenuName(dto.getName());
                     child.setModColumnsDefaultValue();
                 });
                 menuRepository.saveAll(children);
@@ -56,16 +49,8 @@ public class MenuService {
         }
         return ResponseDto.builder()
                 .code(ResponseDto.SUCCESS)
-                .message(StringUtils.isEmpty(dto.getMenuNo()) ? "등록이 완료되었습니다." : "수정이 완료되었습니다.")
+                .message(StringUtils.isEmpty(dto.getId()) ? "등록이 완료되었습니다." : "수정이 완료되었습니다.")
                 .build();
     }
 
-    private void saveAuthorityMenu(String menuNo, String authNo) {
-            authorityMenuRepository.save(
-                    AuthorityMenuRequestDto.builder()
-                            .menuNo(menuNo)
-                            .authNo(authNo)
-                            .build()
-                            .toAuthorityMenu());
-    }
 }

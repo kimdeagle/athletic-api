@@ -30,14 +30,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails createUserDetails(Admin admin) {
-        String authNm = authorityRepository.findById(admin.getAuthNo())
-                .map(Authority::getAuthNm)
+        String authName = authorityRepository.findById(admin.getAuthNo())
+                .map(Authority::getName)
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_NOT_FOUND));
 
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authNm);
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authName);
 
         return new User(
-                admin.getAdminNo(),
+                admin.getId(),
                 admin.getLoginPw(),
                 Collections.singleton(grantedAuthority)
         );

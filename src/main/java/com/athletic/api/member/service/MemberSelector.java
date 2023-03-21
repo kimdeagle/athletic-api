@@ -20,15 +20,15 @@ public class MemberSelector {
     private final MemberRepository memberRepository;
 
     public List<MemberResponseDto> getMemberList() {
-        return memberRepository.findAll(Sort.by(Sort.Order.asc("memberNm")))
+        return memberRepository.findAll(Sort.by(Sort.Order.asc("name")))
                 .stream().map(member -> {
                     member.setMobileNo(maskMobileNo(member.getMobileNo()));
                     return MemberResponseDto.of(member);
                 }).collect(Collectors.toList());
     }
 
-    public MemberResponseDto getMember(String memberNo) {
-        return memberRepository.findById(memberNo)
+    public MemberResponseDto getMember(String id) {
+        return memberRepository.findById(id)
                 .map(MemberResponseDto::of)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
     }

@@ -40,7 +40,7 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Authentication authentication, String adminNm, Date expiresIn) {
+    public String createToken(Authentication authentication, String name, String authorityDisplayName, Date expiresIn) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -50,8 +50,9 @@ public class TokenProvider {
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(Const.AUTHORITIES_KEY, authorities)
-                .claim("adminNo", authentication.getName())
-                .claim("adminNm", adminNm)
+                .claim("id", authentication.getName())
+                .claim("name", name)
+                .claim("authorityDisplayName", authorityDisplayName)
                 .claim("loginAt", loginAt)
                 .setExpiration(expiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)

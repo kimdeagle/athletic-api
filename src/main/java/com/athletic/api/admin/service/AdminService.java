@@ -20,9 +20,9 @@ public class AdminService {
     private final PasswordEncoder passwordEncoder;
 
     public ResponseDto changePassword(AdminRequestDto adminRequestDto) {
-        String adminNo = SecurityUtil.getCurrentAdminNo();
+        String id = SecurityUtil.getCurrentId();
 
-        Admin admin = adminRepository.findById(adminNo).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
+        Admin admin = adminRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
 
         String prevRawLoginPw = adminRequestDto.getLoginPw();
         String prevEncLoginPw = admin.getLoginPw();
@@ -46,13 +46,13 @@ public class AdminService {
     }
 
     public ResponseDto out(AdminRequestDto adminRequestDto) {
-        String adminNo = SecurityUtil.getCurrentAdminNo();
-        Admin admin = adminRepository.findById(adminNo).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
+        String id = SecurityUtil.getCurrentId();
+        Admin admin = adminRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
         String encLoginPw = admin.getLoginPw();
         if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), encLoginPw))
             throw new CustomException(ErrorCode.NOT_MATCH_CURRENT_PASSWORD);
 
-        adminRepository.deleteById(adminNo);
+        adminRepository.deleteById(id);
 
         return ResponseDto.builder()
                 .code(ResponseDto.SUCCESS)

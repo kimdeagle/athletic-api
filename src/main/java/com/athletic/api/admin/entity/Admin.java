@@ -24,10 +24,10 @@ import javax.persistence.Id;
 public class Admin extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String adminNo;
+    private String id;
 
     @Column(nullable = false)
-    private String adminNm;
+    private String name;
 
     @Column(nullable = false)
     @Convert(converter = CryptoConverter.class)

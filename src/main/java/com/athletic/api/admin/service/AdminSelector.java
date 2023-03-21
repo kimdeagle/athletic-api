@@ -17,7 +17,7 @@ public class AdminSelector {
     private final AdminRepository adminRepository;
 
     public AdminResponseDto getInfoBySecurity() {
-        return adminRepository.findById(SecurityUtil.getCurrentAdminNo())
+        return adminRepository.findById(SecurityUtil.getCurrentId())
                 .map(AdminResponseDto::of)
                 .orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
     }

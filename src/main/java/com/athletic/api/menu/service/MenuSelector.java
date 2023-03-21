@@ -3,8 +3,6 @@ package com.athletic.api.menu.service;
 import com.athletic.api.admin.entity.Admin;
 import com.athletic.api.admin.repository.AdminRepository;
 import com.athletic.api.auth.util.SecurityUtil;
-import com.athletic.api.authority.entity.AuthorityMenu;
-import com.athletic.api.authority.repository.AuthorityMenuRepository;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.menu.dto.MenuResponseDto;
@@ -23,7 +21,6 @@ import java.util.stream.Collectors;
 public class MenuSelector {
     private final MenuRepository menuRepository;
     private final AdminRepository adminRepository;
-    private final AuthorityMenuRepository authorityMenuRepository;
 
     public List<MenuResponseDto> getMenuList() {
         return menuRepository.findAll()
@@ -33,10 +30,8 @@ public class MenuSelector {
     }
 
     public List<MenuResponseDto> getUseMenuList() {
-        //TODO JPA 연관관계 찾아보고 수정할 것!
-        String authNo = adminRepository.findById(SecurityUtil.getCurrentAdminNo()).map(Admin::getAuthNo).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
-        List<String> menuNoList = authorityMenuRepository.findAllByAuthNo(authNo).stream().map(AuthorityMenu::getMenuNo).collect(Collectors.toList());
-        return menuRepository.findByMenuNoInAndUseYn(menuNoList, Const.USE_YN_Y)
+        String authNo = adminRepository.findById(SecurityUtil.getCurrentId()).map(Admin::getAuthNo).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
+        return menuRepository.findByAuthNoAndUseYn(authNo, Const.USE_YN_Y)
                 .stream()
                 .map(MenuResponseDto::of)
                 .collect(Collectors.toList());

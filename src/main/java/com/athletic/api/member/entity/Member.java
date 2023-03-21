@@ -24,10 +24,10 @@ import javax.persistence.Id;
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String memberNo;
+    private String id;
 
     @Column(nullable = false, updatable = false)
-    private String memberNm;
+    private String name;
 
     @Column
     @Convert(converter = CryptoConverter.class)

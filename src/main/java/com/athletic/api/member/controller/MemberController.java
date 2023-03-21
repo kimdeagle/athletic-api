@@ -37,9 +37,9 @@ public class MemberController {
         return ResponseEntity.ok(memberService.addMember(memberRequestDto));
     }
 
-    @GetMapping("/{memberNo}")
-    public ResponseEntity<MemberResponseDto> getMember(@PathVariable("memberNo") String memberNo) {
-        return ResponseEntity.ok(memberSelector.getMember(memberNo));
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberResponseDto> getMember(@PathVariable("id") String id) {
+        return ResponseEntity.ok(memberSelector.getMember(id));
     }
 
     @PutMapping("")
@@ -48,8 +48,8 @@ public class MemberController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<ResponseDto> deleteMember(@RequestBody List<String> memberNoList) {
-        return ResponseEntity.ok(memberService.deleteMember(memberNoList));
+    public ResponseEntity<ResponseDto> deleteMember(@RequestBody List<String> idList) {
+        return ResponseEntity.ok(memberService.deleteMember(idList));
     }
 
     @GetMapping("/excel")
