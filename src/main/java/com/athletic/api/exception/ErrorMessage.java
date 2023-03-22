@@ -13,6 +13,7 @@ public class ErrorMessage {
         public static final String MESSAGE_TEMPLATE = "[{0}셀 오류 발생]\n{1}";
         public static final String INVALID_FILE = "유효하지 않은 엑셀 파일입니다.";
         public static final String EMPTY_FILE = "업로드 할 파일이 없습니다.";
+        public static final String EMPTY_ROW = "{0}행에 데이터가 없습니다.\n확인 후 다시 업로드 해주시기 바랍니다.";
         public static final String EMPTY_REQUIRED = "필수 항목을 입력하세요.";
         public static final String INVALID_EMAIL = "올바른 이메일을 입력하세요.";
         public static final String INVALID_MOBILE_NO = "올바른 휴대폰 번호를 입력하세요.";

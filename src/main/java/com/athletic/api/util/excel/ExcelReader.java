@@ -94,6 +94,9 @@ public class ExcelReader {
     private static <T> T extractObjectFromRow(Class<T> clazz) {
         try {
             row = sheet.getRow(rowIndex++);
+            if (row == null)
+                throw new CustomException(ErrorCode.EMPTY_EXCEL_UPLOAD_ROW, String.valueOf(rowIndex));
+
             T object = clazz.getDeclaredConstructor().newInstance();
             colIndex = COLUMN_START_INDEX;
             for (Field field : fields) {
