@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 public @interface ExcelColumn {
     String headerName() default "";
     int sort();
-    int width() default 0;
+    int width() default 15;
     ExcelCellStyle headerStyle() default ExcelCellStyle.DEFAULT_HEADER;
     ExcelCellStyle bodyStyle() default ExcelCellStyle.DEFAULT_BODY;
 }
