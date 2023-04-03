@@ -1,12 +1,10 @@
-package com.athletic.api.menu.repository;
+package com.athletic.api.system.menu.repository;
 
-import com.athletic.api.menu.dto.MenuResponseDto;
-import com.athletic.api.menu.entity.Menu;
+import com.athletic.api.system.menu.entity.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Repository

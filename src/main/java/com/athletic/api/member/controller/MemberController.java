@@ -48,8 +48,8 @@ public class MemberController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<ResponseDto> deleteMember(@RequestBody List<String> idList) {
-        return ResponseEntity.ok(memberService.deleteMember(idList));
+    public ResponseEntity<ResponseDto> deleteMembers(@RequestBody List<String> idList) {
+        return ResponseEntity.ok(memberService.deleteMembers(idList));
     }
 
     @GetMapping("/excel")

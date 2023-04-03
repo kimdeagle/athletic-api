@@ -1,4 +1,4 @@
-package com.athletic.api.menu.entity;
+package com.athletic.api.system.menu.entity;
 
 import com.athletic.api.common.entity.BaseEntity;
 import com.vladmihalcea.hibernate.type.array.ListArrayType;

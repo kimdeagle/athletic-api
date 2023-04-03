@@ -1,7 +1,7 @@
-package com.athletic.api.menu.dto;
+package com.athletic.api.system.menu.dto;
 
 import com.athletic.api.auth.util.SecurityUtil;
-import com.athletic.api.menu.entity.Menu;
+import com.athletic.api.system.menu.entity.Menu;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

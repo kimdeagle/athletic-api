@@ -1,26 +1,22 @@
 package com.athletic.api.authority.dto;
 
 import com.athletic.api.authority.entity.Authority;
+import com.athletic.api.common.dto.BaseResponseDto;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthorityResponseDto {
+public class AuthorityResponseDto extends BaseResponseDto {
     private String id;
     private String name;
-    private String regId;
-    private LocalDateTime regDt;
-    private String modId;
-    private LocalDateTime modDt;
 
     public static AuthorityResponseDto of(Authority authority) {
         return AuthorityResponseDto.builder()

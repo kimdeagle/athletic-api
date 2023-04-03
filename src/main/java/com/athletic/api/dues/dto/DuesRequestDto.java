@@ -16,6 +16,8 @@ public class DuesRequestDto {
 
     private String inOut;
 
+    private String inOutDtl;
+
     private LocalDateTime startDt;
 
     private LocalDateTime endDt;
@@ -29,6 +31,7 @@ public class DuesRequestDto {
     public Dues toDues() {
         return Dues.builder()
                 .inOut(inOut)
+                .inOutDtl(inOutDtl)
                 .startDt(startDt)
                 .endDt(endDt)
                 .title(title)
@@ -45,6 +48,7 @@ public class DuesRequestDto {
         return Dues.builder()
                 .id(id)
                 .inOut(inOut)
+                .inOutDtl(inOutDtl)
                 .startDt(startDt)
                 .endDt(endDt)
                 .title(title)

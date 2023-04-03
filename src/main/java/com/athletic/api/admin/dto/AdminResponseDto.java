@@ -1,20 +1,20 @@
 package com.athletic.api.admin.dto;
 
 import com.athletic.api.admin.entity.Admin;
+import com.athletic.api.common.dto.BaseResponseDto;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminResponseDto {
+public class AdminResponseDto extends BaseResponseDto {
     private String id;
     private String name;
     private String email;
@@ -22,10 +22,6 @@ public class AdminResponseDto {
     private String loginId;
     private String authNo;
     private String aprvStCd;
-    private String regId;
-    private LocalDateTime regDt;
-    private String modId;
-    private LocalDateTime modDt;
 
     public static AdminResponseDto of(Admin admin) {
         return AdminResponseDto.builder()

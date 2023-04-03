@@ -1,16 +1,19 @@
-package com.athletic.api.menu.dto;
+package com.athletic.api.system.menu.dto;
 
-import com.athletic.api.menu.entity.Menu;
-import lombok.*;
+import com.athletic.api.common.dto.BaseResponseDto;
+import com.athletic.api.system.menu.entity.Menu;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuResponseDto {
+public class MenuResponseDto extends BaseResponseDto {
     private String id;
     private String name;
     private String upMenuId;
@@ -21,10 +24,6 @@ public class MenuResponseDto {
     private Long sortSeq;
     private String useYn;
     private List<String> authorities;
-    private String regId;
-    private LocalDateTime regDt;
-    private String modId;
-    private LocalDateTime modDt;
 
     public static MenuResponseDto of (Menu menu) {
         return MenuResponseDto.builder()
@@ -38,6 +37,10 @@ public class MenuResponseDto {
                 .sortSeq(menu.getSortSeq())
                 .useYn(menu.getUseYn())
                 .authorities(menu.getAuthorities())
+                .regId(menu.getRegId())
+                .regDt(menu.getRegDt())
+                .modId(menu.getModId())
+                .modDt(menu.getModDt())
                 .build();
     }
 }

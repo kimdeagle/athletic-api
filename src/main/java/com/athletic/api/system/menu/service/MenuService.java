@@ -1,9 +1,9 @@
-package com.athletic.api.menu.service;
+package com.athletic.api.system.menu.service;
 
 import com.athletic.api.common.dto.ResponseDto;
-import com.athletic.api.menu.dto.MenuRequestDto;
-import com.athletic.api.menu.entity.Menu;
-import com.athletic.api.menu.repository.MenuRepository;
+import com.athletic.api.system.menu.dto.MenuRequestDto;
+import com.athletic.api.system.menu.entity.Menu;
+import com.athletic.api.system.menu.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

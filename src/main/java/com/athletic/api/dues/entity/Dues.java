@@ -27,6 +27,9 @@ public class Dues extends BaseEntity {
     private String inOut;
 
     @Column(nullable = false)
+    private String inOutDtl;
+
+    @Column(nullable = false)
     private LocalDateTime startDt;
 
     @Column(nullable = false)

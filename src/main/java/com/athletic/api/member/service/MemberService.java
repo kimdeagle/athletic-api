@@ -46,7 +46,7 @@ public class MemberService {
                 .build();
     }
 
-    public ResponseDto deleteMember(List<String> idList) {
+    public ResponseDto deleteMembers(List<String> idList) {
         memberRepository.deleteAllByIdInBatch(idList);
         return ResponseDto.builder()
                 .code(ResponseDto.SUCCESS)

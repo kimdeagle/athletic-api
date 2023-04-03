@@ -1,10 +1,10 @@
-package com.athletic.api.menu.controller;
+package com.athletic.api.system.menu.controller;
 
 import com.athletic.api.common.dto.ResponseDto;
-import com.athletic.api.menu.dto.MenuRequestDto;
-import com.athletic.api.menu.dto.MenuResponseDto;
-import com.athletic.api.menu.service.MenuSelector;
-import com.athletic.api.menu.service.MenuService;
+import com.athletic.api.system.menu.dto.MenuRequestDto;
+import com.athletic.api.system.menu.dto.MenuResponseDto;
+import com.athletic.api.system.menu.service.MenuSelector;
+import com.athletic.api.system.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/system/menu")
 @RequiredArgsConstructor
 public class MenuController {
     private final MenuSelector menuSelector;

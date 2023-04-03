@@ -1,18 +1,19 @@
 package com.athletic.api.member.dto;
 
+import com.athletic.api.common.dto.BaseResponseDto;
 import com.athletic.api.member.entity.Member;
 import com.athletic.api.util.excel.style.ExcelCellStyle;
 import com.athletic.api.util.excel.ExcelColumn;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberResponseDto {
+public class MemberResponseDto extends BaseResponseDto {
     private String id;
 
     @ExcelColumn(headerName = "회원명", sort = 0, width = 15, bodyStyle = ExcelCellStyle.CENTER_BODY)
@@ -45,6 +46,10 @@ public class MemberResponseDto {
                 .address(member.getAddress())
                 .addressDtl(member.getAddressDtl())
                 .joinDt(member.getJoinDt())
+                .regId(member.getRegId())
+                .regDt(member.getRegDt())
+                .modId(member.getModId())
+                .modDt(member.getModDt())
                 .build();
     }
 

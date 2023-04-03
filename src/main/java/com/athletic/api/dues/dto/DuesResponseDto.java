@@ -1,21 +1,24 @@
 package com.athletic.api.dues.dto;
 
+import com.athletic.api.common.dto.BaseResponseDto;
 import com.athletic.api.dues.entity.Dues;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DuesResponseDto {
+public class DuesResponseDto extends BaseResponseDto {
     private String id;
 
     private String inOut;
+
+    private String inOutDtl;
 
     private LocalDateTime startDt;
 
@@ -31,11 +34,16 @@ public class DuesResponseDto {
         return DuesResponseDto.builder()
                 .id(dues.getId())
                 .inOut(dues.getInOut())
+                .inOutDtl(dues.getInOutDtl())
                 .startDt(dues.getStartDt())
                 .endDt(dues.getEndDt())
                 .title(dues.getTitle())
                 .description(dues.getDescription())
                 .amount(dues.getAmount())
+                .regId(dues.getRegId())
+                .regDt(dues.getRegDt())
+                .modId(dues.getModId())
+                .modDt(dues.getModDt())
                 .build();
     }
 

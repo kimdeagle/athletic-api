@@ -24,10 +24,6 @@ public class AdminRequestDto {
     private String changePw;
     private String authNo;
     private String aprvStCd;
-    private String regId;
-    private LocalDateTime regDt;
-    private String modId;
-    private LocalDateTime modDt;
 
     public Admin toAdmin() {
         return Admin.builder()
