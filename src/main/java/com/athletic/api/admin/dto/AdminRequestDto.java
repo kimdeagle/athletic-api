@@ -2,6 +2,7 @@ package com.athletic.api.admin.dto;
 
 import com.athletic.api.admin.entity.Admin;
 import com.athletic.api.auth.util.SecurityUtil;
+import com.athletic.api.util.code.CodeDetail;
 import com.athletic.api.util.constant.Const;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,7 @@ public class AdminRequestDto {
     private String loginPw;
     private String changePw;
     private String authorityId;
-    private String aprvStCd;
+    private String approveStatusCd;
 
     public Admin toAdmin() {
         return Admin.builder()
@@ -33,7 +34,7 @@ public class AdminRequestDto {
                 .loginId(loginId)
                 .loginPw(loginPw)
                 .authorityId(Const.AUTH_NO_MANAGER)
-                .aprvStCd(Const.APRV_ST_CD_WAIT)
+                .approveStatusCd(CodeDetail.APPROVE_STATUS_WAIT.getCode())
                 .regId(Const.DEFAULT_ADMIN_ID)
                 .regDt(LocalDateTime.now())
                 .modId(Const.DEFAULT_ADMIN_ID)
@@ -50,7 +51,7 @@ public class AdminRequestDto {
                 .loginId(loginId)
                 .loginPw(loginPw)
                 .authorityId(authorityId)
-                .aprvStCd(aprvStCd)
+                .approveStatusCd(approveStatusCd)
                 .modId(SecurityUtil.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();

@@ -21,7 +21,7 @@ public class AdminResponseDto extends BaseResponseDto {
     private String mobileNo;
     private String loginId;
     private String authorityId;
-    private String aprvStCd;
+    private String approveStatusCd;
 
     public static AdminResponseDto of(Admin admin) {
         return AdminResponseDto.builder()
@@ -31,7 +31,7 @@ public class AdminResponseDto extends BaseResponseDto {
                 .mobileNo(admin.getMobileNo())
                 .loginId(admin.getLoginId())
                 .authorityId(admin.getAuthorityId())
-                .aprvStCd(admin.getAprvStCd())
+                .approveStatusCd(admin.getApproveStatusCd())
                 .regId(admin.getRegId())
                 .regDt(admin.getRegDt())
                 .modId(admin.getModId())

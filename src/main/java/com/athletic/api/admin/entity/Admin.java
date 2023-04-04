@@ -48,7 +48,7 @@ public class Admin extends BaseEntity {
     private String authorityId;
 
     @Column(nullable = false)
-    private String aprvStCd;
+    private String approveStatusCd;
 
     public void setLoginPw(String loginPw) {
         this.loginPw = loginPw;

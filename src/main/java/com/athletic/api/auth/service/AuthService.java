@@ -61,7 +61,7 @@ public class AuthService {
         EmailDto emailDto = new EmailDto();
 
         emailDto.setTo(admin.getEmail());
-        emailDto.setId(CodeDetail.EMAIL_TEMPLATE_REQUEST_JOIN.getId());
+        emailDto.setId(CodeDetail.EMAIL_TEMPLATE_REQUEST_JOIN.getCode());
 
         Map<String, String> templateMap = new HashMap<>();
         templateMap.put("adminNm", admin.getName());
@@ -75,8 +75,11 @@ public class AuthService {
 
         if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), admin.getLoginPw()))
             throw new CustomException(ErrorCode.INVALID_ID_OR_PASSWORD);
-        if (StringUtils.equals(admin.getAprvStCd(), Const.APRV_ST_CD_WAIT))
-            throw new CustomException(ErrorCode.WAIT_ADMIN_STATUS);
+        if (StringUtils.equals(admin.getApproveStatusCd(), CodeDetail.APPROVE_STATUS_WAIT.getCode()))
+            throw new CustomException(ErrorCode.INVALID_APPROVE_STATUS, CodeDetail.APPROVE_STATUS_WAIT.getName());
+
+        if (StringUtils.equals(admin.getApproveStatusCd(), CodeDetail.APPROVE_STATUS_REJECT.getCode()))
+            throw new CustomException(ErrorCode.INVALID_APPROVE_STATUS, CodeDetail.APPROVE_STATUS_REJECT.getName());
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(adminRequestDto.getLoginId(), adminRequestDto.getLoginPw());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -131,7 +134,7 @@ public class AuthService {
         EmailDto emailDto = new EmailDto();
 
         emailDto.setTo(email);
-        emailDto.setId(CodeDetail.EMAIL_TEMPLATE_RESET_PASSWORD.getId());
+        emailDto.setId(CodeDetail.EMAIL_TEMPLATE_RESET_PASSWORD.getCode());
 
         Map<String, String> templateMap = new HashMap<>();
         templateMap.put("tempPassword", tempPassword);

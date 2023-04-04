@@ -6,16 +6,20 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CodeDetail {
-    EMAIL_TEMPLATE_REQUEST_JOIN("회원가입"),
-    EMAIL_TEMPLATE_RESET_PASSWORD("비밀번호 초기화"),
-    DUES_IN_DUES("회비"),
-    DUES_IN_INTEREST("이자"),
-    DUES_OUT_RENT_FEE("구장대여료"),
-    DUES_OUT_BEVERAGE("음료"),
-    DUES_ETC("기타")
+    APPROVE_STATUS_WAIT("WAIT", "대기"),
+    APPROVE_STATUS_NORMAL("NORMAL", "정상"),
+    APPROVE_STATUS_REJECT("REJECT", "거절"),
+    EMAIL_TEMPLATE_REQUEST_JOIN("REQUEST_JOIN", "계정생성 요청"),
+    EMAIL_TEMPLATE_RESET_PASSWORD("RESET_PASSWORD", "비밀번호 초기화"),
+    IN_OUT_IN_DUES("DUES", "회비"),
+    IN_OUT_IN_INTEREST("INTEREST", "이자"),
+    IN_OUT_OUT_RENT_FEE("RENT_FEE", "구장대여료"),
+    IN_OUT_OUT_BEVERAGE("BEVERAGE", "음료"),
+    IN_OUT_ETC("ETC", "기타")
     ;
 
-    private String displayName;
+    private String code;
+    private String name;
 
     public String getId() {
         return name();

@@ -2,6 +2,9 @@ package com.athletic.api.exception;
 
 public class ErrorMessage {
     /* Auth */
+    public static class Auth {
+        public static final String INVALID_APPROVE_STATUS = "{0} 상태의 계정입니다.";
+    }
 
     /* Email */
     public static class Email {

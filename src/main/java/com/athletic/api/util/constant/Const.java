@@ -17,9 +17,6 @@ public class Const {
 
     //common code
     public static final String DEFAULT_ADMIN_ID = "admin";
-    public static final String APRV_ST_CD_WAIT = "W";
-    public static final String APRV_ST_CD_APPROVE = "A";
-    public static final String APRV_ST_CD_REJECT = "R";
     public static final String AUTH_NO_MANAGER = "10001";
     public static final String USE_YN_Y = "Y";
     public static final String USE_YN_N = "N";

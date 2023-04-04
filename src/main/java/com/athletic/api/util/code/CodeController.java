@@ -13,13 +13,13 @@ import java.util.List;
 @RequestMapping("/code")
 public class CodeController {
 
-    @GetMapping("/{groupId}")
-    public JSONArray getCodeListByGroupId(@PathVariable("groupId") String groupId) {
-        return CodeFinder.findByGroupId(groupId);
+    @GetMapping("/{groupCode}")
+    public JSONArray getCodeListByGroupCode(@PathVariable("groupCode") String groupCode) {
+        return CodeFinder.findByGroupCode(groupCode);
     }
 
     @GetMapping
-    public JSONArray getCodeListByGroupIds(@RequestParam List<String> groupIds) {
-        return CodeFinder.findByGroupIds(groupIds);
+    public JSONArray getCodeListByGroupCodes(@RequestParam List<String> groupCodes) {
+        return CodeFinder.findByGroupCodes(groupCodes);
     }
 }

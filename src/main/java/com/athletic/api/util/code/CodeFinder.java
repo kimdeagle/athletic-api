@@ -10,8 +10,8 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class CodeFinder {
 
-    private static final String KEY_ID = "id";
-    private static final String KEY_DISPLAY_NAME = "displayName";
+    private static final String KEY_CODE = "code";
+    private static final String KEY_NAME = "name";
     private static final String KEY_DETAIL_LIST = "detailList";
 
     public static JSONArray findAll() {
@@ -21,34 +21,34 @@ public class CodeFinder {
         return jsonArray;
     }
 
-    public static JSONArray findAllByExcludeGroupId(String groupId) {
+    public static JSONArray findAllByExcludeGroupCode(String groupCode) {
         JSONArray jsonArray = new JSONArray();
         Arrays.stream(CodeGroup.values())
-                .filter(group -> !StringUtils.equals(group.getId(), groupId))
+                .filter(group -> !StringUtils.equals(group.getCode(), groupCode))
                 .forEach(group -> jsonArray.add(getGroup(group)));
         return jsonArray;
     }
 
-    public static JSONArray findAllByExcludeGroupIds(List<String> groupIds) {
+    public static JSONArray findAllByExcludeGroupCodes(List<String> groupCodes) {
         JSONArray jsonArray = new JSONArray();
         Arrays.stream(CodeGroup.values())
-                .filter(group -> groupIds.stream().noneMatch(id -> StringUtils.equals(id, group.getId())))
+                .filter(group -> groupCodes.stream().noneMatch(code -> StringUtils.equals(code, group.getCode())))
                 .forEach(group -> jsonArray.add(getGroup(group)));
         return jsonArray;
     }
 
-    public static JSONArray findByGroupId(String groupId) {
+    public static JSONArray findByGroupCode(String groupCode) {
         JSONArray jsonArray = new JSONArray();
         Arrays.stream(CodeGroup.values())
-                .filter(group -> StringUtils.equals(group.getId(), groupId))
+                .filter(group -> StringUtils.equals(group.getCode(), groupCode))
                 .forEach(group -> jsonArray.add(getGroup(group)));
         return jsonArray;
     }
 
-    public static JSONArray findByGroupIds(List<String> groupIds) {
+    public static JSONArray findByGroupCodes(List<String> groupCodes) {
         JSONArray jsonArray = new JSONArray();
         Arrays.stream(CodeGroup.values())
-                .filter(group -> groupIds.stream().anyMatch(id -> StringUtils.equals(id, group.getId())))
+                .filter(group -> groupCodes.stream().anyMatch(code -> StringUtils.equals(code, group.getCode())))
                 .forEach(group -> jsonArray.add(getGroup(group)));
         return jsonArray;
     }
@@ -56,8 +56,8 @@ public class CodeFinder {
 
     private static JSONObject getGroup(CodeGroup group) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(KEY_ID, group.getId());
-        jsonObject.put(KEY_DISPLAY_NAME, group.getDisplayName());
+        jsonObject.put(KEY_CODE, group.getCode());
+        jsonObject.put(KEY_NAME, group.getName());
         if (!group.getDetailList().isEmpty()) {
             jsonObject.put(KEY_DETAIL_LIST, getDetailList(group));
         }
@@ -68,8 +68,8 @@ public class CodeFinder {
         JSONArray detailArray = new JSONArray();
         group.getDetailList().forEach(detail -> {
             JSONObject detailObject = new JSONObject();
-            detailObject.put(KEY_ID, detail.getId());
-            detailObject.put(KEY_DISPLAY_NAME, detail.getDisplayName());
+            detailObject.put(KEY_CODE, detail.getCode());
+            detailObject.put(KEY_NAME, detail.getName());
             detailArray.add(detailObject);
         });
         return detailArray;

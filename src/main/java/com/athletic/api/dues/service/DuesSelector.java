@@ -29,6 +29,6 @@ public class DuesSelector {
     }
 
     public List<DuesAmountInterface> getAmountThisMonth() {
-        return duesRepository.selectAmountThisMonth(CodeGroup.DUES_IN.getId(), CodeGroup.DUES_OUT.getId(), CodeGroup.DUES_REST.getId());
+        return duesRepository.selectAmountThisMonth(CodeGroup.IN_OUT_IN.getCode(), CodeGroup.IN_OUT_OUT.getCode(), CodeGroup.IN_OUT_REST.getCode());
     }
 }

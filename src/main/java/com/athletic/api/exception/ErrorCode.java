@@ -14,7 +14,7 @@ public enum ErrorCode {
     CANNOT_CHANGE_SAME_PASSWORD(906, "기존과 동일한 비밀번호로 변경할 수 없습니다."),
     EXIST_LOGIN_ID(907, "이미 존재하는 아이디입니다."),
     SECURITY_CONTEXT_NOT_FOUND(908, "Security Context에 인증 정보가 없습니다."),
-    WAIT_ADMIN_STATUS(909, "가입대기 상태의 계정입니다."),
+    INVALID_APPROVE_STATUS(909, ErrorMessage.Auth.INVALID_APPROVE_STATUS),
     MEMBER_NOT_FOUND(910, "존재하지 않는 회원입니다."),
     EXIST_MEMBER(911, "이미 존재하는 회원입니다.\n회원명 또는 휴대폰 번호를 확인하세요."),
     EMAIL_TEMPLATE_NOT_FOUND(912, "이메일 템플릿을 찾을 수 없습니다."),
