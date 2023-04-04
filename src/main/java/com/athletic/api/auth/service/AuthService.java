@@ -61,7 +61,7 @@ public class AuthService {
         EmailDto emailDto = new EmailDto();
 
         emailDto.setTo(admin.getEmail());
-        emailDto.setId(CodeDetail.EMAIL_TEMPLATE_REQUEST_JOIN.getCode());
+        emailDto.setCode(CodeDetail.EMAIL_TEMPLATE_REQUEST_JOIN.getCode());
 
         Map<String, String> templateMap = new HashMap<>();
         templateMap.put("adminNm", admin.getName());
@@ -134,7 +134,7 @@ public class AuthService {
         EmailDto emailDto = new EmailDto();
 
         emailDto.setTo(email);
-        emailDto.setId(CodeDetail.EMAIL_TEMPLATE_RESET_PASSWORD.getCode());
+        emailDto.setCode(CodeDetail.EMAIL_TEMPLATE_RESET_PASSWORD.getCode());
 
         Map<String, String> templateMap = new HashMap<>();
         templateMap.put("tempPassword", tempPassword);

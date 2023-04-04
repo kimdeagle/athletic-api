@@ -16,6 +16,7 @@ public class EmailDto {
     private String subject;
     private String text;
     private String id;
+    private String code;
     private Map<String, String> templateMap;
     private Object to;
     private MultipartFile file;

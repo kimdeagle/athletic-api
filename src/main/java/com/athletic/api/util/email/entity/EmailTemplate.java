@@ -20,6 +20,9 @@ public class EmailTemplate extends BaseEntity {
     private String id;
 
     @Column(nullable = false)
+    private String code;
+
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
