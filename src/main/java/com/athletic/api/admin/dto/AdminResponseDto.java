@@ -20,7 +20,7 @@ public class AdminResponseDto extends BaseResponseDto {
     private String email;
     private String mobileNo;
     private String loginId;
-    private String authNo;
+    private String authorityId;
     private String aprvStCd;
 
     public static AdminResponseDto of(Admin admin) {
@@ -30,7 +30,7 @@ public class AdminResponseDto extends BaseResponseDto {
                 .email(admin.getEmail())
                 .mobileNo(admin.getMobileNo())
                 .loginId(admin.getLoginId())
-                .authNo(admin.getAuthNo())
+                .authorityId(admin.getAuthorityId())
                 .aprvStCd(admin.getAprvStCd())
                 .regId(admin.getRegId())
                 .regDt(admin.getRegDt())

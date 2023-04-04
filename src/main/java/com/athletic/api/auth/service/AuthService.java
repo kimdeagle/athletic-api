@@ -10,6 +10,7 @@ import com.athletic.api.authority.repository.AuthorityRepository;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
+import com.athletic.api.util.code.CodeDetail;
 import com.athletic.api.util.constant.Const;
 import com.athletic.api.util.email.dto.EmailDto;
 import com.athletic.api.util.email.service.EmailService;
@@ -60,7 +61,7 @@ public class AuthService {
         EmailDto emailDto = new EmailDto();
 
         emailDto.setTo(admin.getEmail());
-        emailDto.setTemplateCd(Const.EMAIL_TEMPLATE_CD_JOIN);
+        emailDto.setId(CodeDetail.EMAIL_TEMPLATE_REQUEST_JOIN.getId());
 
         Map<String, String> templateMap = new HashMap<>();
         templateMap.put("adminNm", admin.getName());
@@ -82,7 +83,7 @@ public class AuthService {
 
         String name = admin.getName();
 
-        String authorityDisplayName = authorityRepository.findById(admin.getAuthNo()).map(Authority::getDisplayName).orElseThrow(() -> new CustomException(ErrorCode.AUTH_NOT_FOUND));
+        String authorityDisplayName = authorityRepository.findById(admin.getAuthorityId()).map(Authority::getDisplayName).orElseThrow(() -> new CustomException(ErrorCode.AUTH_NOT_FOUND));
 
         long now = (new Date()).getTime();
         Date accessTokenExpiresIn = new Date(now + Const.ACCESS_TOKEN_EXPIRE_TIME);
@@ -130,7 +131,7 @@ public class AuthService {
         EmailDto emailDto = new EmailDto();
 
         emailDto.setTo(email);
-        emailDto.setTemplateCd(Const.EMAIL_TEMPLATE_CD_RESET_PASSWORD);
+        emailDto.setId(CodeDetail.EMAIL_TEMPLATE_RESET_PASSWORD.getId());
 
         Map<String, String> templateMap = new HashMap<>();
         templateMap.put("tempPassword", tempPassword);
@@ -144,7 +145,7 @@ public class AuthService {
 
         Admin admin = adminRepository.findById(authentication.getName()).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
 
-        String authorityDisplayName = authorityRepository.findById(admin.getAuthNo()).map(Authority::getDisplayName).orElseThrow(() -> new CustomException(ErrorCode.AUTH_NOT_FOUND));
+        String authorityDisplayName = authorityRepository.findById(admin.getAuthorityId()).map(Authority::getDisplayName).orElseThrow(() -> new CustomException(ErrorCode.AUTH_NOT_FOUND));
 
         long now = (new Date()).getTime();
         Date accessTokenExpiresIn = new Date(now + Const.ACCESS_TOKEN_EXPIRE_TIME);

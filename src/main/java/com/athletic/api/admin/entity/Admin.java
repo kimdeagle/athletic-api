@@ -45,7 +45,7 @@ public class Admin extends BaseEntity {
     private String loginPw;
 
     @Column(nullable = false)
-    private String authNo;
+    private String authorityId;
 
     @Column(nullable = false)
     private String aprvStCd;

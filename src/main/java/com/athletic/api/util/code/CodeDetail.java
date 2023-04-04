@@ -6,6 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CodeDetail {
+    EMAIL_TEMPLATE_REQUEST_JOIN("회원가입"),
+    EMAIL_TEMPLATE_RESET_PASSWORD("비밀번호 초기화"),
     DUES_IN_DUES("회비"),
     DUES_IN_INTEREST("이자"),
     DUES_OUT_RENT_FEE("구장대여료"),

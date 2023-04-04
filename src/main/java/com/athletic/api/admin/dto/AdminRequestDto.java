@@ -22,7 +22,7 @@ public class AdminRequestDto {
     private String loginId;
     private String loginPw;
     private String changePw;
-    private String authNo;
+    private String authorityId;
     private String aprvStCd;
 
     public Admin toAdmin() {
@@ -32,7 +32,7 @@ public class AdminRequestDto {
                 .mobileNo(mobileNo)
                 .loginId(loginId)
                 .loginPw(loginPw)
-                .authNo(Const.AUTH_NO_MANAGER)
+                .authorityId(Const.AUTH_NO_MANAGER)
                 .aprvStCd(Const.APRV_ST_CD_WAIT)
                 .regId(Const.DEFAULT_ADMIN_ID)
                 .regDt(LocalDateTime.now())
@@ -49,7 +49,7 @@ public class AdminRequestDto {
                 .mobileNo(mobileNo)
                 .loginId(loginId)
                 .loginPw(loginPw)
-                .authNo(authNo)
+                .authorityId(authorityId)
                 .aprvStCd(aprvStCd)
                 .modId(SecurityUtil.getCurrentId())
                 .modDt(LocalDateTime.now())

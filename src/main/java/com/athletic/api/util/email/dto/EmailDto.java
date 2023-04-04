@@ -15,7 +15,7 @@ import java.util.Map;
 public class EmailDto {
     private String subject;
     private String text;
-    private String templateCd;
+    private String id;
     private Map<String, String> templateMap;
     private Object to;
     private MultipartFile file;

@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 public class DuesRequestDto {
     private String id;
 
-    private String inOut;
+    private String inOutCd;
 
-    private String inOutDtl;
+    private String inOutDtlCd;
 
     private LocalDateTime startDt;
 
@@ -30,8 +30,8 @@ public class DuesRequestDto {
 
     public Dues toDues() {
         return Dues.builder()
-                .inOut(inOut)
-                .inOutDtl(inOutDtl)
+                .inOutCd(inOutCd)
+                .inOutDtlCd(inOutDtlCd)
                 .startDt(startDt)
                 .endDt(endDt)
                 .title(title)
@@ -47,8 +47,8 @@ public class DuesRequestDto {
     public Dues toUpdateDues() {
         return Dues.builder()
                 .id(id)
-                .inOut(inOut)
-                .inOutDtl(inOutDtl)
+                .inOutCd(inOutCd)
+                .inOutDtlCd(inOutDtlCd)
                 .startDt(startDt)
                 .endDt(endDt)
                 .title(title)

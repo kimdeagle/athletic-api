@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails createUserDetails(Admin admin) {
-        String authName = authorityRepository.findById(admin.getAuthNo())
+        String authName = authorityRepository.findById(admin.getAuthorityId())
                 .map(Authority::getName)
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_NOT_FOUND));
 

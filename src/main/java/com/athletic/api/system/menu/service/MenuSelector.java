@@ -30,8 +30,8 @@ public class MenuSelector {
     }
 
     public List<MenuResponseDto> getUseMenuList() {
-        String authNo = adminRepository.findById(SecurityUtil.getCurrentId()).map(Admin::getAuthNo).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
-        return menuRepository.findByAuthNoAndUseYn(authNo, Const.USE_YN_Y)
+        String authorityId = adminRepository.findById(SecurityUtil.getCurrentId()).map(Admin::getAuthorityId).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
+        return menuRepository.findByAuthorityIdAndUseYn(authorityId, Const.USE_YN_Y)
                 .stream()
                 .map(MenuResponseDto::of)
                 .collect(Collectors.toList());

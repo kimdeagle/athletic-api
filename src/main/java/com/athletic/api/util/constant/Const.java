@@ -21,8 +21,6 @@ public class Const {
     public static final String APRV_ST_CD_APPROVE = "A";
     public static final String APRV_ST_CD_REJECT = "R";
     public static final String AUTH_NO_MANAGER = "10001";
-    public static final String EMAIL_TEMPLATE_CD_JOIN = "10";
-    public static final String EMAIL_TEMPLATE_CD_RESET_PASSWORD = "20";
     public static final String USE_YN_Y = "Y";
     public static final String USE_YN_N = "N";
 

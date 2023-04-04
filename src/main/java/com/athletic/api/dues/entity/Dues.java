@@ -24,10 +24,10 @@ public class Dues extends BaseEntity {
     private String id;
 
     @Column(nullable = false)
-    private String inOut;
+    private String inOutCd;
 
     @Column(nullable = false)
-    private String inOutDtl;
+    private String inOutDtlCd;
 
     @Column(nullable = false)
     private LocalDateTime startDt;

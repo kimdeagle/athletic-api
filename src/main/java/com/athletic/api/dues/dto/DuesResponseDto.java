@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 public class DuesResponseDto extends BaseResponseDto {
     private String id;
 
-    private String inOut;
+    private String inOutCd;
 
-    private String inOutDtl;
+    private String inOutDtlCd;
 
     private LocalDateTime startDt;
 
@@ -33,8 +33,8 @@ public class DuesResponseDto extends BaseResponseDto {
     public static DuesResponseDto of(Dues dues) {
         return DuesResponseDto.builder()
                 .id(dues.getId())
-                .inOut(dues.getInOut())
-                .inOutDtl(dues.getInOutDtl())
+                .inOutCd(dues.getInOutCd())
+                .inOutDtlCd(dues.getInOutDtlCd())
                 .startDt(dues.getStartDt())
                 .endDt(dues.getEndDt())
                 .title(dues.getTitle())

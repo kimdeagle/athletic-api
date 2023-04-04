@@ -24,7 +24,7 @@ public class EmailService {
     private String from;
 
     private void processTemplate(EmailDto emailDto) {
-        EmailTemplate template = templateRepository.findById(emailDto.getTemplateCd()).orElseThrow(() -> new CustomException(ErrorCode.EMAIL_TEMPLATE_NOT_FOUND));
+        EmailTemplate template = templateRepository.findById(emailDto.getId()).orElseThrow(() -> new CustomException(ErrorCode.EMAIL_TEMPLATE_NOT_FOUND));
 
         emailDto.setSubject(template.getTitle());
 
@@ -37,7 +37,7 @@ public class EmailService {
 
     public void sendEmail(EmailDto emailDto) {
         try {
-            boolean useHtml = StringUtils.isNotBlank(emailDto.getTemplateCd());
+            boolean useHtml = StringUtils.isNotBlank(emailDto.getId());
 
             if (useHtml) processTemplate(emailDto);
 

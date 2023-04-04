@@ -17,10 +17,10 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class EmailTemplate extends BaseEntity {
     @Id
-    private String templateCd;
+    private String id;
 
     @Column(nullable = false)
-    private String templateNm;
+    private String name;
 
     @Column(nullable = false)
     private String title;
