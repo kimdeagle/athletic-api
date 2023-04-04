@@ -26,12 +26,6 @@ public class Const {
     public static final String USE_YN_Y = "Y";
     public static final String USE_YN_N = "N";
 
-    public static class Dues {
-        public static final String IN = "IN";
-        public static final String OUT = "OUT";
-        public static final String REST = "REST";
-    }
-
     public static final String EXCEL_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
     //regex

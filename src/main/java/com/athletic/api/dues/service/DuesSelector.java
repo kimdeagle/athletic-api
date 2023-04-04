@@ -5,7 +5,7 @@ import com.athletic.api.dues.dto.DuesResponseDto;
 import com.athletic.api.dues.repository.DuesRepository;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
-import com.athletic.api.util.constant.Const;
+import com.athletic.api.util.code.CodeGroup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +29,6 @@ public class DuesSelector {
     }
 
     public List<DuesAmountInterface> getAmountThisMonth() {
-        return duesRepository.selectAmountThisMonth(Const.Dues.IN);
+        return duesRepository.selectAmountThisMonth(CodeGroup.DUES_IN.getId(), CodeGroup.DUES_OUT.getId(), CodeGroup.DUES_REST.getId());
     }
 }
