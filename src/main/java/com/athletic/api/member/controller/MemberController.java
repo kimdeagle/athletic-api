@@ -52,9 +52,9 @@ public class MemberController {
         return ResponseEntity.ok(memberService.deleteMembers(idList));
     }
 
-    @GetMapping("/excel")
+    @PostMapping("/excel/download")
     public void downloadExcel() { memberSelector.downloadExcel(); }
 
-    @PostMapping("/excel")
+    @PostMapping("/excel/upload")
     public ResponseEntity<ResponseDto> uploadExcel(MultipartFile file) throws IOException { return ResponseEntity.ok(memberService.uploadExcel(file)); }
 }

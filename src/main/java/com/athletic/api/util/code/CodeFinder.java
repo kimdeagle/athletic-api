@@ -74,4 +74,21 @@ public class CodeFinder {
         });
         return detailArray;
     }
+
+    public static String findNameByGroupCode(String code) {
+        return Arrays.stream(CodeGroup.values())
+                .filter(group -> StringUtils.equals(group.getCode(), code))
+                .findAny()
+                .map(CodeGroup::getName)
+                .orElse(null);
+    }
+
+    public static String findNameByDetailCode(String code) {
+        return Arrays.stream(CodeDetail.values())
+                .filter(detail -> StringUtils.equals(detail.getCode(), code))
+                .findAny()
+                .map(CodeDetail::getName)
+                .orElse(null);
+    }
+
 }

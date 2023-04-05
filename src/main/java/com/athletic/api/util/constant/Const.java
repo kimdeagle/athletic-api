@@ -16,6 +16,8 @@ public class Const {
     public static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24;
 
     //common code
+    public static final String DEFAULT_LOCAL_DATE_FORMAT = "yyyy-MM-dd";
+    public static final String DEFAULT_LOCAL_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String DEFAULT_ADMIN_ID = "admin";
     public static final String AUTH_NO_MANAGER = "10001";
     public static final String USE_YN_Y = "Y";

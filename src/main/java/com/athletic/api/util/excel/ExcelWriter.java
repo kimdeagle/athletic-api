@@ -25,6 +25,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -191,6 +192,16 @@ public class ExcelWriter {
             cell.setCellValue(number.doubleValue());
             return;
         }
+        if (cellValue instanceof LocalDate) {
+            LocalDate date = (LocalDate) cellValue;
+            cell.setCellValue(date);
+            return;
+        }
+        if (cellValue instanceof LocalDateTime) {
+            LocalDateTime dateTime = (LocalDateTime) cellValue;
+            cell.setCellValue(dateTime);
+            return;
+        }
         cell.setCellValue(cellValue == null ? "" : cellValue.toString());
     }
 
@@ -210,6 +221,12 @@ public class ExcelWriter {
 
         if (isIntegerType(type))
             return dataFormat.getFormat(INTEGER_FORMAT);
+
+        if (type.equals(LocalDate.class))
+            return dataFormat.getFormat(Const.DEFAULT_LOCAL_DATE_FORMAT);
+
+        if (type.equals(LocalDateTime.class))
+            return dataFormat.getFormat(Const.DEFAULT_LOCAL_DATE_TIME_FORMAT);
 
         return dataFormat.getFormat(DEFAULT_FORMAT);
     }

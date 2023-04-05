@@ -6,6 +6,7 @@ import com.athletic.api.dues.dto.DuesRequestDto;
 import com.athletic.api.dues.dto.DuesResponseDto;
 import com.athletic.api.dues.service.DuesSelector;
 import com.athletic.api.dues.service.DuesService;
+import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,6 +55,11 @@ public class DuesController {
     @GetMapping("/amount/this-month")
     public ResponseEntity<List<DuesAmountInterface>> getAmountThisMonth() {
         return ResponseEntity.ok(duesSelector.getAmountThisMonth());
+    }
+
+    @PostMapping("/excel/download")
+    public void downloadExcel(@RequestBody ExcelDownloadSearchCondition search) {
+        duesSelector.downloadExcel(search);
     }
 
 }
