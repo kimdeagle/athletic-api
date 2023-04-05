@@ -70,6 +70,9 @@ public class ExcelWriter {
 
     /* check list size */
     private static void validateData(List<?> list) {
+        if (list.isEmpty())
+            throw new CustomException(ErrorCode.EMPTY_EXCEL_DOWNLOAD_LIST);
+
         int maxRows = SpreadsheetVersion.EXCEL2007.getMaxRows();
         if (list.size() > maxRows)
             throw new CustomException(ErrorCode.OVERFLOW_MAX_ROWS_EXCEL_DOWNLOAD, NumberFormat.getInstance().format(maxRows));

@@ -31,6 +31,7 @@ public class ErrorMessage {
     /* Excel Download */
     public static class ExcelDownload {
         public static final String FAIL = "엑셀 다운로드를 실패했습니다.";
+        public static final String EMPTY_LIST = "다운로드 할 데이터가 없습니다.";
         public static final String OVERFLOW_MAX_ROWS = "{0}개 행을 초과하여 다운로드 할 수 없습니다.";
     }
 
