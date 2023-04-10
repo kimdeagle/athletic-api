@@ -1,7 +1,6 @@
 package com.athletic.api.admin.controller;
 
 import com.athletic.api.admin.dto.AdminRequestDto;
-import com.athletic.api.admin.dto.AdminResponseDto;
 import com.athletic.api.admin.service.AdminSelector;
 import com.athletic.api.admin.service.AdminService;
 import com.athletic.api.common.dto.ResponseDto;
@@ -22,7 +21,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping("/my")
-    public ResponseEntity<AdminResponseDto> getMyInfo() {
+    public ResponseEntity<ResponseDto> getMyInfo() {
         return ResponseEntity.ok(adminSelector.getInfoBySecurity());
     }
 

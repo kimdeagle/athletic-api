@@ -1,5 +1,6 @@
 package com.athletic.api.util.code;
 
+import com.athletic.api.common.dto.ResponseDto;
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -37,20 +38,22 @@ public class CodeFinder {
         return jsonArray;
     }
 
-    public static JSONArray findByGroupCode(String groupCode) {
+    public static ResponseDto findByGroupCode(String groupCode) {
         JSONArray jsonArray = new JSONArray();
         Arrays.stream(CodeGroup.values())
                 .filter(group -> StringUtils.equals(group.getCode(), groupCode))
                 .forEach(group -> jsonArray.add(getGroup(group)));
-        return jsonArray;
+
+        return ResponseDto.success(jsonArray);
     }
 
-    public static JSONArray findByGroupCodes(List<String> groupCodes) {
+    public static ResponseDto findByGroupCodes(List<String> groupCodes) {
         JSONArray jsonArray = new JSONArray();
         Arrays.stream(CodeGroup.values())
                 .filter(group -> groupCodes.stream().anyMatch(code -> StringUtils.equals(code, group.getCode())))
                 .forEach(group -> jsonArray.add(getGroup(group)));
-        return jsonArray;
+
+        return ResponseDto.success(jsonArray);
     }
 
 
@@ -73,6 +76,22 @@ public class CodeFinder {
             detailArray.add(detailObject);
         });
         return detailArray;
+    }
+
+    public static String findCodeByGroupName(String name) {
+        return Arrays.stream(CodeGroup.values())
+                .filter(group -> StringUtils.equals(group.getName(), name))
+                .findAny()
+                .map(CodeGroup::getCode)
+                .orElse(null);
+    }
+
+    public static String findCodeByDetailName(String name) {
+        return Arrays.stream(CodeDetail.values())
+                .filter(detail -> StringUtils.equals(detail.getName(), name))
+                .findAny()
+                .map(CodeDetail::getCode)
+                .orElse(null);
     }
 
     public static String findNameByGroupCode(String code) {

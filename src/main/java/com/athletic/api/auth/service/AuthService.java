@@ -8,6 +8,7 @@ import com.athletic.api.admin.repository.AdminRepository;
 import com.athletic.api.authority.entity.Authority;
 import com.athletic.api.authority.repository.AuthorityRepository;
 import com.athletic.api.common.dto.ResponseDto;
+import com.athletic.api.common.message.SuccessMessage;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.util.code.CodeDetail;
@@ -51,10 +52,7 @@ public class AuthService {
 
         sendJoinEmail(admin);
 
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message(admin.getName() + "님. 계정생성 요청이 완료되었습니다.")
-                .build();
+        return ResponseDto.success(SuccessMessage.getMessageByParams(SuccessMessage.Auth.REQUEST_JOIN, admin.getName()));
     }
 
     private void sendJoinEmail(Admin admin) {
@@ -70,7 +68,7 @@ public class AuthService {
         emailService.sendEmail(emailDto);
     }
 
-    public TokenDto login(AdminRequestDto adminRequestDto) {
+    public ResponseDto login(AdminRequestDto adminRequestDto) {
         Admin admin = adminRepository.findByLoginId(adminRequestDto.getLoginId()).orElseThrow(() -> new CustomException(ErrorCode.INVALID_ID_OR_PASSWORD));
 
         if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), admin.getLoginPw()))
@@ -95,13 +93,15 @@ public class AuthService {
         String accessToken = tokenProvider.createToken(authentication, name, authorityDisplayName, accessTokenExpiresIn);
         String refreshToken = tokenProvider.createToken(authentication, name, authorityDisplayName, refreshTokenExpiresIn);
 
-        return TokenDto.builder()
+        TokenDto tokenDto = TokenDto.builder()
                 .grantType(Const.BEARER_TYPE)
                 .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
                 .refreshToken(refreshToken)
                 .refreshTokenExpiresIn(refreshTokenExpiresIn.getTime())
                 .build();
+
+        return ResponseDto.success(tokenDto);
 
     }
 
@@ -117,10 +117,7 @@ public class AuthService {
 
         sendTempPasswordEmail(adminRequestDto.getEmail(), tempPassword);
 
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message("임시 비밀번호를 이메일로 전송했습니다.\n확인 후 로그인 하세요.")
-                .build();
+        return ResponseDto.success(SuccessMessage.Auth.RESET_PASSWORD);
     }
 
     private String getTempPassword() {
@@ -143,7 +140,7 @@ public class AuthService {
         emailService.sendEmail(emailDto);
     }
 
-    public TokenDto reIssueAccessToken() {
+    public ResponseDto reIssueAccessToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Admin admin = adminRepository.findById(authentication.getName()).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
@@ -155,11 +152,13 @@ public class AuthService {
 
         String accessToken = tokenProvider.createToken(authentication, admin.getName(), authorityDisplayName, accessTokenExpiresIn);
 
-        return TokenDto.builder()
+        TokenDto tokenDto = TokenDto.builder()
                 .grantType(Const.BEARER_TYPE)
                 .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
                 .build();
+
+        return ResponseDto.success(tokenDto);
     }
 
 }

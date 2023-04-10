@@ -1,6 +1,7 @@
 package com.athletic.api.system.menu.service;
 
 import com.athletic.api.common.dto.ResponseDto;
+import com.athletic.api.common.message.SuccessMessage;
 import com.athletic.api.system.menu.dto.MenuRequestDto;
 import com.athletic.api.system.menu.entity.Menu;
 import com.athletic.api.system.menu.repository.MenuRepository;
@@ -25,10 +26,7 @@ public class MenuService {
         //delete menu
         menuRepository.deleteById(id);
 
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message("삭제를 완료했습니다.")
-                .build();
+        return ResponseDto.success(SuccessMessage.Menu.DELETE_MENU);
     }
 
     public ResponseDto saveMenu(MenuRequestDto dto) {
@@ -47,10 +45,7 @@ public class MenuService {
                 menuRepository.saveAll(children);
             }
         }
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message(StringUtils.isEmpty(dto.getId()) ? "등록이 완료되었습니다." : "수정이 완료되었습니다.")
-                .build();
+        return ResponseDto.success(StringUtils.isEmpty(dto.getId()) ? SuccessMessage.Menu.ADD_MENU : SuccessMessage.Menu.UPDATE_MENU);
     }
 
 }

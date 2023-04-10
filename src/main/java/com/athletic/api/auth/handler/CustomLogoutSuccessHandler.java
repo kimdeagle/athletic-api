@@ -1,6 +1,8 @@
 package com.athletic.api.auth.handler;
 
 import com.athletic.api.common.dto.ResponseDto;
+import com.athletic.api.common.message.SuccessMessage;
+import com.athletic.api.util.constant.Const;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -16,8 +18,8 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         ObjectMapper mapper = new ObjectMapper();
-        String result = mapper.writeValueAsString(ResponseDto.builder().code(ResponseDto.SUCCESS).message("로그아웃 되었습니다.").build());
-        response.setContentType("application/json;charset=UTF-8");
+        String result = mapper.writeValueAsString(ResponseDto.builder().status(ResponseDto.SUCCESS).message(SuccessMessage.Auth.LOGOUT).build());
+        response.setContentType(Const.DEFAULT_CONTENT_TYPE);
         response.getWriter().write(result);
     }
 }

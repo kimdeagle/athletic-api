@@ -2,7 +2,6 @@ package com.athletic.api.member.controller;
 
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.member.dto.MemberRequestDto;
-import com.athletic.api.member.dto.MemberResponseDto;
 import com.athletic.api.member.service.MemberSelector;
 import com.athletic.api.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("")
-    public ResponseEntity<List<MemberResponseDto>> getMemberList() {
+    public ResponseEntity<ResponseDto> getMemberList() {
         return ResponseEntity.ok(memberSelector.getMemberList());
     }
 
@@ -38,7 +37,7 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberResponseDto> getMember(@PathVariable("id") String id) {
+    public ResponseEntity<ResponseDto> getMember(@PathVariable("id") String id) {
         return ResponseEntity.ok(memberSelector.getMember(id));
     }
 

@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 public class MemberResponseDto extends BaseResponseDto {
     private String id;
 
-    @ExcelColumn(headerName = "회원명", sort = 0, width = 15, bodyStyle = ExcelCellStyle.CENTER_BODY)
+    @ExcelColumn(headerName = "회원명", sort = 0, bodyStyle = ExcelCellStyle.CENTER_BODY)
     private String name;
 
     @ExcelColumn(headerName = "이메일", sort = 1, width = 24)

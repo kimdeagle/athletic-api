@@ -1,9 +1,7 @@
 package com.athletic.api.dues.controller;
 
 import com.athletic.api.common.dto.ResponseDto;
-import com.athletic.api.dues.dto.DuesAmountInterface;
 import com.athletic.api.dues.dto.DuesRequestDto;
-import com.athletic.api.dues.dto.DuesResponseDto;
 import com.athletic.api.dues.service.DuesSelector;
 import com.athletic.api.dues.service.DuesService;
 import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
@@ -17,8 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
+
 
 @RestController
 @RequestMapping("/dues")
@@ -28,12 +28,12 @@ public class DuesController {
     private final DuesService duesService;
 
     @GetMapping
-    public ResponseEntity<List<DuesResponseDto>> getDuesList() {
+    public ResponseEntity<ResponseDto> getDuesList() {
         return ResponseEntity.ok(duesSelector.getDuesList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DuesResponseDto> getDues(@PathVariable("id") String id) {
+    public ResponseEntity<ResponseDto> getDues(@PathVariable("id") String id) {
         return ResponseEntity.ok(duesSelector.getDues(id));
     }
 
@@ -53,7 +53,7 @@ public class DuesController {
     }
 
     @GetMapping("/amount/this-month")
-    public ResponseEntity<List<DuesAmountInterface>> getAmountThisMonth() {
+    public ResponseEntity<ResponseDto> getAmountThisMonth() {
         return ResponseEntity.ok(duesSelector.getAmountThisMonth());
     }
 
@@ -61,5 +61,8 @@ public class DuesController {
     public void downloadExcel(@RequestBody ExcelDownloadSearchCondition search) {
         duesSelector.downloadExcel(search);
     }
+
+    @PostMapping("/excel/upload")
+    public ResponseEntity<ResponseDto> uploadExcel(MultipartFile file) throws IOException { return ResponseEntity.ok(duesService.uploadExcel(file)); }
 
 }

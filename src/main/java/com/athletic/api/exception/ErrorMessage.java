@@ -22,6 +22,9 @@ public class ErrorMessage {
         public static final String INVALID_MOBILE_NO = "올바른 휴대폰 번호를 입력하세요.";
         public static final String INVALID_BIRTHDAY = "올바른 생년월일을 입력하세요.";
         public static final String INVALID_JOIN_DT = "올바른 입회일자를 입력하세요.";
+        public static final String INVALID_START_DT = "올바른 시작일자를 입력하세요.";
+        public static final String INVALID_END_DT = "올바른 종료일자를 입력하세요.";
+        public static final String INVALID_NUMBER_FORMAT = "숫자만 입력하세요.";
         public static final String INVALID_DATA_FORMAT = "데이터 형식이 올바르지 않습니다.";
         public static final String DUPLICATION_MEMBER_IN_EXCEL = "엑셀 파일 내 중복된 회원이 있습니다.\n아래 회원명 확인 후 다시 업로드 해주시기 바랍니다.\n\n[회원명]\n{0}";
         public static final String EXIST_MEMBER_IN_DATABASE = "이미 존재하는 회원이 있습니다.\n아래 회원명 확인 후 다시 업로드 해주시기 바랍니다.\n\n[회원명]\n{0}";
@@ -33,6 +36,11 @@ public class ErrorMessage {
         public static final String FAIL = "엑셀 다운로드를 실패했습니다.";
         public static final String EMPTY_LIST = "다운로드 할 데이터가 없습니다.";
         public static final String OVERFLOW_MAX_ROWS = "{0}개 행을 초과하여 다운로드 할 수 없습니다.";
+    }
+
+    /* File */
+    public static class File {
+        public static final String NOT_FOUND_SAMPLE = "샘플 파일을 찾을 수 없습니다.";
     }
 
     public static final String UNKNOWN = "알 수 없는 오류가 발생했습니다.\n관리자에게 문의 바랍니다.";

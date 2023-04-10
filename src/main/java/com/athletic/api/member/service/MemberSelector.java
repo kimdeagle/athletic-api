@@ -1,5 +1,6 @@
 package com.athletic.api.member.service;
 
+import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.member.dto.MemberResponseDto;
@@ -19,7 +20,13 @@ import java.util.stream.Collectors;
 public class MemberSelector {
     private final MemberRepository memberRepository;
 
-    public List<MemberResponseDto> getMemberList() {
+    public ResponseDto getMemberList() {
+        List<MemberResponseDto> list = getMemberResponseDtoList();
+
+        return ResponseDto.success(list);
+    }
+
+    private List<MemberResponseDto> getMemberResponseDtoList() {
         return memberRepository.findAll(Sort.by(Sort.Order.asc("name")))
                 .stream().map(member -> {
                     member.setMobileNo(maskMobileNo(member.getMobileNo()));
@@ -27,10 +34,12 @@ public class MemberSelector {
                 }).collect(Collectors.toList());
     }
 
-    public MemberResponseDto getMember(String id) {
-        return memberRepository.findById(id)
+    public ResponseDto getMember(String id) {
+        MemberResponseDto dto = memberRepository.findById(id)
                 .map(MemberResponseDto::of)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        return ResponseDto.success(dto);
     }
 
     /* MobileNoConverter에 의해 하이픈 적용된 상태라 마지막 substring은 9번째부터 */
@@ -39,7 +48,8 @@ public class MemberSelector {
     }
 
     public void downloadExcel() {
-        List<MemberResponseDto> list = getMemberList();
+        List<MemberResponseDto> list = getMemberResponseDtoList();
+
         ExcelWriter.write("회원 리스트", list, MemberResponseDto.class);
     }
 }

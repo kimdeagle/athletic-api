@@ -15,6 +15,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -260,15 +262,10 @@ public class ExcelWriter {
 
         try (OutputStream os = response.getOutputStream()) {
             response.setContentType(Const.EXCEL_CONTENT_TYPE);
-            response.setHeader("Content-Disposition", "attachment;filename=" + getEncodedFilename(filename));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment().filename(LocalDate.now() + " " + filename, StandardCharsets.UTF_8).build().toString());
             workbook.write(os);
         } catch (Exception e) {
             throw new CustomException(ErrorCode.FAIL_EXCEL_DOWNLOAD);
         }
-    }
-
-    /* get encoded filename (한글 깨짐 방지) */
-    private static String getEncodedFilename(String filename) {
-        return URLEncoder.encode(LocalDate.now() + " " + filename.replaceAll(".xlsx|.xls", "") + FILE_EXTENSION, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
     }
 }

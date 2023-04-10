@@ -1,6 +1,7 @@
 package com.athletic.api.member.service;
 
 import com.athletic.api.common.dto.ResponseDto;
+import com.athletic.api.common.message.SuccessMessage;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.member.dto.MemberRequestDto;
@@ -28,30 +29,26 @@ public class MemberService {
         boolean isExistMember = memberRepository.existsByNameAndMobileNo(memberRequestDto.getName(), memberRequestDto.getMobileNo());
         if (isExistMember)
             throw new CustomException(ErrorCode.EXIST_MEMBER);
+
         memberRepository.save(memberRequestDto.toMember());
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message("회원이 추가되었습니다.")
-                .build();
+
+        return ResponseDto.success(SuccessMessage.Member.ADD_MEMBER);
     }
 
     public ResponseDto updateMember(MemberRequestDto memberRequestDto) {
         boolean isExist = memberRepository.existsById(memberRequestDto.getId());
         if (!isExist)
             throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+
         memberRepository.save(memberRequestDto.toUpdateMember());
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message("회원이 수정되었습니다.")
-                .build();
+
+        return ResponseDto.success(SuccessMessage.Member.UPDATE_MEMBER);
     }
 
     public ResponseDto deleteMembers(List<String> idList) {
         memberRepository.deleteAllByIdInBatch(idList);
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message(idList.size() + "명의 회원이 삭제되었습니다.")
-                .build();
+
+        return ResponseDto.success(SuccessMessage.getMessageByParams(SuccessMessage.Member.DELETE_MEMBERS, String.valueOf(idList.size())));
     }
 
     public ResponseDto uploadExcel(MultipartFile file) throws IOException {
@@ -69,10 +66,7 @@ public class MemberService {
 
         memberRepository.saveAll(excelList.stream().map(MemberRequestDto::toMember).collect(Collectors.toList()));
 
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message("엑셀 업로드를 성공하였습니다.")
-                .build();
+        return ResponseDto.success(SuccessMessage.Excel.UPLOAD);
     }
 
     /* 엑셀 파일 내 중복 회원의 회원명 조회 */

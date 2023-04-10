@@ -5,6 +5,7 @@ import com.athletic.api.admin.dto.AdminRequestDto;
 import com.athletic.api.admin.entity.Admin;
 import com.athletic.api.admin.repository.AdminRepository;
 import com.athletic.api.common.dto.ResponseDto;
+import com.athletic.api.common.message.SuccessMessage;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -39,10 +40,7 @@ public class AdminService {
 
         adminRepository.save(admin);
 
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message("비밀번호 변경을 완료하였습니다.")
-                .build();
+        return ResponseDto.success(SuccessMessage.Admin.CHANGE_PASSWORD);
     }
 
     public ResponseDto out(AdminRequestDto adminRequestDto) {
@@ -54,9 +52,6 @@ public class AdminService {
 
         adminRepository.deleteById(id);
 
-        return ResponseDto.builder()
-                .code(ResponseDto.SUCCESS)
-                .message("계정이 삭제되었습니다.")
-                .build();
+        return ResponseDto.success(SuccessMessage.Admin.DELETE_ADMIN);
     }
 }

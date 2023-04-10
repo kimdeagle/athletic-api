@@ -45,7 +45,7 @@ public class TokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        String loginAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String loginAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Const.DEFAULT_LOCAL_DATE_TIME_FORMAT));
 
         return Jwts.builder()
                 .setSubject(authentication.getName())

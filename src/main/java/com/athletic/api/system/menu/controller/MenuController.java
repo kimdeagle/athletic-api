@@ -2,7 +2,6 @@ package com.athletic.api.system.menu.controller;
 
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.system.menu.dto.MenuRequestDto;
-import com.athletic.api.system.menu.dto.MenuResponseDto;
 import com.athletic.api.system.menu.service.MenuSelector;
 import com.athletic.api.system.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/system/menu")
@@ -25,12 +23,12 @@ public class MenuController {
     private final MenuService menuService;
 
     @GetMapping("")
-    public ResponseEntity<List<MenuResponseDto>> getMenuList() {
+    public ResponseEntity<ResponseDto> getMenuList() {
         return ResponseEntity.ok(menuSelector.getMenuList());
     }
 
     @GetMapping("/use")
-    public ResponseEntity<List<MenuResponseDto>> getUseMenuList() {
+    public ResponseEntity<ResponseDto> getUseMenuList() {
         return ResponseEntity.ok(menuSelector.getUseMenuList());
     }
 

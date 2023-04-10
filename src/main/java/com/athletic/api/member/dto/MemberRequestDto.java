@@ -27,7 +27,7 @@ public class MemberRequestDto {
     @ExcelUploadColumn(colIndex = 3, required = true, validationRegex = Const.MOBILE_NO_REGEX, errorMessage = ErrorMessage.ExcelUpload.INVALID_MOBILE_NO)
     private String mobileNo;
 
-    @ExcelUploadColumn(colIndex = 4, validationRegex = Const.YYYYMMDD_REGEX, errorMessage = ErrorMessage.ExcelUpload.INVALID_BIRTHDAY)
+    @ExcelUploadColumn(colIndex = 4, validationRegex = Const.DATE_REGEX, errorMessage = ErrorMessage.ExcelUpload.INVALID_BIRTHDAY)
     private String birthday;
 
     @ExcelUploadColumn(colIndex = 5)
@@ -36,7 +36,7 @@ public class MemberRequestDto {
     @ExcelUploadColumn(colIndex = 6)
     private String addressDtl;
 
-    @ExcelUploadColumn(colIndex = 7, required = true, validationRegex = Const.YYYYMMDD_REGEX, errorMessage = ErrorMessage.ExcelUpload.INVALID_JOIN_DT)
+    @ExcelUploadColumn(colIndex = 7, required = true, validationRegex = Const.DATE_REGEX, errorMessage = ErrorMessage.ExcelUpload.INVALID_JOIN_DT)
     private String joinDt;
 
     private String regId;

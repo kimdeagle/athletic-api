@@ -20,8 +20,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,7 +88,9 @@ public class ExcelReader {
         List<T> list = new ArrayList<>();
         rowIndex = ROW_START_INDEX;
         for (int i=0; i < rowCount; i++) {
-            list.add(extractObjectFromRow(clazz));
+            row = sheet.getRow(rowIndex++);
+            if (row != null)
+                list.add(extractObjectFromRow(clazz));
         }
         return list;
     }
@@ -93,10 +98,6 @@ public class ExcelReader {
     /* extract object from row */
     private static <T> T extractObjectFromRow(Class<T> clazz) {
         try {
-            row = sheet.getRow(rowIndex++);
-            if (row == null)
-                throw new CustomException(ErrorCode.EMPTY_EXCEL_UPLOAD_ROW, String.valueOf(rowIndex));
-
             T object = clazz.getDeclaredConstructor().newInstance();
             colIndex = COLUMN_START_INDEX;
             for (Field field : fields) {
@@ -118,37 +119,61 @@ public class ExcelReader {
         ExcelUploadColumn excelUploadColumn = field.getAnnotation(ExcelUploadColumn.class);
 
         //1. 필수 항목 체크
-        if (excelUploadColumn.required() && cell == null)
+        if (excelUploadColumn.required() && (cell == null || StringUtils.isBlank(cell.toString())))
             throw new CustomException(ErrorCode.ERROR_EXCEL_UPLOAD_BY_TEMPLATE, CellReference.convertNumToColString(colIndex) + rowIndex, ErrorMessage.ExcelUpload.EMPTY_REQUIRED);
 
         //2. regex 체크
         String regex = excelUploadColumn.validationRegex();
-        String value = (String) getCellValue(field);
-        if (StringUtils.isNotBlank(value) && StringUtils.isNotBlank(regex) && !value.matches(regex)) {
-            throw new CustomException(ErrorCode.ERROR_EXCEL_UPLOAD_BY_TEMPLATE, CellReference.convertNumToColString(colIndex) + rowIndex, excelUploadColumn.errorMessage());
+        if (StringUtils.isNotBlank(regex)) {
+            String value = getCellValue(field).toString();
+            if (StringUtils.isNotBlank(value) && !value.matches(regex)) {
+                throw new CustomException(ErrorCode.ERROR_EXCEL_UPLOAD_BY_TEMPLATE, CellReference.convertNumToColString(colIndex) + rowIndex, excelUploadColumn.errorMessage());
+            }
         }
     }
 
     /* get cell value */
     private static Object getCellValue(Field field) {
         Class<?> type = field.getType();
-        if (isNumberType(type))
-            try {
-                return cell == null ? 0 : cell.getNumericCellValue();
-            } catch (IllegalStateException | NumberFormatException e) {
-                throw new CustomException(ErrorCode.ERROR_EXCEL_UPLOAD_BY_TEMPLATE, CellReference.convertNumToColString(colIndex) + rowIndex, ErrorMessage.ExcelUpload.INVALID_DATA_FORMAT);
+        try {
+            if (isIntegerType(type)) {
+                return cell == null ? 0 : Math.round(cell.getNumericCellValue());
             }
+            if (isFloatType(type)) {
+                return cell == null ? 0 : cell.getNumericCellValue();
+            }
+            if (isDateType(type)) {
+                return cell.getLocalDateTimeCellValue();
+            }
+        } catch (IllegalStateException | NumberFormatException e) {
+            throw new CustomException(ErrorCode.ERROR_EXCEL_UPLOAD_BY_TEMPLATE, CellReference.convertNumToColString(colIndex) + rowIndex, ErrorMessage.ExcelUpload.INVALID_DATA_FORMAT);
+        }
 
         return cell == null ? "" : cell.getStringCellValue();
     }
 
-    /* check number type */
-    private static boolean isNumberType(Class<?> type) {
-        List<Class<?>> numberTypes = Arrays.asList(
-                Byte.class, byte.class, Short.class, short.class, Integer.class, int.class, Long.class, long.class,
+    /* check integer type */
+    private static boolean isIntegerType(Class<?> type) {
+        List<Class<?>> integerTypes = Arrays.asList(
+                Byte.class, byte.class, Short.class, short.class, Integer.class, int.class, Long.class, long.class
+        );
+        return integerTypes.contains(type);
+    }
+
+    /* check float type */
+    private static boolean isFloatType(Class<?> type) {
+        List<Class<?>> floatTypes = Arrays.asList(
                 Float.class, float.class, Double.class, double.class
         );
-        return numberTypes.contains(type);
+        return floatTypes.contains(type);
+    }
+
+    /* check date type */
+    private static boolean isDateType(Class<?> type) {
+        List<Class<?>> dateTypes = Arrays.asList(
+                LocalDate.class, LocalDateTime.class, Date.class
+        );
+        return dateTypes.contains(type);
     }
 
 }

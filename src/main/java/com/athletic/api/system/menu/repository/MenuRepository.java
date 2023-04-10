@@ -12,5 +12,5 @@ public interface MenuRepository extends JpaRepository<Menu, String> {
     List<Menu> findAllByUpMenuId(String upMenuId);
 
     @Query(value = "select m.* from menu m where ?1 = any(m.authorities) and m.use_yn = ?2", nativeQuery = true)
-    List<Menu> findByAuthorityIdAndUseYn(String authorityId, String useYn);
+    List<Menu> findAllByAuthorityIdAndUseYn(String authorityId, String useYn);
 }

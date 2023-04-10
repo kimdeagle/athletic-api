@@ -1,7 +1,6 @@
 package com.athletic.api.auth.controller;
 
 import com.athletic.api.admin.dto.AdminRequestDto;
-import com.athletic.api.auth.dto.TokenDto;
 import com.athletic.api.auth.service.AuthService;
 import com.athletic.api.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody AdminRequestDto adminRequestDto) {
+    public ResponseEntity<ResponseDto> login(@RequestBody AdminRequestDto adminRequestDto) {
         return ResponseEntity.ok(authService.login(adminRequestDto));
     }
 
@@ -33,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/re-issue/access")
-    public ResponseEntity<TokenDto> reIssueAccessToken() {
+    public ResponseEntity<ResponseDto> reIssueAccessToken() {
         return ResponseEntity.ok(authService.reIssueAccessToken());
     }
 

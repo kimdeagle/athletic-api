@@ -29,6 +29,7 @@ public enum ErrorCode {
     EXIST_MEMBER_IN_DATABASE(921, ErrorMessage.ExcelUpload.EXIST_MEMBER_IN_DATABASE),
     FAIL_EXCEL_UPLOAD(922, ErrorMessage.ExcelUpload.FAIL),
     FAIL_SEND_EMAIL(923, ErrorMessage.Email.FAIL),
+    NOT_FOUND_SAMPLE_FILE(924, ErrorMessage.File.NOT_FOUND_SAMPLE),
 
     UNKNOWN(999, ErrorMessage.UNKNOWN)
     ;
