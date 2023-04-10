@@ -41,4 +41,10 @@ public class SuccessMessage {
         public static final String UPDATE_MENU = "메뉴가 수정되었습니다.";
         public static final String DELETE_MENU = "메뉴가 삭제되었습니다.";
     }
+
+    public static class Schedule {
+        public static final String ADD_SCHEDULE = "일정이 추가되었습니다.";
+        public static final String UPDATE_SCHEDULE = "일정이 수정되었습니다.";
+        public static final String DELETE_SCHEDULE = "일정이 삭제되었습니다.";
+    }
 }

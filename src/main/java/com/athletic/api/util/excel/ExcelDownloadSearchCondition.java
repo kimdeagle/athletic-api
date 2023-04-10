@@ -13,4 +13,6 @@ public class ExcelDownloadSearchCondition {
     private String period;
     private LocalDateTime startDt;
     private LocalDateTime endDt;
+    private String inOutCd;
+    private String inOutDtlCd;
 }

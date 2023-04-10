@@ -10,8 +10,6 @@ import com.athletic.api.util.code.CodeGroup;
 import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
 import com.athletic.api.util.excel.ExcelWriter;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,11 +41,16 @@ public class DuesSelector {
     }
 
     public void downloadExcel(ExcelDownloadSearchCondition search) {
-        List<DuesResponseDto> list =
-                ObjectUtils.isEmpty(search.getStartDt())
-                        ? duesRepository.findAll(Sort.by("startDt", "endDt", "amount")).stream().map(DuesResponseDto::of).collect(Collectors.toList())
-                        : duesRepository.findByPeriod(search.getStartDt(), search.getEndDt()).stream().map(DuesResponseDto::of).collect(Collectors.toList());
+        /* TODO 동적 쿼리를 위해 Querydsl 사용
+         * 1. 설정 - https://www.inflearn.com/chats/669477/querydsl-springboot-2-7%EC%9D%98-gradle-%EC%84%A4%EC%A0%95%EC%9D%84-%EA%B3%B5%EC%9C%A0%ED%95%A9%EB%8B%88%EB%8B%A4
+         * 2. 사용 예제
+         *  - https://jaehoney.tistory.com/185
+         *  - https://velog.io/@kangsan/%EC%82%AC%EB%82%B4-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-Dynamic-Query-%EC%A0%81%EC%9A%A9%EA%B8%B0
+         *  - https://jojoldu.tistory.com/394
+         */
 
-        ExcelWriter.write("회비 내역", list, DuesResponseDto.class);
+//        List<DuesResponseDto> list = duesRepository.findAllBySearchCondition(search).stream().map(DuesResponseDto::of).collect(Collectors.toList());
+
+//        ExcelWriter.write("회비 내역", list, DuesResponseDto.class);
     }
 }
