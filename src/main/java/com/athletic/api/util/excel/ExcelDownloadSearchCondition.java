@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExcelDownloadSearchCondition {
-    private String period;
     private LocalDateTime startDt;
     private LocalDateTime endDt;
     private String inOutCd;

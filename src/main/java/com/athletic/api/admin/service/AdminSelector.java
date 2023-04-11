@@ -20,7 +20,7 @@ public class AdminSelector {
     public ResponseDto getInfoBySecurity() {
         AdminResponseDto dto = adminRepository.findById(SecurityUtil.getCurrentId())
                 .map(AdminResponseDto::of)
-                .orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
 
         return ResponseDto.success(dto);
     }

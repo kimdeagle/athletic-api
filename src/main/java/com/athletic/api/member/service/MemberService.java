@@ -38,7 +38,7 @@ public class MemberService {
     public ResponseDto updateMember(MemberRequestDto memberRequestDto) {
         boolean isExist = memberRepository.existsById(memberRequestDto.getId());
         if (!isExist)
-            throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+            throw new CustomException(ErrorCode.NOT_FOUND_MEMBER);
 
         memberRepository.save(memberRequestDto.toUpdateMember());
 

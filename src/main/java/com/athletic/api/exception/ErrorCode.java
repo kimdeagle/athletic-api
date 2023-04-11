@@ -6,18 +6,18 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ErrorCode {
-    UNAUTHORIZED_TOKEN(901, "권한 정보가 없는 토큰입니다."),
-    AUTH_NOT_FOUND(902, "권한 정보가 없습니다."),
-    INVALID_ID_OR_PASSWORD(903, "아이디 또는 비밀번호를 다시 확인해주세요."),
-    ADMIN_NOT_FOUND(904, "계정 정보를 찾을 수 없습니다."),
-    NOT_MATCH_CURRENT_PASSWORD(905, "현재 비밀번호가 일치하지 않습니다."),
-    CANNOT_CHANGE_SAME_PASSWORD(906, "기존과 동일한 비밀번호로 변경할 수 없습니다."),
-    EXIST_LOGIN_ID(907, "이미 존재하는 아이디입니다."),
-    SECURITY_CONTEXT_NOT_FOUND(908, "Security Context에 인증 정보가 없습니다."),
+    UNAUTHORIZED_TOKEN(901, ErrorMessage.Auth.UNAUTHORIZED_TOKEN),
+    NOT_FOUND_AUTHORITY(902, ErrorMessage.Auth.NOT_FOUND_AUTHORITY),
+    INVALID_ID_OR_PASSWORD(903, ErrorMessage.Auth.INVALID_ID_OR_PASSWORD),
+    NOT_FOUND_ADMIN(904, ErrorMessage.Auth.NOT_FOUND_ADMIN),
+    NOT_MATCH_CURRENT_PASSWORD(905, ErrorMessage.Auth.NOT_MATCH_CURRENT_PASSWORD),
+    CANNOT_CHANGE_SAME_PASSWORD(906, ErrorMessage.Auth.CANNOT_CHANGE_SAME_PASSWORD),
+    EXIST_LOGIN_ID(907, ErrorMessage.Auth.EXIST_LOGIN_ID),
+    NOT_FOUND_AUTH_AT_SECURITY_CONTEXT(908, ErrorMessage.Auth.NOT_FOUND_AUTH_AT_SECURITY_CONTEXT),
     INVALID_APPROVE_STATUS(909, ErrorMessage.Auth.INVALID_APPROVE_STATUS),
-    MEMBER_NOT_FOUND(910, "존재하지 않는 회원입니다."),
-    EXIST_MEMBER(911, "이미 존재하는 회원입니다.\n회원명 또는 휴대폰 번호를 확인하세요."),
-    EMAIL_TEMPLATE_NOT_FOUND(912, "이메일 템플릿을 찾을 수 없습니다."),
+    NOT_FOUND_MEMBER(910, ErrorMessage.Member.NOT_FOUND),
+    EXIST_MEMBER(911, ErrorMessage.Member.EXIST),
+    NOT_FOUND_EMAIL_TEMPLATE(912, ErrorMessage.Email.NOT_FOUND_TEMPLATE),
     FAIL_EXCEL_DOWNLOAD(913, ErrorMessage.ExcelDownload.FAIL),
     EMPTY_EXCEL_DOWNLOAD_LIST(914, ErrorMessage.ExcelDownload.EMPTY_LIST),
     OVERFLOW_MAX_ROWS_EXCEL_DOWNLOAD(915, ErrorMessage.ExcelDownload.OVERFLOW_MAX_ROWS),
@@ -30,6 +30,7 @@ public enum ErrorCode {
     FAIL_EXCEL_UPLOAD(922, ErrorMessage.ExcelUpload.FAIL),
     FAIL_SEND_EMAIL(923, ErrorMessage.Email.FAIL),
     NOT_FOUND_SAMPLE_FILE(924, ErrorMessage.File.NOT_FOUND_SAMPLE),
+    NOT_FOUND_DUES(925, ErrorMessage.Dues.NOT_FOUND),
 
     UNKNOWN(999, ErrorMessage.UNKNOWN)
     ;

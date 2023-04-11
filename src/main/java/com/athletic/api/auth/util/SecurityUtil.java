@@ -10,7 +10,7 @@ public class SecurityUtil {
     public static String getCurrentId() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication.getName() == null) {
-            throw new CustomException(ErrorCode.SECURITY_CONTEXT_NOT_FOUND);
+            throw new CustomException(ErrorCode.NOT_FOUND_AUTH_AT_SECURITY_CONTEXT);
         }
 
         return authentication.getName();

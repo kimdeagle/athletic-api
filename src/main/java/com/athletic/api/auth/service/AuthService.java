@@ -84,7 +84,7 @@ public class AuthService {
 
         String name = admin.getName();
 
-        String authorityDisplayName = authorityRepository.findById(admin.getAuthorityId()).map(Authority::getDisplayName).orElseThrow(() -> new CustomException(ErrorCode.AUTH_NOT_FOUND));
+        String authorityDisplayName = authorityRepository.findById(admin.getAuthorityId()).map(Authority::getDisplayName).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_AUTHORITY));
 
         long now = (new Date()).getTime();
         Date accessTokenExpiresIn = new Date(now + Const.ACCESS_TOKEN_EXPIRE_TIME);
@@ -106,7 +106,7 @@ public class AuthService {
     }
 
     public ResponseDto resetPassword(AdminRequestDto adminRequestDto) {
-        Admin admin = adminRepository.findByLoginIdAndEmail(adminRequestDto.getLoginId(), adminRequestDto.getEmail()).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
+        Admin admin = adminRepository.findByLoginIdAndEmail(adminRequestDto.getLoginId(), adminRequestDto.getEmail()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
 
         String tempPassword = getTempPassword();
 
@@ -143,9 +143,9 @@ public class AuthService {
     public ResponseDto reIssueAccessToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        Admin admin = adminRepository.findById(authentication.getName()).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
+        Admin admin = adminRepository.findById(authentication.getName()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
 
-        String authorityDisplayName = authorityRepository.findById(admin.getAuthorityId()).map(Authority::getDisplayName).orElseThrow(() -> new CustomException(ErrorCode.AUTH_NOT_FOUND));
+        String authorityDisplayName = authorityRepository.findById(admin.getAuthorityId()).map(Authority::getDisplayName).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_AUTHORITY));
 
         long now = (new Date()).getTime();
         Date accessTokenExpiresIn = new Date(now + Const.ACCESS_TOKEN_EXPIRE_TIME);

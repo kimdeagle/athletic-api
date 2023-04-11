@@ -23,7 +23,7 @@ public class AdminService {
     public ResponseDto changePassword(AdminRequestDto adminRequestDto) {
         String id = SecurityUtil.getCurrentId();
 
-        Admin admin = adminRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
+        Admin admin = adminRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
 
         String prevRawLoginPw = adminRequestDto.getLoginPw();
         String prevEncLoginPw = admin.getLoginPw();
@@ -45,7 +45,7 @@ public class AdminService {
 
     public ResponseDto out(AdminRequestDto adminRequestDto) {
         String id = SecurityUtil.getCurrentId();
-        Admin admin = adminRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.ADMIN_NOT_FOUND));
+        Admin admin = adminRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
         String encLoginPw = admin.getLoginPw();
         if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), encLoginPw))
             throw new CustomException(ErrorCode.NOT_MATCH_CURRENT_PASSWORD);

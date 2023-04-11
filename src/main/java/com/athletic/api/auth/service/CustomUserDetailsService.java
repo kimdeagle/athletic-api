@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserDetails createUserDetails(Admin admin) {
         String authName = authorityRepository.findById(admin.getAuthorityId())
                 .map(Authority::getName)
-                .orElseThrow(() -> new CustomException(ErrorCode.AUTH_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_AUTHORITY));
 
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authName);
 

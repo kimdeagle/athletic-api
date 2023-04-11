@@ -37,7 +37,7 @@ public class MemberSelector {
     public ResponseDto getMember(String id) {
         MemberResponseDto dto = memberRepository.findById(id)
                 .map(MemberResponseDto::of)
-                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
 
         return ResponseDto.success(dto);
     }

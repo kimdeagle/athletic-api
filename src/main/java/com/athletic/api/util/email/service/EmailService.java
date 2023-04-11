@@ -24,7 +24,7 @@ public class EmailService {
     private String from;
 
     private void processTemplate(EmailDto emailDto) {
-        EmailTemplate template = templateRepository.findByCode(emailDto.getCode()).orElseThrow(() -> new CustomException(ErrorCode.EMAIL_TEMPLATE_NOT_FOUND));
+        EmailTemplate template = templateRepository.findByCode(emailDto.getCode()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_EMAIL_TEMPLATE));
 
         emailDto.setSubject(template.getTitle());
 
