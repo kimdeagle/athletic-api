@@ -1,4 +1,4 @@
-package com.athletic.api.util.file;
+package com.athletic.api.util.file.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

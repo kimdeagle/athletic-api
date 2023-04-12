@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class MenuController {
     private final MenuSelector menuSelector;
     private final MenuService menuService;
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<ResponseDto> getMenuList() {
         return ResponseEntity.ok(menuSelector.getMenuList());
     }
@@ -38,7 +39,12 @@ public class MenuController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDto> saveMenu(@RequestBody MenuRequestDto dto) {
-        return ResponseEntity.ok(menuService.saveMenu(dto));
+    public ResponseEntity<ResponseDto> addMenu(@RequestBody MenuRequestDto menuRequestDto) {
+        return ResponseEntity.ok(menuService.addMenu(menuRequestDto));
+    }
+
+    @PutMapping
+    public ResponseEntity<ResponseDto> updateMenu(@RequestBody MenuRequestDto menuRequestDto) {
+        return ResponseEntity.ok(menuService.updateMenu(menuRequestDto));
     }
 }

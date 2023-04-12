@@ -1,8 +1,10 @@
 package com.athletic.api.system.menu.service;
 
+import com.athletic.api.auth.util.SecurityUtil;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.system.menu.dto.MenuResponseDto;
 import com.athletic.api.system.menu.repository.MenuRepository;
+import com.athletic.api.util.constant.Const;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +29,7 @@ public class MenuSelector {
 
     public ResponseDto getUseMenuList() {
         List<MenuResponseDto> list =
-                menuRepository.findAllByAuthorityIdAndUseYn()
+                menuRepository.findAllByAdminIdAndUseYn(SecurityUtil.getCurrentId(), Const.USE_YN_Y)
                         .stream().map(MenuResponseDto::of)
                         .collect(Collectors.toList());
 

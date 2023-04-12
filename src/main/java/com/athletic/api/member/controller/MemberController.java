@@ -26,12 +26,12 @@ public class MemberController {
     private final MemberSelector memberSelector;
     private final MemberService memberService;
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<ResponseDto> getMemberList() {
         return ResponseEntity.ok(memberSelector.getMemberList());
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<ResponseDto> addMember(@RequestBody MemberRequestDto memberRequestDto) {
         return ResponseEntity.ok(memberService.addMember(memberRequestDto));
     }
@@ -41,12 +41,12 @@ public class MemberController {
         return ResponseEntity.ok(memberSelector.getMember(id));
     }
 
-    @PutMapping("")
+    @PutMapping
     public ResponseEntity<ResponseDto> updateMember(@RequestBody MemberRequestDto memberRequestDto) {
         return ResponseEntity.ok(memberService.updateMember(memberRequestDto));
     }
 
-    @DeleteMapping("")
+    @DeleteMapping
     public ResponseEntity<ResponseDto> deleteMembers(@RequestBody List<String> idList) {
         return ResponseEntity.ok(memberService.deleteMembers(idList));
     }

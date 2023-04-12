@@ -28,10 +28,10 @@ public class DuesRepositoryImpl implements DuesRepositoryCustom {
             builder.and(QuerydslUtil.dateTimeToDate(dues.startDt).loe(condition.getEndDt().toLocalDate())).and(QuerydslUtil.dateTimeToDate(dues.endDt).goe(condition.getStartDt().toLocalDate()));
         }
         if (StringUtils.isNotBlank(condition.getInOutCd())) {
-            builder.and(dues.inOutCd.eq(condition.getInOutCd()));
+            builder.and(eqInOutCd(condition.getInOutCd()));
         }
         if (StringUtils.isNotBlank(condition.getInOutDtlCd())) {
-            builder.and(dues.inOutDtlCd.eq(condition.getInOutDtlCd()));
+            builder.and(eqInOutDtlCd(condition.getInOutDtlCd()));
         }
 
         return queryFactory
@@ -75,6 +75,10 @@ public class DuesRepositoryImpl implements DuesRepositoryCustom {
     }
 
     private BooleanExpression eqInOutCd(String inOutCd) {
-        return dues.inOutCd.eq(inOutCd);
+        return StringUtils.isNotBlank(inOutCd) ? dues.inOutCd.eq(inOutCd) : null;
+    }
+
+    private BooleanExpression eqInOutDtlCd(String inOutDtlCd) {
+        return StringUtils.isNotBlank(inOutDtlCd) ? dues.inOutDtlCd.eq(inOutDtlCd) : null;
     }
 }

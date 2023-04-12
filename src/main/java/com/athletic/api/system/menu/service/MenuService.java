@@ -6,7 +6,6 @@ import com.athletic.api.system.menu.dto.MenuRequestDto;
 import com.athletic.api.system.menu.entity.Menu;
 import com.athletic.api.system.menu.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,23 +28,25 @@ public class MenuService {
         return ResponseDto.success(SuccessMessage.Menu.DELETE_MENU);
     }
 
-    public ResponseDto saveMenu(MenuRequestDto dto) {
-        if (StringUtils.isBlank(dto.getId())) {
-            menuRepository.save(dto.toMenu());
-        } else {
-            //update menu
-            menuRepository.save(dto.toUpdateMenu());
-            //update children
-            List<Menu> children = menuRepository.findAllByUpMenuId(dto.getId());
-            if (children.size() > 0) {
-                children.forEach(child -> {
-                    child.setUpMenuName(dto.getName());
-                    child.setModColumnsDefaultValue();
-                });
-                menuRepository.saveAll(children);
-            }
+    public ResponseDto addMenu(MenuRequestDto menuRequestDto) {
+        menuRepository.save(menuRequestDto.toMenu());
+
+        return ResponseDto.success(SuccessMessage.Menu.ADD_MENU);
+    }
+
+    public ResponseDto updateMenu(MenuRequestDto menuRequestDto) {
+        //update menu
+        menuRepository.save(menuRequestDto.toUpdateMenu());
+        //update children
+        List<Menu> children = menuRepository.findAllByUpMenuId(menuRequestDto.getId());
+        if (children.size() > 0) {
+            children.forEach(child -> {
+                child.setUpMenuName(menuRequestDto.getName());
+                child.setModColumnsDefaultValue();
+            });
+            menuRepository.saveAll(children);
         }
-        return ResponseDto.success(StringUtils.isEmpty(dto.getId()) ? SuccessMessage.Menu.ADD_MENU : SuccessMessage.Menu.UPDATE_MENU);
+        return ResponseDto.success(SuccessMessage.Menu.UPDATE_MENU);
     }
 
 }

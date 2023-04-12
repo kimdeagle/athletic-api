@@ -1,12 +1,11 @@
 package com.athletic.api.system.menu.repository;
 
-import com.athletic.api.auth.util.SecurityUtil;
 import com.athletic.api.system.menu.entity.Menu;
-import com.athletic.api.util.constant.Const;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -18,12 +17,20 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Menu> findAllByAuthorityIdAndUseYn() {
+    public List<Menu> findAllByAdminIdAndUseYn(String adminId, String useYn) {
         return queryFactory
                 .selectFrom(menu)
                 .join(admin)
                 .on(hasAuthorities())
-                .where(eqAdminId(SecurityUtil.getCurrentId()), eqMenuUseYn(Const.USE_YN_Y))
+                .where(eqAdminId(adminId), eqMenuUseYn(useYn))
+                .fetch();
+    }
+
+    @Override
+    public List<Menu> findAllByUpMenuId(String upMenuId) {
+        return queryFactory
+                .selectFrom(menu)
+                .where(eqUpMenuId(upMenuId))
                 .fetch();
     }
 
@@ -32,10 +39,14 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
     }
 
     private BooleanExpression eqAdminId(String id) {
-        return admin.id.eq(id);
+        return StringUtils.isNotBlank(id) ? admin.id.eq(id) : null;
     }
 
     private BooleanExpression eqMenuUseYn(String useYn) {
-        return menu.useYn.eq(useYn);
+        return StringUtils.isNotBlank(useYn) ? menu.useYn.eq(useYn) : null;
+    }
+
+    private BooleanExpression eqUpMenuId(String upMenuId) {
+        return StringUtils.isNotBlank(upMenuId) ? menu.upMenuId.eq(upMenuId) : null;
     }
 }
