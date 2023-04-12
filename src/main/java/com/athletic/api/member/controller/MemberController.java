@@ -55,5 +55,5 @@ public class MemberController {
     public void downloadExcel() { memberSelector.downloadExcel(); }
 
     @PostMapping("/excel/upload")
-    public ResponseEntity<ResponseDto> uploadExcel(MultipartFile file) throws IOException { return ResponseEntity.ok(memberService.uploadExcel(file)); }
+    public ResponseEntity<ResponseDto> uploadExcel(MultipartFile file) { return ResponseEntity.ok(memberService.uploadExcel(file)); }
 }

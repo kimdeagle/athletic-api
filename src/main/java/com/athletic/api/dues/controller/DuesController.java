@@ -58,11 +58,11 @@ public class DuesController {
     }
 
     @PostMapping("/excel/download")
-    public void downloadExcel(@RequestBody ExcelDownloadSearchCondition search) {
-        duesSelector.downloadExcel(search);
+    public void downloadExcel(@RequestBody ExcelDownloadSearchCondition condition) {
+        duesSelector.downloadExcel(condition);
     }
 
     @PostMapping("/excel/upload")
-    public ResponseEntity<ResponseDto> uploadExcel(MultipartFile file) throws IOException { return ResponseEntity.ok(duesService.uploadExcel(file)); }
+    public ResponseEntity<ResponseDto> uploadExcel(MultipartFile file) { return ResponseEntity.ok(duesService.uploadExcel(file)); }
 
 }

@@ -4,6 +4,7 @@ import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.schedule.dto.ScheduleRequestDto;
 import com.athletic.api.schedule.service.ScheduleSelector;
 import com.athletic.api.schedule.service.ScheduleService;
+import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/schedule")
@@ -41,5 +45,11 @@ public class ScheduleController {
     public ResponseEntity<ResponseDto> deleteSchedule(@PathVariable("id") String id) {
         return ResponseEntity.ok(scheduleService.deleteSchedule(id));
     }
+
+    @PostMapping("/excel/download")
+    public void downloadExcel(@RequestBody ExcelDownloadSearchCondition condition) { scheduleSelector.downloadExcel(condition); }
+
+    @PostMapping("/excel/upload")
+    public ResponseEntity<ResponseDto> uploadExcel(MultipartFile file) { return ResponseEntity.ok(scheduleService.uploadExcel(file)); }
 
 }

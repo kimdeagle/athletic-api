@@ -45,20 +45,24 @@ public class ExcelReader {
     private static int colIndex;
 
     /* read excel */
-    public static <T> List<T> read(MultipartFile file, Class<T> clazz) throws IOException {
+    public static <T> List<T> read(MultipartFile file, Class<T> clazz) {
         validationFile(file);
-        File tempFile = File.createTempFile("temp", ".tmp");
-        file.transferTo(tempFile);
-        try (InputStream is = new FileInputStream(tempFile)) {
-            workbook = new XSSFWorkbook(is);
-            sheet = workbook.getSheetAt(SHEET_INDEX);
-            rowCount = sheet.getPhysicalNumberOfRows() - 1;
-            fields = getUploadFields(clazz);
-            return extractListFromExcel(clazz);
+        try {
+            File tempFile = File.createTempFile("temp", ".tmp");
+            file.transferTo(tempFile);
+            try (InputStream is = new FileInputStream(tempFile)) {
+                workbook = new XSSFWorkbook(is);
+                sheet = workbook.getSheetAt(SHEET_INDEX);
+                rowCount = sheet.getPhysicalNumberOfRows() - 1;
+                fields = getUploadFields(clazz);
+                return extractListFromExcel(clazz);
+            } catch (IOException e) {
+                throw new CustomException(ErrorCode.INVALID_EXCEL_UPLOAD_FILE);
+            } finally {
+                FileUtils.deleteQuietly(tempFile);
+            }
         } catch (IOException e) {
             throw new CustomException(ErrorCode.INVALID_EXCEL_UPLOAD_FILE);
-        } finally {
-            FileUtils.deleteQuietly(tempFile);
         }
     }
 

@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum SampleCode {
     MEMBER("/excel/member", "memberUploadSample.xlsx"),
     DUES("/excel/dues", "duesUploadSample.xlsx"),
+    SCHEDULE("/excel/schedule", "scheduleUploadSample.xlsx"),
     ;
 
     private String path;

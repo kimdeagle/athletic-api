@@ -23,7 +23,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -95,10 +94,10 @@ public class ExcelWriter {
     /* get excel fields by clazz */
     private static List<Field> getExcelFields(Class<?> clazz) {
         return Arrays.stream(clazz.getDeclaredFields())
-                .filter(field -> field.isAnnotationPresent(ExcelColumn.class))
+                .filter(field -> field.isAnnotationPresent(ExcelDownloadColumn.class))
                 .sorted((field1, field2) -> {
-                    int sort1 = field1.getAnnotation(ExcelColumn.class).sort();
-                    int sort2 = field2.getAnnotation(ExcelColumn.class).sort();
+                    int sort1 = field1.getAnnotation(ExcelDownloadColumn.class).sort();
+                    int sort2 = field2.getAnnotation(ExcelDownloadColumn.class).sort();
                     return sort1 - sort2;
                 })
                 .collect(Collectors.toList());
@@ -111,13 +110,13 @@ public class ExcelWriter {
         int columnIndex = COLUMN_START_INDEX;
 
         for (Field field : excelFields) {
-            ExcelColumn excelColumn = field.getAnnotation(ExcelColumn.class);
-            setColumnWidth(columnIndex, excelColumn.width());
+            ExcelDownloadColumn excelDownloadColumn = field.getAnnotation(ExcelDownloadColumn.class);
+            setColumnWidth(columnIndex, excelDownloadColumn.width());
 
             Cell cell = row.createCell(columnIndex++);
-            cell.setCellValue(excelColumn.headerName());
+            cell.setCellValue(excelDownloadColumn.headerName());
 
-            setHeaderCellStyle(excelColumn.headerStyle());
+            setHeaderCellStyle(excelDownloadColumn.headerStyle());
             cell.setCellStyle(cellStyle);
         }
     }
@@ -174,14 +173,14 @@ public class ExcelWriter {
         int columnIndex = COLUMN_START_INDEX;
 
         for (Field field : excelFields) {
-            ExcelColumn excelColumn = field.getAnnotation(ExcelColumn.class);
+            ExcelDownloadColumn excelDownloadColumn = field.getAnnotation(ExcelDownloadColumn.class);
             try {
                 field.setAccessible(true);
 
                 Cell cell = row.createCell(columnIndex++);
                 setCellValue(cell, field.get(data));
 
-                setBodyCellStyle(excelColumn, field.getType());
+                setBodyCellStyle(excelDownloadColumn, field.getType());
                 cell.setCellStyle(cellStyle);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -211,8 +210,8 @@ public class ExcelWriter {
     }
 
     /* set body cell style */
-    private static void setBodyCellStyle(ExcelColumn excelColumn, Class<?> type) {
-        setCellStyle(excelColumn.bodyStyle());
+    private static void setBodyCellStyle(ExcelDownloadColumn excelDownloadColumn, Class<?> type) {
+        setCellStyle(excelDownloadColumn.bodyStyle());
 
         //set data format
         DataFormat dataFormat = workbook.createDataFormat();

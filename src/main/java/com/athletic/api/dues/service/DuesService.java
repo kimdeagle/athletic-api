@@ -38,7 +38,7 @@ public class DuesService {
         return ResponseDto.success(SuccessMessage.Dues.UPDATE_DUES);
     }
 
-    public ResponseDto uploadExcel(MultipartFile file) throws IOException {
+    public ResponseDto uploadExcel(MultipartFile file) {
         List<DuesRequestDto> excelList = ExcelReader.read(file, DuesRequestDto.class);
 
         duesRepository.saveAll(excelList.stream().map(DuesRequestDto::toDuesByExcel).collect(Collectors.toList()));

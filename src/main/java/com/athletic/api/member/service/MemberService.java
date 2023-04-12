@@ -51,7 +51,7 @@ public class MemberService {
         return ResponseDto.success(SuccessMessage.getMessageByParams(SuccessMessage.Member.DELETE_MEMBERS, String.valueOf(idList.size())));
     }
 
-    public ResponseDto uploadExcel(MultipartFile file) throws IOException {
+    public ResponseDto uploadExcel(MultipartFile file) {
         List<MemberRequestDto> excelList = ExcelReader.read(file, MemberRequestDto.class);
 
         List<String> duplicationList = getNameAndMobileNoDuplicateInExcel(excelList);

@@ -5,7 +5,6 @@ import com.athletic.api.dues.entity.Dues;
 import com.athletic.api.util.code.CodeGroup;
 import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
 import com.athletic.api.util.querydsl.QuerydslUtil;
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -13,6 +12,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.athletic.api.dues.entity.QDues.dues;
@@ -23,20 +23,15 @@ public class DuesRepositoryImpl implements DuesRepositoryCustom {
 
     @Override
     public List<Dues> findAllByExcelDownloadSearchCondition(ExcelDownloadSearchCondition condition) {
-        BooleanBuilder builder = new BooleanBuilder();
-        if (condition.getStartDt() != null && condition.getEndDt() != null) {
-            builder.and(QuerydslUtil.dateTimeToDate(dues.startDt).loe(condition.getEndDt().toLocalDate())).and(QuerydslUtil.dateTimeToDate(dues.endDt).goe(condition.getStartDt().toLocalDate()));
-        }
-        if (StringUtils.isNotBlank(condition.getInOutCd())) {
-            builder.and(eqInOutCd(condition.getInOutCd()));
-        }
-        if (StringUtils.isNotBlank(condition.getInOutDtlCd())) {
-            builder.and(eqInOutDtlCd(condition.getInOutDtlCd()));
-        }
-
         return queryFactory
                 .selectFrom(dues)
-                .where(builder)
+                .where(loeStartDt(condition.getEndDt()),
+                        goeEndDt(condition.getStartDt()),
+                        eqInOutCd(condition.getInOutCd()),
+                        eqInOutDtlCd(condition.getInOutDtlCd()))
+                .orderBy(dues.startDt.asc(),
+                        dues.endDt.asc(),
+                        dues.amount.asc())
                 .fetch();
     }
 
@@ -72,6 +67,14 @@ public class DuesRepositoryImpl implements DuesRepositoryCustom {
     private BooleanExpression betweenUntilMonth() {
         return QuerydslUtil.truncDateTimeUntilMonth(Expressions.currentTimestamp())
                 .between(QuerydslUtil.truncDateTimeUntilMonth(dues.startDt), QuerydslUtil.truncDateTimeUntilMonth(dues.endDt));
+    }
+
+    private BooleanExpression loeStartDt(LocalDateTime right) {
+        return right != null ? QuerydslUtil.dateTimeToDate(dues.startDt).loe(right.toLocalDate()) : null;
+    }
+
+    private BooleanExpression goeEndDt(LocalDateTime right) {
+        return right != null ? QuerydslUtil.dateTimeToDate(dues.endDt).goe(right.toLocalDate()) : null;
     }
 
     private BooleanExpression eqInOutCd(String inOutCd) {

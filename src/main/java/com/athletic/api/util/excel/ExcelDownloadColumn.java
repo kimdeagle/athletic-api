@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExcelColumn {
+public @interface ExcelDownloadColumn {
     String headerName() default "";
     int sort();
     int width() default 15;

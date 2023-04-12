@@ -3,6 +3,8 @@ package com.athletic.api.schedule.service;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.schedule.dto.ScheduleResponseDto;
 import com.athletic.api.schedule.repository.ScheduleRepository;
+import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
+import com.athletic.api.util.excel.ExcelWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,5 +22,14 @@ public class ScheduleSelector {
         List<ScheduleResponseDto> list = scheduleRepository.findAll().stream().map(ScheduleResponseDto::of).collect(Collectors.toList());
 
         return ResponseDto.success(list);
+    }
+
+    public void downloadExcel(ExcelDownloadSearchCondition condition) {
+        List<ScheduleResponseDto> list =
+                scheduleRepository.findAllByExcelDownloadSearchCondition(condition)
+                        .stream().map(ScheduleResponseDto::of)
+                        .collect(Collectors.toList());
+
+        ExcelWriter.write("일정 리스트", list, ScheduleResponseDto.class);
     }
 }
