@@ -4,15 +4,15 @@ import com.athletic.api.dues.dto.DuesResponseDto;
 import com.athletic.api.dues.entity.Dues;
 import com.athletic.api.util.code.CodeGroup;
 import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
-import com.athletic.api.util.querydsl.QuerydslUtil;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.DateTemplate;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.athletic.api.dues.entity.QDues.dues;
@@ -43,7 +43,7 @@ public class DuesRepositoryImpl implements DuesRepositoryCustom {
                                 dues.inOutCd,
                                 dues.amount.sum().as("amount")))
                         .from(dues)
-                        .where(betweenUntilMonth())
+                        .where(currentDateBetweenStartDtAndEndDtUntilMonth())
                         .groupBy(dues.inOutCd)
                         .fetch();
 
@@ -64,17 +64,13 @@ public class DuesRepositoryImpl implements DuesRepositoryCustom {
         return list;
     }
 
-    private BooleanExpression betweenUntilMonth() {
-        return QuerydslUtil.truncDateTimeUntilMonth(Expressions.currentTimestamp())
-                .between(QuerydslUtil.truncDateTimeUntilMonth(dues.startDt), QuerydslUtil.truncDateTimeUntilMonth(dues.endDt));
+
+    private BooleanExpression loeStartDt(LocalDate right) {
+        return right != null ? dues.startDt.loe(right) : null;
     }
 
-    private BooleanExpression loeStartDt(LocalDateTime right) {
-        return right != null ? QuerydslUtil.dateTimeToDate(dues.startDt).loe(right.toLocalDate()) : null;
-    }
-
-    private BooleanExpression goeEndDt(LocalDateTime right) {
-        return right != null ? QuerydslUtil.dateTimeToDate(dues.endDt).goe(right.toLocalDate()) : null;
+    private BooleanExpression goeEndDt(LocalDate right) {
+        return right != null ? dues.endDt.goe(right) : null;
     }
 
     private BooleanExpression eqInOutCd(String inOutCd) {
@@ -83,5 +79,14 @@ public class DuesRepositoryImpl implements DuesRepositoryCustom {
 
     private BooleanExpression eqInOutDtlCd(String inOutDtlCd) {
         return StringUtils.isNotBlank(inOutDtlCd) ? dues.inOutDtlCd.eq(inOutDtlCd) : null;
+    }
+
+    private BooleanExpression currentDateBetweenStartDtAndEndDtUntilMonth() {
+        return truncDateUntilMonth(Expressions.currentDate())
+                .between(truncDateUntilMonth(dues.startDt), truncDateUntilMonth(dues.endDt));
+    }
+
+    private DateTemplate<LocalDate> truncDateUntilMonth(Object dateTime) {
+        return Expressions.dateTemplate(LocalDate.class, "DATE_TRUNC('MONTH', {0})", dateTime);
     }
 }

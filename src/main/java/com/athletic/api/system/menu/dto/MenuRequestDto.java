@@ -24,10 +24,6 @@ public class MenuRequestDto {
     private Long sortSeq;
     private String useYn;
     private List<String> authorities;
-    private String regId;
-    private LocalDateTime regDt;
-    private String modId;
-    private LocalDateTime modDt;
 
     public Menu toMenu() {
         return Menu.builder()

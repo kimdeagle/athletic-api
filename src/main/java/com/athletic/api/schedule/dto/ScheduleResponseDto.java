@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @SuperBuilder
@@ -19,16 +19,18 @@ public class ScheduleResponseDto extends BaseResponseDto {
     private String id;
 
     @ExcelDownloadColumn(headerName = "시작일자", sort = 0, width = 20, bodyStyle = ExcelCellStyle.CENTER_BODY)
-    private LocalDateTime startDt;
+    private LocalDate startDt;
 
     @ExcelDownloadColumn(headerName = "종료일자", sort = 1, width = 20, bodyStyle = ExcelCellStyle.CENTER_BODY)
-    private LocalDateTime endDt;
+    private LocalDate endDt;
 
     @ExcelDownloadColumn(headerName = "일정명", sort = 2, width = 20)
     private String title;
 
     @ExcelDownloadColumn(headerName = "상세내용", sort = 3, width = 30)
     private String description;
+
+    private String bgColor;
 
     public static ScheduleResponseDto of(Schedule schedule) {
         return ScheduleResponseDto.builder()
@@ -37,6 +39,7 @@ public class ScheduleResponseDto extends BaseResponseDto {
                 .endDt(schedule.getEndDt())
                 .title(schedule.getTitle())
                 .description(schedule.getDescription())
+                .bgColor(schedule.getBgColor())
                 .regId(schedule.getRegId())
                 .regDt(schedule.getRegDt())
                 .modId(schedule.getModId())

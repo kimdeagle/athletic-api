@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -24,14 +24,17 @@ public class Schedule extends BaseEntity {
     private String id;
 
     @Column(nullable = false)
-    private LocalDateTime startDt;
+    private LocalDate startDt;
 
     @Column(nullable = false)
-    private LocalDateTime endDt;
+    private LocalDate endDt;
 
     @Column(nullable = false)
     private String title;
 
     @Column
     private String description;
+
+    @Column
+    private String bgColor;
 }

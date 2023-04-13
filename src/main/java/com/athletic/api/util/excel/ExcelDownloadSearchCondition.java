@@ -4,14 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExcelDownloadSearchCondition {
-    private LocalDateTime startDt;
-    private LocalDateTime endDt;
+    private LocalDate startDt;
+    private LocalDate endDt;
     private String inOutCd;
     private String inOutDtlCd;
 }

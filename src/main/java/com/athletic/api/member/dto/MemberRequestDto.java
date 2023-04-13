@@ -39,14 +39,6 @@ public class MemberRequestDto {
     @ExcelUploadColumn(colIndex = 7, required = true, validationRegex = Const.DATE_REGEX, errorMessage = ErrorMessage.ExcelUpload.INVALID_JOIN_DT)
     private String joinDt;
 
-    private String regId;
-
-    private LocalDateTime regDt;
-
-    private String modId;
-
-    private LocalDateTime modDt;
-
     public Member toMember() {
         return Member.builder()
                 .name(name)

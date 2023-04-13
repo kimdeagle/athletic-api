@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,9 +24,10 @@ public class DuesRequestDto {
     private String inOutDtlCd;
 
     @ExcelUploadColumn(colIndex = 1, required = true)
-    private LocalDateTime startDt;
+    private LocalDate startDt;
+
     @ExcelUploadColumn(colIndex = 2, required = true)
-    private LocalDateTime endDt;
+    private LocalDate endDt;
 
     @ExcelUploadColumn(colIndex = 5, required = true)
     private String title;

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,10 +17,10 @@ public class ScheduleRequestDto {
     private String id;
 
     @ExcelUploadColumn(colIndex = 1, required = true)
-    private LocalDateTime startDt;
+    private LocalDate startDt;
 
     @ExcelUploadColumn(colIndex = 2, required = true)
-    private LocalDateTime endDt;
+    private LocalDate endDt;
 
     @ExcelUploadColumn(colIndex = 3, required = true)
     private String title;
@@ -27,12 +28,15 @@ public class ScheduleRequestDto {
     @ExcelUploadColumn(colIndex = 4)
     private String description;
 
+    private String bgColor;
+
     public Schedule toSchedule() {
         return Schedule.builder()
                 .startDt(startDt)
                 .endDt(endDt)
                 .title(title)
                 .description(description)
+                .bgColor(bgColor)
                 .regId(SecurityUtil.getCurrentId())
                 .regDt(LocalDateTime.now())
                 .modId(SecurityUtil.getCurrentId())
@@ -47,6 +51,7 @@ public class ScheduleRequestDto {
                 .endDt(endDt)
                 .title(title)
                 .description(description)
+                .bgColor(bgColor)
                 .modId(SecurityUtil.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();

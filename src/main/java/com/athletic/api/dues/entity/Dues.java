@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -30,10 +30,10 @@ public class Dues extends BaseEntity {
     private String inOutDtlCd;
 
     @Column(nullable = false)
-    private LocalDateTime startDt;
+    private LocalDate startDt;
 
     @Column(nullable = false)
-    private LocalDateTime endDt;
+    private LocalDate endDt;
 
     @Column(nullable = false)
     private String title;

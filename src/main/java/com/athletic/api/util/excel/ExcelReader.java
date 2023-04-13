@@ -20,11 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -140,13 +137,16 @@ public class ExcelReader {
     private static Object getCellValue(Field field) {
         Class<?> type = field.getType();
         try {
-            if (isIntegerType(type)) {
+            if (ExcelUtil.isIntegerType(type)) {
                 return cell == null ? 0 : Math.round(cell.getNumericCellValue());
             }
-            if (isFloatType(type)) {
+            if (ExcelUtil.isFloatType(type)) {
                 return cell == null ? 0 : cell.getNumericCellValue();
             }
-            if (isDateType(type)) {
+            if (ExcelUtil.isLocalDateType(type)) {
+                return cell.getLocalDateTimeCellValue().toLocalDate();
+            }
+            if (ExcelUtil.isLocalDateTimeType(type)) {
                 return cell.getLocalDateTimeCellValue();
             }
         } catch (IllegalStateException | NumberFormatException e) {
@@ -155,29 +155,4 @@ public class ExcelReader {
 
         return cell == null ? "" : cell.getStringCellValue();
     }
-
-    /* check integer type */
-    private static boolean isIntegerType(Class<?> type) {
-        List<Class<?>> integerTypes = Arrays.asList(
-                Byte.class, byte.class, Short.class, short.class, Integer.class, int.class, Long.class, long.class
-        );
-        return integerTypes.contains(type);
-    }
-
-    /* check float type */
-    private static boolean isFloatType(Class<?> type) {
-        List<Class<?>> floatTypes = Arrays.asList(
-                Float.class, float.class, Double.class, double.class
-        );
-        return floatTypes.contains(type);
-    }
-
-    /* check date type */
-    private static boolean isDateType(Class<?> type) {
-        List<Class<?>> dateTypes = Arrays.asList(
-                LocalDate.class, LocalDateTime.class, Date.class
-        );
-        return dateTypes.contains(type);
-    }
-
 }

@@ -2,12 +2,11 @@ package com.athletic.api.schedule.repository;
 
 import com.athletic.api.schedule.entity.Schedule;
 import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
-import com.athletic.api.util.querydsl.QuerydslUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.athletic.api.schedule.entity.QSchedule.schedule;
@@ -27,11 +26,11 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
                 .fetch();
     }
 
-    private BooleanExpression loeStartDt(LocalDateTime right) {
-        return right != null ? QuerydslUtil.dateTimeToDate(schedule.startDt).loe(right.toLocalDate()) : null;
+    private BooleanExpression loeStartDt(LocalDate right) {
+        return right != null ? schedule.startDt.loe(right) : null;
     }
 
-    private BooleanExpression goeEndDt(LocalDateTime right) {
-        return right != null ? QuerydslUtil.dateTimeToDate(schedule.endDt).goe(right.toLocalDate()) : null;
+    private BooleanExpression goeEndDt(LocalDate right) {
+        return right != null ? schedule.endDt.goe(right) : null;
     }
 }

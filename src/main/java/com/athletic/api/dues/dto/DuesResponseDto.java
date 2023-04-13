@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @SuperBuilder
@@ -24,10 +24,10 @@ public class DuesResponseDto extends BaseResponseDto {
     private String inOutDtlCd;
 
     @ExcelDownloadColumn(headerName = "시작일자", sort = 0, width = 20, bodyStyle = ExcelCellStyle.CENTER_BODY)
-    private LocalDateTime startDt;
+    private LocalDate startDt;
 
     @ExcelDownloadColumn(headerName = "종료일자", sort = 1, width = 20, bodyStyle = ExcelCellStyle.CENTER_BODY)
-    private LocalDateTime endDt;
+    private LocalDate endDt;
 
     @ExcelDownloadColumn(headerName = "회비명", sort = 4, width = 20)
     private String title;

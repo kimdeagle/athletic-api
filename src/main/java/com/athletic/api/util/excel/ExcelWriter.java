@@ -6,6 +6,7 @@ import com.athletic.api.util.constant.Const;
 import com.athletic.api.util.excel.style.ExcelCellStyle;
 import com.athletic.api.util.excel.style.align.ExcelAlign;
 import com.athletic.api.util.excel.style.border.ExcelBorder;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -191,22 +192,23 @@ public class ExcelWriter {
 
     /* set cell value */
     private static void setCellValue(Cell cell, Object cellValue) {
-        if (cellValue instanceof Number) {
+        Class<?> type = cellValue.getClass();
+        if (ExcelUtil.isIntegerType(type) || ExcelUtil.isFloatType(type)) {
             Number number = (Number) cellValue;
             cell.setCellValue(number.doubleValue());
             return;
         }
-        if (cellValue instanceof LocalDate) {
+        if (ExcelUtil.isLocalDateType(type)) {
             LocalDate date = (LocalDate) cellValue;
             cell.setCellValue(date);
             return;
         }
-        if (cellValue instanceof LocalDateTime) {
+        if (ExcelUtil.isLocalDateTimeType(type)) {
             LocalDateTime dateTime = (LocalDateTime) cellValue;
             cell.setCellValue(dateTime);
             return;
         }
-        cell.setCellValue(cellValue == null ? "" : cellValue.toString());
+        cell.setCellValue(ObjectUtils.isNotEmpty(cellValue) ? cellValue.toString() : "");
     }
 
     /* set body cell style */
@@ -220,35 +222,19 @@ public class ExcelWriter {
 
     /* get data format */
     private static short getDataFormat(DataFormat dataFormat, Class<?> type) {
-        if (isFloatType(type))
-            return dataFormat.getFormat(FLOAT_FORMAT);
-
-        if (isIntegerType(type))
+        if (ExcelUtil.isIntegerType(type))
             return dataFormat.getFormat(INTEGER_FORMAT);
 
-        if (type.equals(LocalDate.class))
+        if (ExcelUtil.isFloatType(type))
+            return dataFormat.getFormat(FLOAT_FORMAT);
+
+        if (ExcelUtil.isLocalDateType(type))
             return dataFormat.getFormat(Const.DEFAULT_LOCAL_DATE_FORMAT);
 
-        if (type.equals(LocalDateTime.class))
+        if (ExcelUtil.isLocalDateTimeType(type))
             return dataFormat.getFormat(Const.DEFAULT_LOCAL_DATE_TIME_FORMAT);
 
         return dataFormat.getFormat(DEFAULT_FORMAT);
-    }
-
-    /* check float type */
-    private static boolean isFloatType(Class<?> type) {
-        List<Class<?>> floatTypes = Arrays.asList(
-                Float.class, float.class, Double.class, double.class
-        );
-        return floatTypes.contains(type);
-    }
-
-    /* check integer type */
-    private static boolean isIntegerType(Class<?> type) {
-        List<Class<?>> integerTypes = Arrays.asList(
-                Byte.class, byte.class, Short.class, short.class, Integer.class, int.class, Long.class, long.class
-        );
-        return integerTypes.contains(type);
     }
 
     /* write excel to response */
@@ -261,7 +247,7 @@ public class ExcelWriter {
 
         try (OutputStream os = response.getOutputStream()) {
             response.setContentType(Const.EXCEL_CONTENT_TYPE);
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment().filename(LocalDate.now() + " " + filename, StandardCharsets.UTF_8).build().toString());
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment().filename(LocalDate.now() + " " + filename + FILE_EXTENSION, StandardCharsets.UTF_8).build().toString());
             workbook.write(os);
         } catch (Exception e) {
             throw new CustomException(ErrorCode.FAIL_EXCEL_DOWNLOAD);
