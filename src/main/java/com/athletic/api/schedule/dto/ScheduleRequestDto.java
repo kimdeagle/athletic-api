@@ -2,10 +2,12 @@ package com.athletic.api.schedule.dto;
 
 import com.athletic.api.auth.util.SecurityUtil;
 import com.athletic.api.schedule.entity.Schedule;
+import com.athletic.api.util.code.CodeDetail;
 import com.athletic.api.util.excel.ExcelUploadColumn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,6 +30,7 @@ public class ScheduleRequestDto {
     @ExcelUploadColumn(colIndex = 4)
     private String description;
 
+    @ExcelUploadColumn(colIndex = 5)
     private String bgColor;
 
     public Schedule toSchedule() {
@@ -36,7 +39,7 @@ public class ScheduleRequestDto {
                 .endDt(endDt)
                 .title(title)
                 .description(description)
-                .bgColor(bgColor)
+                .bgColor(StringUtils.isNotBlank(bgColor) ? bgColor : CodeDetail.BG_COLOR_BLUE.getCode())
                 .regId(SecurityUtil.getCurrentId())
                 .regDt(LocalDateTime.now())
                 .modId(SecurityUtil.getCurrentId())
@@ -51,7 +54,7 @@ public class ScheduleRequestDto {
                 .endDt(endDt)
                 .title(title)
                 .description(description)
-                .bgColor(bgColor)
+                .bgColor(StringUtils.isNotBlank(bgColor) ? bgColor : CodeDetail.BG_COLOR_BLUE.getCode())
                 .modId(SecurityUtil.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();

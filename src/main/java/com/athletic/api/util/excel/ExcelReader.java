@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -100,19 +102,24 @@ public class ExcelReader {
     private static <T> T extractObjectFromRow(Class<T> clazz) {
         try {
             T object = clazz.getDeclaredConstructor().newInstance();
-            colIndex = COLUMN_START_INDEX;
             for (Field field : fields) {
+                colIndex = getColIndex(field);
                 field.setAccessible(true);
                 cell = row.getCell(colIndex);
                 validateCellValue(field);
                 field.set(object, getCellValue(field));
-                colIndex++;
             }
             return object;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
             throw new CustomException(ErrorCode.FAIL_EXCEL_UPLOAD);
         }
+    }
+
+    /* get colIndex */
+    private static int getColIndex(Field field) {
+        ExcelUploadColumn excelUploadColumn = field.getAnnotation(ExcelUploadColumn.class);
+        return excelUploadColumn.colIndex();
     }
 
     /* validate cell value */
@@ -144,10 +151,10 @@ public class ExcelReader {
                 return cell == null ? 0 : cell.getNumericCellValue();
             }
             if (ExcelUtil.isLocalDateType(type)) {
-                return cell.getLocalDateTimeCellValue().toLocalDate();
+                return cell == null ? LocalDate.now() : cell.getLocalDateTimeCellValue().toLocalDate();
             }
             if (ExcelUtil.isLocalDateTimeType(type)) {
-                return cell.getLocalDateTimeCellValue();
+                return cell == null ? LocalDateTime.now() : cell.getLocalDateTimeCellValue();
             }
         } catch (IllegalStateException | NumberFormatException e) {
             throw new CustomException(ErrorCode.ERROR_EXCEL_UPLOAD_BY_TEMPLATE, CellReference.convertNumToColString(colIndex) + rowIndex, ErrorMessage.ExcelUpload.INVALID_DATA_FORMAT);
