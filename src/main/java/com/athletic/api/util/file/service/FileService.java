@@ -30,8 +30,9 @@ public class FileService {
 
         Resource resource = resourceLoader.getResource(STATIC_PATH + SAMPLE_PATH_PREFIX + path + "/" + filename);
 
-        if (!resource.exists())
+        if (!resource.exists()) {
             throw new CustomException(ErrorCode.NOT_FOUND_SAMPLE_FILE);
+        }
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)

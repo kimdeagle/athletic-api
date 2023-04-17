@@ -39,19 +39,24 @@ public class EmailService {
         try {
             boolean useHtml = StringUtils.isNotBlank(emailDto.getCode());
 
-            if (useHtml) processTemplate(emailDto);
+            if (useHtml) {
+                processTemplate(emailDto);
+            }
 
             EmailHandler emailHandler = new EmailHandler(javaMailSender);
 
             emailHandler.setFrom(from);
             Object to = emailDto.getTo();
-            if (to instanceof String) emailHandler.setTo((String) to);
-            if (to instanceof String[]) emailHandler.setTo((String[]) to);
+            if (to instanceof String) {
+                emailHandler.setTo((String) to);
+            }
+            if (to instanceof String[]) {
+                emailHandler.setTo((String[]) to);
+            }
             emailHandler.setSubject(emailDto.getSubject());
             emailHandler.setText(emailDto.getText(), useHtml);
             emailHandler.send();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new CustomException(ErrorCode.FAIL_SEND_EMAIL);
         }
     }

@@ -1,7 +1,5 @@
 package com.athletic.api.util.email.handler;
 
-import com.athletic.api.exception.CustomException;
-import com.athletic.api.exception.ErrorCode;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;

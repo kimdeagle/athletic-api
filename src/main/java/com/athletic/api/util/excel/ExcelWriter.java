@@ -72,12 +72,14 @@ public class ExcelWriter {
 
     /* check list size */
     private static void validateData(List<?> list) {
-        if (list.isEmpty())
+        if (list.isEmpty()) {
             throw new CustomException(ErrorCode.EMPTY_EXCEL_DOWNLOAD_LIST);
+        }
 
         int maxRows = SpreadsheetVersion.EXCEL2007.getMaxRows();
-        if (list.size() > maxRows)
+        if (list.size() > maxRows) {
             throw new CustomException(ErrorCode.OVERFLOW_MAX_ROWS_EXCEL_DOWNLOAD, NumberFormat.getInstance().format(maxRows));
+        }
     }
 
     /* initialize excel */
@@ -184,7 +186,6 @@ public class ExcelWriter {
                 setBodyCellStyle(excelDownloadColumn, field.getType());
                 cell.setCellStyle(cellStyle);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
                 throw new CustomException(ErrorCode.FAIL_EXCEL_DOWNLOAD);
             }
         }
@@ -222,17 +223,21 @@ public class ExcelWriter {
 
     /* get data format */
     private static short getDataFormat(DataFormat dataFormat, Class<?> type) {
-        if (ExcelUtil.isIntegerType(type))
+        if (ExcelUtil.isIntegerType(type)) {
             return dataFormat.getFormat(INTEGER_FORMAT);
+        }
 
-        if (ExcelUtil.isFloatType(type))
+        if (ExcelUtil.isFloatType(type)) {
             return dataFormat.getFormat(FLOAT_FORMAT);
+        }
 
-        if (ExcelUtil.isLocalDateType(type))
+        if (ExcelUtil.isLocalDateType(type)) {
             return dataFormat.getFormat(Const.DEFAULT_LOCAL_DATE_FORMAT);
+        }
 
-        if (ExcelUtil.isLocalDateTimeType(type))
+        if (ExcelUtil.isLocalDateTimeType(type)) {
             return dataFormat.getFormat(Const.DEFAULT_LOCAL_DATE_TIME_FORMAT);
+        }
 
         return dataFormat.getFormat(DEFAULT_FORMAT);
     }
@@ -242,8 +247,9 @@ public class ExcelWriter {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpServletResponse response = attributes.getResponse();
 
-        if (response == null)
+        if (response == null) {
             throw new CustomException(ErrorCode.FAIL_EXCEL_DOWNLOAD);
+        }
 
         try (OutputStream os = response.getOutputStream()) {
             response.setContentType(Const.EXCEL_CONTENT_TYPE);

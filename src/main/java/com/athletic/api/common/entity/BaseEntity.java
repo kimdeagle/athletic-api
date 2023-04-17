@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class BaseEntity {
+public class BaseEntity {
     @Column(updatable = false)
     private String regId;
 

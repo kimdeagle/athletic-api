@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,8 +26,9 @@ public class MemberService {
 
     public ResponseDto addMember(MemberRequestDto memberRequestDto) {
         boolean isExistMember = memberRepository.existsByNameAndMobileNo(memberRequestDto.getName(), memberRequestDto.getMobileNo());
-        if (isExistMember)
+        if (isExistMember) {
             throw new CustomException(ErrorCode.EXIST_MEMBER);
+        }
 
         memberRepository.save(memberRequestDto.toMember());
 
@@ -37,8 +37,9 @@ public class MemberService {
 
     public ResponseDto updateMember(MemberRequestDto memberRequestDto) {
         boolean isExist = memberRepository.existsById(memberRequestDto.getId());
-        if (!isExist)
+        if (!isExist) {
             throw new CustomException(ErrorCode.NOT_FOUND_MEMBER);
+        }
 
         memberRepository.save(memberRequestDto.toUpdateMember());
 
@@ -55,14 +56,16 @@ public class MemberService {
         List<MemberRequestDto> excelList = ExcelReader.read(file, MemberRequestDto.class);
 
         List<String> duplicationList = getNameAndMobileNoDuplicateInExcel(excelList);
-        if (!duplicationList.isEmpty())
+        if (!duplicationList.isEmpty()) {
             throw new CustomException(ErrorCode.DUPLICATION_MEMBER_IN_EXCEL, String.join("\n", duplicationList));
+        }
 
         List<Member> dbList = memberRepository.findAll().stream().peek(member -> member.setMobileNo(member.getMobileNo().replaceAll("[^0-9]", ""))).collect(Collectors.toList());
 
         List<String> existenceList = getNameListExistInDatabase(excelList, dbList);
-        if (!existenceList.isEmpty())
+        if (!existenceList.isEmpty()) {
             throw new CustomException(ErrorCode.EXIST_MEMBER_IN_DATABASE, String.join("\n", existenceList));
+        }
 
         memberRepository.saveAll(excelList.stream().map(MemberRequestDto::toMember).collect(Collectors.toList()));
 

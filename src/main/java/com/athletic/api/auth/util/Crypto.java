@@ -26,7 +26,9 @@ public class Crypto {
 
     public String encryptAES256(String text) {
         try {
-            if (StringUtils.isBlank(text)) return text;
+            if (StringUtils.isBlank(text)) {
+                return text;
+            }
             Cipher cipher = Cipher.getInstance(algorithm);
             SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "AES");
             String iv = key.substring(0, 16);
@@ -35,14 +37,15 @@ public class Crypto {
             byte[] encrypted = cipher.doFinal(text.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(encrypted);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
             throw new RuntimeException("error CryptUtil.encryptAES256()");
         }
     }
 
     public String decryptAES256(String text) {
         try {
-            if (StringUtils.isBlank(text)) return text;
+            if (StringUtils.isBlank(text)) {
+                return text;
+            }
             Cipher cipher = Cipher.getInstance(algorithm);
             SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "AES");
             String iv = key.substring(0, 16);
@@ -52,7 +55,6 @@ public class Crypto {
             byte[] decrypted = cipher.doFinal(decodedBytes);
             return new String(decrypted, StandardCharsets.UTF_8);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
             throw new RuntimeException("error CryptUtil.decryptAES256()");
         }
     }

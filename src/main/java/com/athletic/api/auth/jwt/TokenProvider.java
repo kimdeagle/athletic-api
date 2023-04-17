@@ -62,7 +62,9 @@ public class TokenProvider {
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 
-        if (claims.get(Const.AUTHORITIES_KEY) == null) throw new CustomException(ErrorCode.UNAUTHORIZED_TOKEN);
+        if (claims.get(Const.AUTHORITIES_KEY) == null) {
+            throw new CustomException(ErrorCode.UNAUTHORIZED_TOKEN);
+        }
 
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get(Const.AUTHORITIES_KEY).toString().split(","))

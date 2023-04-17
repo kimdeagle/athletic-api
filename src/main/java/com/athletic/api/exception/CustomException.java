@@ -6,6 +6,9 @@ import java.util.List;
 
 @Getter
 public class CustomException extends RuntimeException {
+
+    private static final long serialVersionUID = 1L;
+
     private final ErrorCode errorCode;
     private final Object parameter;
 

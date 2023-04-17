@@ -39,7 +39,7 @@ public class MenuService {
         menuRepository.save(menuRequestDto.toUpdateMenu());
         //update children
         List<Menu> children = menuRepository.findAllByUpMenuId(menuRequestDto.getId());
-        if (children.size() > 0) {
+        if (!children.isEmpty()) {
             children.forEach(child -> {
                 child.setUpMenuName(menuRequestDto.getName());
                 child.setModColumnsDefaultValue();

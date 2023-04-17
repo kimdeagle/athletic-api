@@ -28,12 +28,14 @@ public class AdminService {
         String prevRawLoginPw = adminRequestDto.getLoginPw();
         String prevEncLoginPw = admin.getLoginPw();
 
-        if (!passwordEncoder.matches(prevRawLoginPw, prevEncLoginPw))
+        if (!passwordEncoder.matches(prevRawLoginPw, prevEncLoginPw)) {
             throw new CustomException(ErrorCode.NOT_MATCH_CURRENT_PASSWORD);
+        }
 
         String nextRawLoginPw = adminRequestDto.getChangePw();
-        if (passwordEncoder.matches(nextRawLoginPw, prevEncLoginPw))
+        if (passwordEncoder.matches(nextRawLoginPw, prevEncLoginPw)) {
             throw new CustomException(ErrorCode.CANNOT_CHANGE_SAME_PASSWORD);
+        }
 
         admin.setLoginPw(nextRawLoginPw);
         admin.setModColumnsDefaultValue();
@@ -47,8 +49,9 @@ public class AdminService {
         String id = SecurityUtil.getCurrentId();
         Admin admin = adminRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
         String encLoginPw = admin.getLoginPw();
-        if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), encLoginPw))
+        if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), encLoginPw)) {
             throw new CustomException(ErrorCode.NOT_MATCH_CURRENT_PASSWORD);
+        }
 
         adminRepository.deleteById(id);
 

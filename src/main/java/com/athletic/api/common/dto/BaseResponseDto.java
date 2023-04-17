@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @SuperBuilder
 @NoArgsConstructor
-public abstract class BaseResponseDto {
+public class BaseResponseDto {
     private String regId;
 
     private LocalDateTime regDt;

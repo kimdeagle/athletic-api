@@ -17,17 +17,19 @@ public class CustomExceptionHandler {
         String message = exception.getErrorCode().getMessage();
         Object parameter = exception.getParameter();
         message = convertMessage(message, parameter);
-        if (log.isErrorEnabled())
-            exception.printStackTrace();
+        if (log.isErrorEnabled()) {
+//            exception.printStackTrace();
             log.error("CustomException : {} ({})", name, message);
+        }
         return ErrorResponseEntity.toResponseEntity(status, name, message);
     }
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponseEntity> handleException(Exception e) {
-        if (log.isErrorEnabled())
-            e.printStackTrace();
+        if (log.isErrorEnabled()) {
+//            e.printStackTrace();
             log.error("Unknown Exception : {}", e.getMessage());
+        }
         return handleCustomException(new CustomException(ErrorCode.UNKNOWN));
     }
 

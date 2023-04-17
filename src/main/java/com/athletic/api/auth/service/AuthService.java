@@ -43,8 +43,9 @@ public class AuthService {
     private final AuthorityRepository authorityRepository;
 
     public ResponseDto join(AdminRequestDto adminRequestDto) {
-        if (adminRepository.existsByLoginId(adminRequestDto.getLoginId()))
+        if (adminRepository.existsByLoginId(adminRequestDto.getLoginId())) {
             throw new CustomException(ErrorCode.EXIST_LOGIN_ID);
+        }
 
         Admin admin = adminRequestDto.toAdmin();
 
@@ -71,13 +72,15 @@ public class AuthService {
     public ResponseDto login(AdminRequestDto adminRequestDto) {
         Admin admin = adminRepository.findByLoginId(adminRequestDto.getLoginId()).orElseThrow(() -> new CustomException(ErrorCode.INVALID_ID_OR_PASSWORD));
 
-        if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), admin.getLoginPw()))
+        if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), admin.getLoginPw())) {
             throw new CustomException(ErrorCode.INVALID_ID_OR_PASSWORD);
-        if (StringUtils.equals(admin.getApproveStatusCd(), CodeDetail.APPROVE_STATUS_WAIT.getCode()))
+        }
+        if (StringUtils.equals(admin.getApproveStatusCd(), CodeDetail.APPROVE_STATUS_WAIT.getCode())) {
             throw new CustomException(ErrorCode.INVALID_APPROVE_STATUS, CodeDetail.APPROVE_STATUS_WAIT.getName());
-
-        if (StringUtils.equals(admin.getApproveStatusCd(), CodeDetail.APPROVE_STATUS_REJECT.getCode()))
+        }
+        if (StringUtils.equals(admin.getApproveStatusCd(), CodeDetail.APPROVE_STATUS_REJECT.getCode())) {
             throw new CustomException(ErrorCode.INVALID_APPROVE_STATUS, CodeDetail.APPROVE_STATUS_REJECT.getName());
+        }
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(adminRequestDto.getLoginId(), adminRequestDto.getLoginPw());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);

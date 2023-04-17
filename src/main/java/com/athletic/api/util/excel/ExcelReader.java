@@ -38,7 +38,6 @@ public class ExcelReader {
 
     private static final int SHEET_INDEX = 0;
     private static final int ROW_START_INDEX = 2;
-    private static final int COLUMN_START_INDEX = 1;
 
     private static int rowIndex;
     private static int colIndex;
@@ -67,11 +66,13 @@ public class ExcelReader {
 
     /* validation file */
     private static void validationFile(MultipartFile file) {
-        if (file == null)
+        if (file == null) {
             throw new CustomException(ErrorCode.EMPTY_EXCEL_UPLOAD_FILE);
+        }
 
-        if (!StringUtils.equals(Const.EXCEL_CONTENT_TYPE, file.getContentType()))
+        if (!StringUtils.equals(Const.EXCEL_CONTENT_TYPE, file.getContentType())) {
             throw new CustomException(ErrorCode.INVALID_EXCEL_UPLOAD_FILE);
+        }
     }
 
     /* get upload field list */
@@ -92,8 +93,9 @@ public class ExcelReader {
         rowIndex = ROW_START_INDEX;
         for (int i=0; i < rowCount; i++) {
             row = sheet.getRow(rowIndex++);
-            if (row != null)
+            if (row != null) {
                 list.add(extractObjectFromRow(clazz));
+            }
         }
         return list;
     }
@@ -111,7 +113,6 @@ public class ExcelReader {
             }
             return object;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
             throw new CustomException(ErrorCode.FAIL_EXCEL_UPLOAD);
         }
     }
@@ -127,8 +128,9 @@ public class ExcelReader {
         ExcelUploadColumn excelUploadColumn = field.getAnnotation(ExcelUploadColumn.class);
 
         //1. 필수 항목 체크
-        if (excelUploadColumn.required() && (cell == null || StringUtils.isBlank(cell.toString())))
+        if (excelUploadColumn.required() && (cell == null || StringUtils.isBlank(cell.toString()))) {
             throw new CustomException(ErrorCode.ERROR_EXCEL_UPLOAD_BY_TEMPLATE, CellReference.convertNumToColString(colIndex) + rowIndex, ErrorMessage.ExcelUpload.EMPTY_REQUIRED);
+        }
 
         //2. regex 체크
         String regex = excelUploadColumn.validationRegex();

@@ -26,7 +26,9 @@ public class AesTests {
         try {
             String key = "1029a3847s5665d7483f9201";
             String algorithm = "AES/CBC/PKCS5Padding";
-            if (StringUtils.isBlank(text)) return text;
+            if (StringUtils.isBlank(text)) {
+                return text;
+            }
             Cipher cipher = Cipher.getInstance(algorithm);
             SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "AES");
             String iv = key.substring(0, 16);
@@ -36,7 +38,6 @@ public class AesTests {
             byte[] decrypted = cipher.doFinal(decodedBytes);
             return new String(decrypted, StandardCharsets.UTF_8);
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
             throw new RuntimeException("error CryptUtil.decryptAES256()");
         }
     }

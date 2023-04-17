@@ -3,10 +3,11 @@ package com.athletic.api.common.message;
 public class SuccessMessage {
 
     public static String getMessageByParams(String message, String... params) {
+        String resultMessage = message;
         for (int i=0; i<params.length; i++) {
-            message = message.replace("{" + i + "}", params[i]);
+            resultMessage = resultMessage.replace("{" + i + "}", params[i]);
         }
-        return message;
+        return resultMessage;
     }
 
     public static class Admin {
