@@ -18,7 +18,6 @@ public enum CodeDetail {
     IN_OUT_ETC("ETC", "기타"),
     BG_COLOR_RED("RED", "#F44336"),
     BG_COLOR_ORANGE("ORANGE", "#FF9800"),
-    BG_COLOR_YELLOW("YELLOW", "#FFEB3B"),
     BG_COLOR_GREEN("GREEN", "#4CAF50"),
     BG_COLOR_BLUE("BLUE", "#2196F3"),
     BG_COLOR_PINK("PINK", "#E91E63"),
