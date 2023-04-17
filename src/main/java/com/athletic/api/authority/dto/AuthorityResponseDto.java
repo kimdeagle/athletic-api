@@ -17,11 +17,13 @@ import lombok.experimental.SuperBuilder;
 public class AuthorityResponseDto extends BaseResponseDto {
     private String id;
     private String name;
+    private String displayName;
 
     public static AuthorityResponseDto of(Authority authority) {
         return AuthorityResponseDto.builder()
                 .id(authority.getId())
                 .name(authority.getName())
+                .displayName(authority.getDisplayName())
                 .regId(authority.getRegId())
                 .regDt(authority.getRegDt())
                 .modId(authority.getModId())
