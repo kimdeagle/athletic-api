@@ -31,7 +31,7 @@ public class ScheduleRequestDto {
     private String description;
 
     @ExcelUploadColumn(colIndex = 5)
-    private String bgColor;
+    private String bgColorCd;
 
     public Schedule toSchedule() {
         return Schedule.builder()
@@ -39,7 +39,7 @@ public class ScheduleRequestDto {
                 .endDt(endDt)
                 .title(title)
                 .description(description)
-                .bgColor(StringUtils.isNotBlank(bgColor) ? bgColor : CodeDetail.BG_COLOR_BLUE.getCode())
+                .bgColorCd(StringUtils.isNotBlank(bgColorCd) ? bgColorCd : CodeDetail.BG_COLOR_BLUE.getCode())
                 .regId(SecurityUtil.getCurrentId())
                 .regDt(LocalDateTime.now())
                 .modId(SecurityUtil.getCurrentId())
@@ -54,7 +54,7 @@ public class ScheduleRequestDto {
                 .endDt(endDt)
                 .title(title)
                 .description(description)
-                .bgColor(StringUtils.isNotBlank(bgColor) ? bgColor : CodeDetail.BG_COLOR_BLUE.getCode())
+                .bgColorCd(StringUtils.isNotBlank(bgColorCd) ? bgColorCd : CodeDetail.BG_COLOR_BLUE.getCode())
                 .modId(SecurityUtil.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();

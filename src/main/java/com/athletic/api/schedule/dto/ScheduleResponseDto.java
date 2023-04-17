@@ -30,7 +30,7 @@ public class ScheduleResponseDto extends BaseResponseDto {
     @ExcelDownloadColumn(headerName = "상세내용", sort = 3, width = 30)
     private String description;
 
-    private String bgColor;
+    private String bgColorCd;
 
     public static ScheduleResponseDto of(Schedule schedule) {
         return ScheduleResponseDto.builder()
@@ -39,7 +39,7 @@ public class ScheduleResponseDto extends BaseResponseDto {
                 .endDt(schedule.getEndDt())
                 .title(schedule.getTitle())
                 .description(schedule.getDescription())
-                .bgColor(schedule.getBgColor())
+                .bgColorCd(schedule.getBgColorCd())
                 .regId(schedule.getRegId())
                 .regDt(schedule.getRegDt())
                 .modId(schedule.getModId())

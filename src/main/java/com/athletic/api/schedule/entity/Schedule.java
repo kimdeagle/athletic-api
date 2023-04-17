@@ -36,5 +36,5 @@ public class Schedule extends BaseEntity {
     private String description;
 
     @Column
-    private String bgColor;
+    private String bgColorCd;
 }
