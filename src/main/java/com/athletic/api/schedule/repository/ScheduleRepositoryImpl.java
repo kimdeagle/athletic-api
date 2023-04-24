@@ -5,6 +5,7 @@ import com.athletic.api.schedule.entity.Schedule;
 import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -35,7 +36,11 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
                         schedule.title,
                         schedule.startDt,
                         schedule.endDt,
-                        schedule.description))
+                        schedule.description,
+                        new CaseBuilder()
+                                .when(schedule.startDt.gt(LocalDate.now())).then("예정")
+                                .when(schedule.endDt.lt(LocalDate.now())).then("종료")
+                                .otherwise("진행중").as("statusName")))
                 .from(schedule)
                 .orderBy(schedule.endDt.desc())
                 .limit(5)

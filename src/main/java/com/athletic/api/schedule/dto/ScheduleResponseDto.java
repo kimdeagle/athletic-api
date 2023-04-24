@@ -32,6 +32,8 @@ public class ScheduleResponseDto extends BaseResponseDto {
 
     private String bgColorCd;
 
+    private String statusName;
+
     public static ScheduleResponseDto of(Schedule schedule) {
         return ScheduleResponseDto.builder()
                 .id(schedule.getId())
