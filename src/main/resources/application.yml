@@ -4,6 +4,10 @@ server:
     context-path: /api
 
 spring:
+  # profiles
+  profiles:
+    active: local
+
   # devtools
   devtools:
     livereload:
@@ -12,6 +16,7 @@ spring:
       enabled: true
       additional-exclude: static/**, public/**
       log-condition-evaluation-delta: false
+
   # Mail
   mail:
     host: smtp.gmail.com
@@ -30,10 +35,13 @@ spring:
 
   # Database
   datasource:
-    url: jdbc:postgresql://localhost:5432/athletic
-    username: ENC(zXI+DBXIg/ZDuveT/JZ3rA==)
-    password: ENC(Eoyllw+djw11ZIpn7XvfM/joPccRmUXF)
-    driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: false
+      connection-test-query: SELECT 1
+      jdbc-url: jdbc:postgresql://localhost:5432/athletic
+      username: ENC(zXI+DBXIg/ZDuveT/JZ3rA==)
+      password: ENC(Eoyllw+djw11ZIpn7XvfM/joPccRmUXF)
+      driver-class-name: org.postgresql.Driver
 
   # JPA
   jpa:
@@ -45,6 +53,8 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+        implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
 
   mvc:
     log-resolved-exception: false
@@ -54,12 +64,11 @@ logging:
   level:
     com:
       athletic:
-        api: info
+        api: debug
     org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
+      hibernate: info
+      springframework:
+        web: info
 
 # JWT
 jwt:

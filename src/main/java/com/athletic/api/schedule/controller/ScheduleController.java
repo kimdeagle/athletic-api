@@ -51,4 +51,9 @@ public class ScheduleController {
     @PostMapping("/excel/upload")
     public ResponseEntity<ResponseDto> uploadExcel(MultipartFile file) { return ResponseEntity.ok(scheduleService.uploadExcel(file)); }
 
+    @GetMapping("/dashboard")
+    public ResponseEntity<ResponseDto> getScheduleListOfDashboard() {
+        return ResponseEntity.ok(scheduleSelector.getScheduleListOfDashboard());
+    }
+
 }

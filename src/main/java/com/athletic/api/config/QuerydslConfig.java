@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 
 @Configuration
 public class QuerydslConfig {
-    @PersistenceContext
+    @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
     @Bean

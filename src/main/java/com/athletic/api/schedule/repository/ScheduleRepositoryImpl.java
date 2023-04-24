@@ -1,7 +1,9 @@
 package com.athletic.api.schedule.repository;
 
+import com.athletic.api.schedule.dto.ScheduleResponseDto;
 import com.athletic.api.schedule.entity.Schedule;
 import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,20 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
                         goeEndDt(condition.getStartDt()))
                 .orderBy(schedule.startDt.asc(),
                         schedule.endDt.asc())
+                .fetch();
+    }
+
+    @Override
+    public List<ScheduleResponseDto> findTop5OrderByEndDtDesc() {
+        return queryFactory
+                .select(Projections.fields(ScheduleResponseDto.class,
+                        schedule.title,
+                        schedule.startDt,
+                        schedule.endDt,
+                        schedule.description))
+                .from(schedule)
+                .orderBy(schedule.endDt.desc())
+                .limit(5)
                 .fetch();
     }
 

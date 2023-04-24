@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.athletic.api.statistics.mapper.StatisticsMapper">
+    <select id="getDuesStatisticsOfThisMonth" parameterType="DuesStatisticsRequestDto" resultType="DuesStatisticsResponseDto">
+        SELECT IN_OUT_CD
+             , SUM(AMOUNT) AS AMOUNT
+        FROM DUES
+        WHERE TO_CHAR(END_DT, 'YYYYMM') = TO_CHAR(CURRENT_DATE, 'YYYYMM')
+        GROUP BY IN_OUT_CD
+        UNION ALL
+        SELECT #{rest} AS IN_OUT_CD
+             , SUM(CASE WHEN IN_OUT_CD = #{in} THEN AMOUNT ELSE AMOUNT * -1 END) AS AMOUNT
+        FROM DUES
+    </select>
+
+    <select id="getMemberStatisticsOneYearAgo" resultType="MemberStatisticsResponseDto">
+        SELECT TO_CHAR(GS_DATE, 'YYYY-MM') AS DISPLAY_DATE
+             , COALESCE(M.JOIN_COUNT, 0) AS JOIN_COUNT
+             , (SELECT COUNT(1) FROM MEMBER WHERE SUBSTRING(JOIN_DT, 1, 6) <![CDATA[ <= ]]> TO_CHAR(GS_DATE, 'YYYYMM')) AS TOTAL_COUNT
+          FROM GENERATE_SERIES(CURRENT_DATE - INTERVAL '11 MONTH', CURRENT_DATE, INTERVAL '1 MONTH') GS_DATE
+          LEFT JOIN (SELECT SUBSTRING(JOIN_DT, 1, 6) AS DATE
+                          , COUNT(1) AS JOIN_COUNT
+                       FROM MEMBER
+                      GROUP BY SUBSTRING(JOIN_DT, 1, 6)
+                    ) M
+            ON TO_CHAR(GS_DATE, 'YYYYMM') = M.DATE
+    </select>
+
+    <select id="getDuesStatisticsOneYearAgo" parameterType="DuesStatisticsRequestDto" resultType="DuesStatisticsResponseDto">
+        SELECT TO_CHAR(X.GS_DATE, 'YYYY-MM') AS DISPLAY_DATE
+             , COALESCE(X.IN_AMOUNT, 0) AS IN_AMOUNT
+             , COALESCE(X.OUT_AMOUNT, 0) AS OUT_AMOUNT
+             , COALESCE((SELECT SUM(CASE WHEN IN_OUT_CD = #{in} THEN AMOUNT ELSE AMOUNT * -1 END) FROM DUES WHERE TO_CHAR(END_DT, 'YYYYMM') <![CDATA[ <= ]]> TO_CHAR(X.GS_DATE, 'YYYYMM')), 0) AS REST_AMOUNT
+          FROM (SELECT GS_DATE
+                     , SUM(CASE WHEN D.IN_OUT_CD = #{in} THEN D.AMOUNT END) AS IN_AMOUNT
+                     , SUM(CASE WHEN D.IN_OUT_CD = #{out} THEN D.AMOUNT END) AS OUT_AMOUNT
+                  FROM GENERATE_SERIES(CURRENT_DATE - INTERVAL '11 MONTH', CURRENT_DATE, INTERVAL '1 MONTH') GS_DATE
+                  LEFT JOIN (SELECT IN_OUT_CD
+                                  , END_DT
+                                  , AMOUNT
+                               FROM DUES
+                  ) D
+                    ON TO_CHAR(GS_DATE, 'YYYYMM') = TO_CHAR(D.END_DT, 'YYYYMM')
+                 GROUP BY GS_DATE
+                 ORDER BY GS_DATE
+          ) X
+    </select>
+</mapper>

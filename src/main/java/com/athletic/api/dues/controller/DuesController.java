@@ -50,11 +50,6 @@ public class DuesController {
         return ResponseEntity.ok(duesService.updateDues(duesRequestDto));
     }
 
-    @GetMapping("/amount/this-month")
-    public ResponseEntity<ResponseDto> getAmountThisMonth() {
-        return ResponseEntity.ok(duesSelector.getAmountThisMonth());
-    }
-
     @PostMapping("/excel/download")
     public void downloadExcel(@RequestBody ExcelDownloadSearchCondition condition) {
         duesSelector.downloadExcel(condition);

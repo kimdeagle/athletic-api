@@ -38,10 +38,6 @@ public class DuesSelector {
         return ResponseDto.success(dto);
     }
 
-    public ResponseDto getAmountThisMonth() {
-        return ResponseDto.success(duesRepository.findAmountThisMonth());
-    }
-
     public void downloadExcel(ExcelDownloadSearchCondition condition) {
         List<DuesResponseDto> list =
                 duesRepository.findAllByExcelDownloadSearchCondition(condition)

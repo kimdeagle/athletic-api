@@ -32,4 +32,10 @@ public class ScheduleSelector {
 
         ExcelWriter.write("일정 리스트", list, ScheduleResponseDto.class);
     }
+
+    public ResponseDto getScheduleListOfDashboard() {
+        List<ScheduleResponseDto> list = scheduleRepository.findTop5OrderByEndDtDesc();
+
+        return ResponseDto.success(list);
+    }
 }
