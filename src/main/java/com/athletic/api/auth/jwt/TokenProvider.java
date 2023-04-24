@@ -40,7 +40,7 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Authentication authentication, String name, String authorityDisplayName, Date expiresIn) {
+    public String createToken(Authentication authentication, String name, String authorityId, String authorityDisplayName, Date expiresIn) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -52,6 +52,7 @@ public class TokenProvider {
                 .claim(Const.AUTHORITIES_KEY, authorities)
                 .claim("id", authentication.getName())
                 .claim("name", name)
+                .claim("authorityId", authorityId)
                 .claim("authorityDisplayName", authorityDisplayName)
                 .claim("loginAt", loginAt)
                 .setExpiration(expiresIn)
