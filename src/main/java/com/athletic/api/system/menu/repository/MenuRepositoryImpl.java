@@ -21,7 +21,7 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
         return queryFactory
                 .selectFrom(menu)
                 .join(admin)
-                .on(hasAuthorities())
+                .on(hasAuthorities(admin.authorityId))
                 .where(eqAdminId(adminId), eqMenuUseYn(useYn))
                 .fetch();
     }
@@ -34,12 +34,21 @@ public class MenuRepositoryImpl implements MenuRepositoryCustom {
                 .fetch();
     }
 
-    private BooleanExpression hasAuthorities() {
-        return Expressions.numberTemplate(int.class, "ARRAY_POSITION({0}, {1})", menu.authorities, admin.authorityId).isNotNull();
+    @Override
+    public List<String> findAllNameByAuthorityId(String authorityId) {
+        return queryFactory
+                .select(menu.name)
+                .from(menu)
+                .where(hasAuthorities(authorityId))
+                .fetch();
     }
 
-    private BooleanExpression eqAdminId(String id) {
-        return StringUtils.isNotBlank(id) ? admin.id.eq(id) : null;
+    private BooleanExpression hasAuthorities(Object authorityId) {
+        return Expressions.stringTemplate("ARRAY_POSITION({0}, {1})", menu.authorities, authorityId).isNotNull();
+    }
+
+    private BooleanExpression eqAdminId(String adminId) {
+        return StringUtils.isNotBlank(adminId) ? admin.id.eq(adminId) : null;
     }
 
     private BooleanExpression eqMenuUseYn(String useYn) {

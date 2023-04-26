@@ -7,4 +7,5 @@ import java.util.List;
 public interface MenuRepositoryCustom {
     List<Menu> findAllByUpMenuId(String upMenuId);
     List<Menu> findAllByAdminIdAndUseYn(String adminId, String useYn);
+    List<String> findAllNameByAuthorityId(String id);
 }

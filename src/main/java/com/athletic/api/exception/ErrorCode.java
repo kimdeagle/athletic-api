@@ -31,6 +31,9 @@ public enum ErrorCode {
     FAIL_SEND_EMAIL(923, ErrorMessage.Email.FAIL),
     NOT_FOUND_SAMPLE_FILE(924, ErrorMessage.File.NOT_FOUND_SAMPLE),
     NOT_FOUND_DUES(925, ErrorMessage.Dues.NOT_FOUND),
+    EXIST_ADMIN_HAS_AUTHORITY(926, ErrorMessage.Authority.EXIST_ADMIN_HAS_AUTHORITY),
+    EXIST_MENU_HAS_AUTHORITY(927, ErrorMessage.Menu.EXIST_MENU_HAS_AUTHORITY),
+    EXIST_AUTHORITY_NAME(928, ErrorMessage.Authority.EXIST_NAME),
 
     UNKNOWN(999, ErrorMessage.UNKNOWN)
     ;

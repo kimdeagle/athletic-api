@@ -83,7 +83,7 @@ public class CodeFinder {
                 .filter(group -> StringUtils.equals(group.getName(), name))
                 .findAny()
                 .map(CodeGroup::getCode)
-                .orElse(null);
+                .orElse("");
     }
 
     public static String findCodeByDetailName(String name) {
@@ -91,7 +91,7 @@ public class CodeFinder {
                 .filter(detail -> StringUtils.equals(detail.getName(), name))
                 .findAny()
                 .map(CodeDetail::getCode)
-                .orElse(null);
+                .orElse("");
     }
 
     public static String findNameByGroupCode(String code) {
@@ -99,7 +99,7 @@ public class CodeFinder {
                 .filter(group -> StringUtils.equals(group.getCode(), code))
                 .findAny()
                 .map(CodeGroup::getName)
-                .orElse(null);
+                .orElse("");
     }
 
     public static String findNameByDetailCode(String code) {
@@ -107,7 +107,7 @@ public class CodeFinder {
                 .filter(detail -> StringUtils.equals(detail.getCode(), code))
                 .findAny()
                 .map(CodeDetail::getName)
-                .orElse(null);
+                .orElse("");
     }
 
 }

@@ -20,8 +20,7 @@ public class EmailTemplateRepositoryImpl implements EmailTemplateRepositoryCusto
                 queryFactory
                         .selectFrom(emailTemplate)
                         .where(eqCode(code))
-                        .fetchOne()
-        );
+                        .fetchOne());
     }
 
     private BooleanExpression eqCode(String code) {

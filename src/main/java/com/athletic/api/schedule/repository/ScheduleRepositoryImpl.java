@@ -38,8 +38,8 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
                         schedule.endDt,
                         schedule.description,
                         new CaseBuilder()
-                                .when(schedule.startDt.gt(LocalDate.now())).then("예정")
-                                .when(schedule.endDt.lt(LocalDate.now())).then("종료")
+                                .when(gtStartDt(LocalDate.now())).then("예정")
+                                .when(ltEndDt(LocalDate.now())).then("종료")
                                 .otherwise("진행중").as("statusName")))
                 .from(schedule)
                 .orderBy(schedule.endDt.desc())
@@ -53,5 +53,13 @@ public class ScheduleRepositoryImpl implements ScheduleRepositoryCustom {
 
     private BooleanExpression goeEndDt(LocalDate right) {
         return right != null ? schedule.endDt.goe(right) : null;
+    }
+
+    private BooleanExpression gtStartDt(LocalDate right) {
+        return right != null ? schedule.startDt.gt(right) : null;
+    }
+
+    private BooleanExpression ltEndDt(LocalDate right) {
+        return right != null ? schedule.endDt.lt(right) : null;
     }
 }

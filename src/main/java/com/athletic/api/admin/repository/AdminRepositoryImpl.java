@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.athletic.api.admin.entity.QAdmin.admin;
@@ -29,8 +30,7 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
                 queryFactory
                         .selectFrom(admin)
                         .where(eqLoginId(loginId))
-                        .fetchOne()
-        );
+                        .fetchOne());
     }
 
     @Override
@@ -39,8 +39,16 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
                 queryFactory
                         .selectFrom(admin)
                         .where(eqLoginId(loginId), eqEmail(email))
-                        .fetchOne()
-        );
+                        .fetchOne());
+    }
+
+    @Override
+    public List<String> findAllNameByAuthorityId(String authorityId) {
+        return queryFactory
+                .select(admin.name)
+                .from(admin)
+                .where(eqAuthorityId(authorityId))
+                .fetch();
     }
 
     private BooleanExpression eqLoginId(String loginId) {
@@ -49,5 +57,9 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
 
     private BooleanExpression eqEmail(String email) {
         return StringUtils.isNotBlank(email) ? admin.email.eq(email) : null;
+    }
+
+    private BooleanExpression eqAuthorityId(String authorityId) {
+        return StringUtils.isNotBlank(authorityId) ? admin.authorityId.eq(authorityId) : null;
     }
 }

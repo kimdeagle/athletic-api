@@ -1,4 +1,4 @@
-package com.athletic.api.authority.entity;
+package com.athletic.api.system.authority.entity;
 
 import com.athletic.api.common.entity.BaseEntity;
 import lombok.AllArgsConstructor;

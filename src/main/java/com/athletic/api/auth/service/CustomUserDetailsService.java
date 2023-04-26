@@ -1,8 +1,8 @@
 package com.athletic.api.auth.service;
 
 import com.athletic.api.admin.entity.Admin;
-import com.athletic.api.authority.entity.Authority;
-import com.athletic.api.authority.repository.AuthorityRepository;
+import com.athletic.api.system.authority.entity.Authority;
+import com.athletic.api.system.authority.repository.AuthorityRepository;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.admin.repository.AdminRepository;

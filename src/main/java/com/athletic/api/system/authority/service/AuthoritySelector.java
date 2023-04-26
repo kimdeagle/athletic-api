@@ -1,7 +1,9 @@
-package com.athletic.api.authority.service;
+package com.athletic.api.system.authority.service;
 
-import com.athletic.api.authority.dto.AuthorityResponseDto;
-import com.athletic.api.authority.repository.AuthorityRepository;
+import com.athletic.api.exception.CustomException;
+import com.athletic.api.exception.ErrorCode;
+import com.athletic.api.system.authority.dto.AuthorityResponseDto;
+import com.athletic.api.system.authority.repository.AuthorityRepository;
 import com.athletic.api.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,4 +24,9 @@ public class AuthoritySelector {
         return ResponseDto.success(list);
     }
 
+    public ResponseDto getAuthority(String id) {
+        AuthorityResponseDto dto = authorityRepository.findById(id).map(AuthorityResponseDto::of).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_AUTHORITY));
+
+        return ResponseDto.success(dto);
+    }
 }

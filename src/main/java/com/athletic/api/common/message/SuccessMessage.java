@@ -21,6 +21,12 @@ public class SuccessMessage {
         public static final String LOGOUT = "로그아웃 되었습니다.";
     }
 
+    public static class Authority {
+        public static final String DELETE_AUTHORITIES = "{0}개의 권한이 삭제되었습니다.";
+        public static final String ADD_AUTHORITIES = "권한이 추가되었습니다.";
+        public static final String UPDATE_AUTHORITIES = "권한이 수정되었습니다.";
+    }
+
     public static class Dues {
         public static final String DELETE_DUES = "회비 내역이 삭제되었습니다.";
         public static final String ADD_DUES = "회비 내역이 추가되었습니다.";

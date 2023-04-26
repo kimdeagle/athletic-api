@@ -14,10 +14,21 @@ public class ErrorMessage {
         public static final String INVALID_APPROVE_STATUS = "{0} 상태의 계정입니다.";
     }
 
+    /* Authority */
+    public static class Authority {
+        public static final String EXIST_ADMIN_HAS_AUTHORITY = "{0} 권한을 가진 계정이 있습니다.\n\n[계정명]\n{1}";
+        public static final String EXIST_NAME = "이미 존재하는 권한명입니다.";
+    }
+
     /* Member */
     public static class Member {
         public static final String NOT_FOUND = "회원을 찾을 수 없습니다.";
         public static final String EXIST = "이미 존재하는 회원입니다.\n회원명 또는 휴대폰번호를 확인하세요.";
+    }
+
+    /* Menu */
+    public static class Menu {
+        public static final String EXIST_MENU_HAS_AUTHORITY = "{0} 권한을 가진 메뉴가 있습니다.\n\n[메뉴명]\n{1}";
     }
 
     /* Email */
