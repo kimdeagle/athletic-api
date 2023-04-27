@@ -6,13 +6,13 @@
     <select id="getDuesStatisticsOfThisMonth" parameterType="DuesStatisticsRequestDto" resultType="DuesStatisticsResponseDto">
         SELECT IN_OUT_CD
              , SUM(AMOUNT) AS AMOUNT
-        FROM DUES
-        WHERE TO_CHAR(END_DT, 'YYYYMM') = TO_CHAR(CURRENT_DATE, 'YYYYMM')
-        GROUP BY IN_OUT_CD
-        UNION ALL
+          FROM DUES
+         WHERE TO_CHAR(END_DT, 'YYYYMM') = TO_CHAR(CURRENT_DATE, 'YYYYMM')
+         GROUP BY IN_OUT_CD
+         UNION ALL
         SELECT #{rest} AS IN_OUT_CD
              , SUM(CASE WHEN IN_OUT_CD = #{in} THEN AMOUNT ELSE AMOUNT * -1 END) AS AMOUNT
-        FROM DUES
+          FROM DUES
     </select>
 
     <select id="getMemberStatisticsOneYearAgo" resultType="MemberStatisticsResponseDto">
@@ -26,6 +26,7 @@
                       GROUP BY SUBSTRING(JOIN_DT, 1, 6)
                     ) M
             ON TO_CHAR(GS_DATE, 'YYYYMM') = M.DATE
+         ORDER BY GS_DATE
     </select>
 
     <select id="getDuesStatisticsOneYearAgo" parameterType="DuesStatisticsRequestDto" resultType="DuesStatisticsResponseDto">

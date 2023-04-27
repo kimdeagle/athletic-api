@@ -1,6 +1,8 @@
 package com.athletic.api.admin.repository;
 
+import com.athletic.api.admin.dto.AdminResponseDto;
 import com.athletic.api.admin.entity.Admin;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.athletic.api.admin.entity.QAdmin.admin;
+import static com.athletic.api.system.authority.entity.QAuthority.authority;
 
 @RequiredArgsConstructor
 public class AdminRepositoryImpl implements AdminRepositoryCustom {
@@ -49,6 +52,26 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
                 .from(admin)
                 .where(eqAuthorityId(authorityId))
                 .fetch();
+    }
+
+    @Override
+    public Optional<AdminResponseDto> getUserById(String id) {
+        return Optional.ofNullable(
+                queryFactory
+                        .select(Projections.fields(
+                                AdminResponseDto.class,
+                                admin.id,
+                                admin.name,
+                                admin.authorityId,
+                                authority.displayName.as("authorityDisplayName")))
+                        .from(admin)
+                        .join(authority)
+                        .on(eqId(id), admin.authorityId.eq(authority.id))
+                        .fetchOne());
+    }
+
+    private BooleanExpression eqId(String id) {
+        return StringUtils.isNotBlank(id) ? admin.id.eq(id) : null;
     }
 
     private BooleanExpression eqLoginId(String loginId) {

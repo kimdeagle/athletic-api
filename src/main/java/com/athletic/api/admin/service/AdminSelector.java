@@ -17,6 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdminSelector {
     private final AdminRepository adminRepository;
 
+    public ResponseDto getUser() {
+        AdminResponseDto dto = adminRepository.getUserById(SecurityUtil.getCurrentId()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
+
+        return ResponseDto.success(dto);
+    }
+
     public ResponseDto getInfoBySecurity() {
         AdminResponseDto dto = adminRepository.findById(SecurityUtil.getCurrentId())
                 .map(AdminResponseDto::of)

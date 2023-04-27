@@ -10,5 +10,6 @@ public interface AdminRepositoryCustom {
     boolean existsByLoginId(String loginId);
     Optional<Admin> findByLoginId(String loginId);
     Optional<Admin> findByLoginIdAndEmail(String loginId, String email);
-    List<String> findAllNameByAuthorityId(String id);
+    List<String> findAllNameByAuthorityId(String authorityId);
+    Optional<AdminResponseDto> getUserById(String id);
 }

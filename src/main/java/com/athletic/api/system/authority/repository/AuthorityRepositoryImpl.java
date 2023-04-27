@@ -30,11 +30,24 @@ public class AuthorityRepositoryImpl implements AuthorityRepositoryCustom {
                 != null;
     }
 
+    @Override
+    public boolean existsByNameAndIdNot(String name, String id) {
+        return queryFactory
+                .selectFrom(authority)
+                .where(eqName(name), neId(id))
+                .fetchOne()
+                != null;
+    }
+
     private BooleanExpression eqId(String id) {
         return StringUtils.isNotBlank(id) ? authority.id.eq(id) : null;
     }
 
     private BooleanExpression eqName(String name) {
         return StringUtils.isNotBlank(name) ? authority.name.eq(name) : null;
+    }
+
+    private BooleanExpression neId(String id) {
+        return StringUtils.isNotBlank(id) ? authority.id.ne(id) : null;
     }
 }

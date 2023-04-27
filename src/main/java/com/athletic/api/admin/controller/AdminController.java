@@ -20,6 +20,11 @@ public class AdminController {
     private final AdminSelector adminSelector;
     private final AdminService adminService;
 
+    @GetMapping("/user")
+    public ResponseEntity<ResponseDto> getUser() {
+        return ResponseEntity.ok(adminSelector.getUser());
+    }
+
     @GetMapping("/my")
     public ResponseEntity<ResponseDto> getMyInfo() {
         return ResponseEntity.ok(adminSelector.getInfoBySecurity());

@@ -23,6 +23,8 @@ public class AdminResponseDto extends BaseResponseDto {
     private String authorityId;
     private String approveStatusCd;
 
+    private String authorityDisplayName;
+
     public static AdminResponseDto of(Admin admin) {
         return AdminResponseDto.builder()
                 .id(admin.getId())

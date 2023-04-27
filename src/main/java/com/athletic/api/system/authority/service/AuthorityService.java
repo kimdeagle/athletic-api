@@ -52,7 +52,7 @@ public class AuthorityService {
     }
 
     public ResponseDto updateAuthority(AuthorityRequestDto authorityRequestDto) {
-        if (existByName(authorityRequestDto.getName())) {
+        if (existByNameAndIdNot(authorityRequestDto.getName(), authorityRequestDto.getId())) {
             throw new CustomException(ErrorCode.EXIST_AUTHORITY_NAME);
         }
 
@@ -63,5 +63,9 @@ public class AuthorityService {
 
     private boolean existByName(String name) {
         return authorityRepository.existsByName(name);
+    }
+
+    private boolean existByNameAndIdNot(String name, String id) {
+        return authorityRepository.existsByNameAndIdNot(name, id);
     }
 }

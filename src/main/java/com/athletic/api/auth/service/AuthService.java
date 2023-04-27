@@ -5,8 +5,6 @@ import com.athletic.api.auth.dto.TokenDto;
 import com.athletic.api.admin.entity.Admin;
 import com.athletic.api.auth.jwt.TokenProvider;
 import com.athletic.api.admin.repository.AdminRepository;
-import com.athletic.api.system.authority.entity.Authority;
-import com.athletic.api.system.authority.repository.AuthorityRepository;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.common.message.SuccessMessage;
 import com.athletic.api.exception.CustomException;
@@ -40,7 +38,6 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
-    private final AuthorityRepository authorityRepository;
 
     public ResponseDto join(AdminRequestDto adminRequestDto) {
         if (adminRepository.existsByLoginId(adminRequestDto.getLoginId())) {
@@ -85,16 +82,12 @@ public class AuthService {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(adminRequestDto.getLoginId(), adminRequestDto.getLoginPw());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        String name = admin.getName();
-        String authorityId = admin.getAuthorityId();
-        String authorityDisplayName = authorityRepository.findById(admin.getAuthorityId()).map(Authority::getDisplayName).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_AUTHORITY));
-
         long now = (new Date()).getTime();
         Date accessTokenExpiresIn = new Date(now + Const.ACCESS_TOKEN_EXPIRE_TIME);
         Date refreshTokenExpiresIn = new Date(now + Const.REFRESH_TOKEN_EXPIRE_TIME);
 
-        String accessToken = tokenProvider.createToken(authentication, name, authorityId, authorityDisplayName, accessTokenExpiresIn);
-        String refreshToken = tokenProvider.createToken(authentication, name, authorityId, authorityDisplayName, refreshTokenExpiresIn);
+        String accessToken = tokenProvider.createToken(authentication, accessTokenExpiresIn);
+        String refreshToken = tokenProvider.createToken(authentication, refreshTokenExpiresIn);
 
         TokenDto tokenDto = TokenDto.builder()
                 .grantType(Const.BEARER_TYPE)
@@ -146,14 +139,10 @@ public class AuthService {
     public ResponseDto reIssueAccessToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        Admin admin = adminRepository.findById(authentication.getName()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
-
-        String authorityDisplayName = authorityRepository.findById(admin.getAuthorityId()).map(Authority::getDisplayName).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_AUTHORITY));
-
         long now = (new Date()).getTime();
         Date accessTokenExpiresIn = new Date(now + Const.ACCESS_TOKEN_EXPIRE_TIME);
 
-        String accessToken = tokenProvider.createToken(authentication, admin.getName(), admin.getAuthorityId(), authorityDisplayName, accessTokenExpiresIn);
+        String accessToken = tokenProvider.createToken(authentication, accessTokenExpiresIn);
 
         TokenDto tokenDto = TokenDto.builder()
                 .grantType(Const.BEARER_TYPE)

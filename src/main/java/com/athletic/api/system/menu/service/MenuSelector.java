@@ -6,6 +6,7 @@ import com.athletic.api.system.menu.dto.MenuResponseDto;
 import com.athletic.api.system.menu.repository.MenuRepository;
 import com.athletic.api.util.constant.Const;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,7 @@ public class MenuSelector {
 
     public ResponseDto getMenuList() {
         List<MenuResponseDto> list =
-                menuRepository.findAll()
+                menuRepository.findAll(Sort.by(Sort.Order.asc("menuLevel"), Sort.Order.asc("sortSeq")))
                         .stream().map(MenuResponseDto::of)
                         .collect(Collectors.toList());
 

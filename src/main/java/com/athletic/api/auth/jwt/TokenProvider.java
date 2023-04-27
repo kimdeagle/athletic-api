@@ -23,8 +23,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -40,21 +38,14 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Authentication authentication, String name, String authorityId, String authorityDisplayName, Date expiresIn) {
+    public String createToken(Authentication authentication, Date expiresIn) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        String loginAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Const.DEFAULT_LOCAL_DATE_TIME_FORMAT));
-
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(Const.AUTHORITIES_KEY, authorities)
-                .claim("id", authentication.getName())
-                .claim("name", name)
-                .claim("authorityId", authorityId)
-                .claim("authorityDisplayName", authorityDisplayName)
-                .claim("loginAt", loginAt)
                 .setExpiration(expiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();

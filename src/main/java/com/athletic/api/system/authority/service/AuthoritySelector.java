@@ -6,6 +6,7 @@ import com.athletic.api.system.authority.dto.AuthorityResponseDto;
 import com.athletic.api.system.authority.repository.AuthorityRepository;
 import com.athletic.api.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ public class AuthoritySelector {
     private final AuthorityRepository authorityRepository;
 
     public ResponseDto getAuthorities() {
-        List<AuthorityResponseDto> list = authorityRepository.findAll().stream().map(AuthorityResponseDto::of).collect(Collectors.toList());
+        List<AuthorityResponseDto> list = authorityRepository.findAll(Sort.by(Sort.Order.asc("id"))).stream().map(AuthorityResponseDto::of).collect(Collectors.toList());
 
         return ResponseDto.success(list);
     }
