@@ -1,7 +1,7 @@
-package com.athletic.api.admin.repository;
+package com.athletic.api.system.admin.repository;
 
-import com.athletic.api.admin.dto.AdminResponseDto;
-import com.athletic.api.admin.entity.Admin;
+import com.athletic.api.system.admin.dto.AdminResponseDto;
+import com.athletic.api.system.admin.entity.Admin;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,5 +11,5 @@ public interface AdminRepositoryCustom {
     Optional<Admin> findByLoginId(String loginId);
     Optional<Admin> findByLoginIdAndEmail(String loginId, String email);
     List<String> findAllNameByAuthorityId(String authorityId);
-    Optional<AdminResponseDto> getUserById(String id);
+    Optional<AdminResponseDto> getCurrentUserById(String id);
 }

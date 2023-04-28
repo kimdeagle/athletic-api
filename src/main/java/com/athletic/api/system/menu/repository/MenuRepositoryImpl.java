@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-import static com.athletic.api.admin.entity.QAdmin.admin;
+import static com.athletic.api.system.admin.entity.QAdmin.admin;
 import static com.athletic.api.system.menu.entity.QMenu.menu;
 
 @RequiredArgsConstructor

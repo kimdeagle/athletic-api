@@ -1,6 +1,6 @@
 package com.athletic.api.auth.controller;
 
-import com.athletic.api.admin.dto.AdminRequestDto;
+import com.athletic.api.system.admin.dto.AdminRequestDto;
 import com.athletic.api.auth.service.AuthService;
 import com.athletic.api.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;

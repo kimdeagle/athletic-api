@@ -1,6 +1,6 @@
-package com.athletic.api.admin.dto;
+package com.athletic.api.system.admin.dto;
 
-import com.athletic.api.admin.entity.Admin;
+import com.athletic.api.system.admin.entity.Admin;
 import com.athletic.api.common.dto.BaseResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

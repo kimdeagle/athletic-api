@@ -1,6 +1,6 @@
 package com.athletic.api.system.authority.service;
 
-import com.athletic.api.admin.repository.AdminRepository;
+import com.athletic.api.system.admin.repository.AdminRepository;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.common.message.SuccessMessage;
 import com.athletic.api.exception.CustomException;

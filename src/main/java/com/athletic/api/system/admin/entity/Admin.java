@@ -1,4 +1,4 @@
-package com.athletic.api.admin.entity;
+package com.athletic.api.system.admin.entity;
 
 import com.athletic.api.common.entity.BaseEntity;
 import com.athletic.api.util.converter.CryptoConverter;

@@ -1,7 +1,7 @@
-package com.athletic.api.admin.repository;
+package com.athletic.api.system.admin.repository;
 
-import com.athletic.api.admin.dto.AdminResponseDto;
-import com.athletic.api.admin.entity.Admin;
+import com.athletic.api.system.admin.dto.AdminResponseDto;
+import com.athletic.api.system.admin.entity.Admin;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 import java.util.Optional;
 
-import static com.athletic.api.admin.entity.QAdmin.admin;
+import static com.athletic.api.system.admin.entity.QAdmin.admin;
 import static com.athletic.api.system.authority.entity.QAuthority.authority;
 
 @RequiredArgsConstructor
@@ -55,15 +55,19 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
     }
 
     @Override
-    public Optional<AdminResponseDto> getUserById(String id) {
+    public Optional<AdminResponseDto> getCurrentUserById(String id) {
         return Optional.ofNullable(
                 queryFactory
                         .select(Projections.fields(
                                 AdminResponseDto.class,
                                 admin.id,
                                 admin.name,
+                                admin.loginId,
+                                admin.email,
+                                admin.mobileNo,
                                 admin.authorityId,
-                                authority.displayName.as("authorityDisplayName")))
+                                authority.displayName.as("authorityDisplayName"),
+                                admin.modDt))
                         .from(admin)
                         .join(authority)
                         .on(eqId(id), admin.authorityId.eq(authority.id))

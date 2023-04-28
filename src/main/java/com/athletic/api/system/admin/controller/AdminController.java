@@ -1,8 +1,8 @@
-package com.athletic.api.admin.controller;
+package com.athletic.api.system.admin.controller;
 
-import com.athletic.api.admin.dto.AdminRequestDto;
-import com.athletic.api.admin.service.AdminSelector;
-import com.athletic.api.admin.service.AdminService;
+import com.athletic.api.system.admin.dto.AdminRequestDto;
+import com.athletic.api.system.admin.service.AdminSelector;
+import com.athletic.api.system.admin.service.AdminService;
 import com.athletic.api.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/system/admin")
 @RequiredArgsConstructor
 public class AdminController {
     private final AdminSelector adminSelector;
@@ -22,12 +22,7 @@ public class AdminController {
 
     @GetMapping("/user")
     public ResponseEntity<ResponseDto> getUser() {
-        return ResponseEntity.ok(adminSelector.getUser());
-    }
-
-    @GetMapping("/my")
-    public ResponseEntity<ResponseDto> getMyInfo() {
-        return ResponseEntity.ok(adminSelector.getInfoBySecurity());
+        return ResponseEntity.ok(adminSelector.getCurrentUser());
     }
 
     @PutMapping("/password")

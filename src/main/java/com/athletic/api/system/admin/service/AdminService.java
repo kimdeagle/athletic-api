@@ -1,9 +1,9 @@
-package com.athletic.api.admin.service;
+package com.athletic.api.system.admin.service;
 
 import com.athletic.api.auth.util.SecurityUtil;
-import com.athletic.api.admin.dto.AdminRequestDto;
-import com.athletic.api.admin.entity.Admin;
-import com.athletic.api.admin.repository.AdminRepository;
+import com.athletic.api.system.admin.dto.AdminRequestDto;
+import com.athletic.api.system.admin.entity.Admin;
+import com.athletic.api.system.admin.repository.AdminRepository;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.common.message.SuccessMessage;
 import com.athletic.api.exception.CustomException;
