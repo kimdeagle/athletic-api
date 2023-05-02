@@ -1,7 +1,7 @@
 package com.athletic.api.dues.repository;
 
 import com.athletic.api.dues.entity.Dues;
-import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
+import com.athletic.api.utils.excel.ExcelDownloadSearchCondition;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.athletic.api.auth.jwt;
 
-import com.athletic.api.util.constant.Const;
+import com.athletic.api.utils.constant.Const;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

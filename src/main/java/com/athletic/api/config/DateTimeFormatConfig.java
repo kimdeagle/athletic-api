@@ -1,6 +1,6 @@
 package com.athletic.api.config;
 
-import com.athletic.api.util.constant.Const;
+import com.athletic.api.utils.constant.Const;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;

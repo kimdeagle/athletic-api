@@ -12,4 +12,5 @@ public interface AdminRepositoryCustom {
     Optional<Admin> findByLoginIdAndEmail(String loginId, String email);
     List<String> findAllNameByAuthorityId(String authorityId);
     Optional<AdminResponseDto> getCurrentUserById(String id);
+    List<AdminResponseDto> findAllJoinAuthority();
 }

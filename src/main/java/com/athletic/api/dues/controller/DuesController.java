@@ -4,7 +4,7 @@ import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.dues.dto.DuesRequestDto;
 import com.athletic.api.dues.service.DuesSelector;
 import com.athletic.api.dues.service.DuesService;
-import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
+import com.athletic.api.utils.excel.ExcelDownloadSearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

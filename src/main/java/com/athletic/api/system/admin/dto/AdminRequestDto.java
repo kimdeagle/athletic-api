@@ -2,8 +2,8 @@ package com.athletic.api.system.admin.dto;
 
 import com.athletic.api.system.admin.entity.Admin;
 import com.athletic.api.auth.util.SecurityUtil;
-import com.athletic.api.util.code.CodeDetail;
-import com.athletic.api.util.constant.Const;
+import com.athletic.api.utils.code.CodeDetail;
+import com.athletic.api.utils.constant.Const;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -2,8 +2,8 @@ package com.athletic.api.schedule.dto;
 
 import com.athletic.api.auth.util.SecurityUtil;
 import com.athletic.api.schedule.entity.Schedule;
-import com.athletic.api.util.code.CodeDetail;
-import com.athletic.api.util.excel.ExcelUploadColumn;
+import com.athletic.api.utils.code.CodeDetail;
+import com.athletic.api.utils.excel.ExcelUploadColumn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

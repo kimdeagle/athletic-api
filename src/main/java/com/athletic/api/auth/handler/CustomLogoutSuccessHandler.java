@@ -2,7 +2,7 @@ package com.athletic.api.auth.handler;
 
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.common.message.SuccessMessage;
-import com.athletic.api.util.constant.Const;
+import com.athletic.api.utils.constant.Const;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

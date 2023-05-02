@@ -3,7 +3,7 @@ package com.athletic.api.statistics.service;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.statistics.dto.DuesStatisticsRequestDto;
 import com.athletic.api.statistics.mapper.StatisticsMapper;
-import com.athletic.api.util.code.CodeGroup;
+import com.athletic.api.utils.code.CodeGroup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

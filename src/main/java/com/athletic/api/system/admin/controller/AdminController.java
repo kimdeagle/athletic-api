@@ -7,6 +7,7 @@ import com.athletic.api.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,5 +33,15 @@ public class AdminController {
 
     @PostMapping("/out")
     public ResponseEntity<ResponseDto> out(@RequestBody AdminRequestDto adminRequestDto) { return ResponseEntity.ok(adminService.out(adminRequestDto)); }
+
+    @GetMapping
+    public ResponseEntity<ResponseDto> getAdminList() {
+        return ResponseEntity.ok(adminSelector.getAdminList());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseDto> getAdminById(@PathVariable("id") String id) {
+        return ResponseEntity.ok(adminSelector.getAdminById(id));
+    }
 
 }

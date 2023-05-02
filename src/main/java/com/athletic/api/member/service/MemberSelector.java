@@ -5,7 +5,8 @@ import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.member.dto.MemberResponseDto;
 import com.athletic.api.member.repository.MemberRepository;
-import com.athletic.api.util.excel.ExcelWriter;
+import com.athletic.api.utils.excel.ExcelWriter;
+import com.athletic.api.utils.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -28,10 +29,13 @@ public class MemberSelector {
 
     private List<MemberResponseDto> getMemberResponseDtoList() {
         return memberRepository.findAll(Sort.by(Sort.Order.asc("name")))
-                .stream().map(member -> {
-                    member.setMobileNo(maskMobileNo(member.getMobileNo()));
-                    return MemberResponseDto.of(member);
-                }).collect(Collectors.toList());
+                .stream()
+                .map(MemberResponseDto::of)
+                .peek(member -> {
+                    member.setMobileNo(Util.maskMobileNo(member.getMobileNo()));
+                    member.setEmail(Util.maskEmail(member.getEmail()));
+                })
+                .collect(Collectors.toList());
     }
 
     public ResponseDto getMember(String id) {
@@ -40,11 +44,6 @@ public class MemberSelector {
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_MEMBER));
 
         return ResponseDto.success(dto);
-    }
-
-    /* MobileNoConverter에 의해 하이픈 적용된 상태라 마지막 substring은 9번째부터 */
-    private String maskMobileNo(String mobileNo) {
-        return mobileNo.substring(0, 3) + "-****-" + mobileNo.substring(9);
     }
 
     public void downloadExcel() {

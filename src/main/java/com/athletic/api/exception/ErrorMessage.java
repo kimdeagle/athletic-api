@@ -23,7 +23,7 @@ public class ErrorMessage {
     /* Member */
     public static class Member {
         public static final String NOT_FOUND = "회원을 찾을 수 없습니다.";
-        public static final String EXIST = "이미 존재하는 회원입니다.\n회원명 또는 휴대폰번호를 확인하세요.";
+        public static final String EXIST = "이미 존재하는 회원입니다.\n회원명 또는 휴대폰 번호를 확인하세요.";
     }
 
     /* Menu */

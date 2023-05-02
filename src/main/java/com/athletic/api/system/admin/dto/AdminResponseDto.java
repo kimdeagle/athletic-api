@@ -23,6 +23,7 @@ public class AdminResponseDto extends BaseResponseDto {
     private String authorityId;
     private String approveStatusCd;
 
+    private String approveStatusName;
     private String authorityDisplayName;
 
     public static AdminResponseDto of(Admin admin) {

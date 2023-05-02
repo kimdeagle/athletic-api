@@ -74,6 +74,26 @@ public class AdminRepositoryImpl implements AdminRepositoryCustom {
                         .fetchOne());
     }
 
+    @Override
+    public List<AdminResponseDto> findAllJoinAuthority() {
+        return queryFactory
+                .select(Projections.fields(
+                        AdminResponseDto.class,
+                        admin.id,
+                        admin.name,
+                        admin.loginId,
+                        admin.email,
+                        admin.mobileNo,
+                        admin.authorityId,
+                        admin.approveStatusCd,
+                        authority.displayName.as("authorityDisplayName")
+                ))
+                .from(admin)
+                .join(authority)
+                .on(admin.authorityId.eq(authority.id))
+                .fetch();
+    }
+
     private BooleanExpression eqId(String id) {
         return StringUtils.isNotBlank(id) ? admin.id.eq(id) : null;
     }

@@ -2,7 +2,7 @@ package com.athletic.api.schedule.repository;
 
 import com.athletic.api.schedule.dto.ScheduleResponseDto;
 import com.athletic.api.schedule.entity.Schedule;
-import com.athletic.api.util.excel.ExcelDownloadSearchCondition;
+import com.athletic.api.utils.excel.ExcelDownloadSearchCondition;
 
 import java.util.List;
 

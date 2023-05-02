@@ -5,7 +5,7 @@ import com.athletic.api.auth.jwt.JwtAccessDeniedHandler;
 import com.athletic.api.auth.jwt.JwtAuthenticationEntryPoint;
 import com.athletic.api.auth.jwt.JwtFilter;
 import com.athletic.api.auth.jwt.TokenProvider;
-import com.athletic.api.util.constant.Const;
+import com.athletic.api.utils.constant.Const;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

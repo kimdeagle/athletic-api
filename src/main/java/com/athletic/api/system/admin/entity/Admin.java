@@ -1,9 +1,9 @@
 package com.athletic.api.system.admin.entity;
 
 import com.athletic.api.common.entity.BaseEntity;
-import com.athletic.api.util.converter.CryptoConverter;
-import com.athletic.api.util.converter.MobileNoConverter;
-import com.athletic.api.util.converter.PasswordConverter;
+import com.athletic.api.utils.converter.CryptoConverter;
+import com.athletic.api.utils.converter.MobileNoConverter;
+import com.athletic.api.utils.converter.PasswordConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,6 +52,10 @@ public class Admin extends BaseEntity {
 
     public void setLoginPw(String loginPw) {
         this.loginPw = loginPw;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 
 }

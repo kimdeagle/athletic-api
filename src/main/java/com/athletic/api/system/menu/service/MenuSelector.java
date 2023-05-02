@@ -4,7 +4,7 @@ import com.athletic.api.auth.util.SecurityUtil;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.system.menu.dto.MenuResponseDto;
 import com.athletic.api.system.menu.repository.MenuRepository;
-import com.athletic.api.util.constant.Const;
+import com.athletic.api.utils.constant.Const;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

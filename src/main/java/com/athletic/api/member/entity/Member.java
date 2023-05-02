@@ -1,9 +1,9 @@
 package com.athletic.api.member.entity;
 
 import com.athletic.api.common.entity.BaseEntity;
-import com.athletic.api.util.converter.CryptoConverter;
-import com.athletic.api.util.converter.MobileNoConverter;
-import com.athletic.api.util.converter.StringDateConverter;
+import com.athletic.api.utils.converter.CryptoConverter;
+import com.athletic.api.utils.converter.MobileNoConverter;
+import com.athletic.api.utils.converter.StringDateConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

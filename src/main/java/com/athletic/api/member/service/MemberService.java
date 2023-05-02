@@ -7,7 +7,7 @@ import com.athletic.api.exception.ErrorCode;
 import com.athletic.api.member.dto.MemberRequestDto;
 import com.athletic.api.member.entity.Member;
 import com.athletic.api.member.repository.MemberRepository;
-import com.athletic.api.util.excel.ExcelReader;
+import com.athletic.api.utils.excel.ExcelReader;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

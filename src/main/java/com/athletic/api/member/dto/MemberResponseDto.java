@@ -2,14 +2,16 @@ package com.athletic.api.member.dto;
 
 import com.athletic.api.common.dto.BaseResponseDto;
 import com.athletic.api.member.entity.Member;
-import com.athletic.api.util.excel.style.ExcelCellStyle;
-import com.athletic.api.util.excel.ExcelDownloadColumn;
+import com.athletic.api.utils.excel.style.ExcelCellStyle;
+import com.athletic.api.utils.excel.ExcelDownloadColumn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
+@Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor

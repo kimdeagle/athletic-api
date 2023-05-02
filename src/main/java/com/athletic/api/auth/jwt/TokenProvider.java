@@ -2,7 +2,7 @@ package com.athletic.api.auth.jwt;
 
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
-import com.athletic.api.util.constant.Const;
+import com.athletic.api.utils.constant.Const;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

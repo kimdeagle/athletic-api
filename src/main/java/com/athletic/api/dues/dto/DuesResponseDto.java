@@ -2,9 +2,9 @@ package com.athletic.api.dues.dto;
 
 import com.athletic.api.common.dto.BaseResponseDto;
 import com.athletic.api.dues.entity.Dues;
-import com.athletic.api.util.code.CodeFinder;
-import com.athletic.api.util.excel.ExcelDownloadColumn;
-import com.athletic.api.util.excel.style.ExcelCellStyle;
+import com.athletic.api.utils.code.CodeFinder;
+import com.athletic.api.utils.excel.ExcelDownloadColumn;
+import com.athletic.api.utils.excel.style.ExcelCellStyle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -4,7 +4,7 @@ import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.common.message.SuccessMessage;
 import com.athletic.api.dues.dto.DuesRequestDto;
 import com.athletic.api.dues.repository.DuesRepository;
-import com.athletic.api.util.excel.ExcelReader;
+import com.athletic.api.utils.excel.ExcelReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
