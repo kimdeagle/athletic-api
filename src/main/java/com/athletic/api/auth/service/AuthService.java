@@ -90,7 +90,7 @@ public class AuthService {
         String refreshToken = tokenProvider.createToken(authentication, refreshTokenExpiresIn);
 
         TokenDto tokenDto = TokenDto.builder()
-                .grantType(Const.BEARER_TYPE)
+                .grantType(Const.BEARER_PREFIX)
                 .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
                 .refreshToken(refreshToken)
@@ -145,7 +145,7 @@ public class AuthService {
         String accessToken = tokenProvider.createToken(authentication, accessTokenExpiresIn);
 
         TokenDto tokenDto = TokenDto.builder()
-                .grantType(Const.BEARER_TYPE)
+                .grantType(Const.BEARER_PREFIX)
                 .accessToken(accessToken)
                 .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
                 .build();
