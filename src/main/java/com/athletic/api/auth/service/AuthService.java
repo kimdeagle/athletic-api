@@ -1,5 +1,6 @@
 package com.athletic.api.auth.service;
 
+import com.athletic.api.auth.util.PasswordUtils;
 import com.athletic.api.system.admin.dto.AdminRequestDto;
 import com.athletic.api.auth.dto.TokenDto;
 import com.athletic.api.system.admin.entity.Admin;
@@ -20,7 +21,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +36,7 @@ public class AuthService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final AdminRepository adminRepository;
     private final TokenProvider tokenProvider;
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordUtils passwordUtils;
     private final EmailService emailService;
 
     public ResponseDto join(AdminRequestDto adminRequestDto) {
@@ -69,7 +69,7 @@ public class AuthService {
     public ResponseDto login(AdminRequestDto adminRequestDto) {
         Admin admin = adminRepository.findByLoginId(adminRequestDto.getLoginId()).orElseThrow(() -> new CustomException(ErrorCode.INVALID_ID_OR_PASSWORD));
 
-        if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), admin.getLoginPw())) {
+        if (!passwordUtils.getPasswordEncoder().matches(adminRequestDto.getLoginPw(), admin.getLoginPw())) {
             throw new CustomException(ErrorCode.INVALID_ID_OR_PASSWORD);
         }
         if (StringUtils.equals(admin.getApproveStatusCd(), CodeDetail.APPROVE_STATUS_WAIT.getCode())) {

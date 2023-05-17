@@ -1,5 +1,6 @@
 package com.athletic.api.system.admin.service;
 
+import com.athletic.api.auth.util.PasswordUtils;
 import com.athletic.api.auth.util.SecurityUtil;
 import com.athletic.api.system.admin.dto.AdminRequestDto;
 import com.athletic.api.system.admin.entity.Admin;
@@ -9,7 +10,6 @@ import com.athletic.api.common.message.SuccessMessage;
 import com.athletic.api.exception.CustomException;
 import com.athletic.api.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AdminService {
     private final AdminRepository adminRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordUtils passwordUtils;
 
     public ResponseDto changePassword(AdminRequestDto adminRequestDto) {
         String id = SecurityUtil.getCurrentId();
@@ -28,12 +28,12 @@ public class AdminService {
         String prevRawLoginPw = adminRequestDto.getLoginPw();
         String prevEncLoginPw = admin.getLoginPw();
 
-        if (!passwordEncoder.matches(prevRawLoginPw, prevEncLoginPw)) {
+        if (!passwordUtils.getPasswordEncoder().matches(prevRawLoginPw, prevEncLoginPw)) {
             throw new CustomException(ErrorCode.NOT_MATCH_CURRENT_PASSWORD);
         }
 
         String nextRawLoginPw = adminRequestDto.getChangePw();
-        if (passwordEncoder.matches(nextRawLoginPw, prevEncLoginPw)) {
+        if (passwordUtils.getPasswordEncoder().matches(nextRawLoginPw, prevEncLoginPw)) {
             throw new CustomException(ErrorCode.CANNOT_CHANGE_SAME_PASSWORD);
         }
 
@@ -49,7 +49,7 @@ public class AdminService {
         String id = SecurityUtil.getCurrentId();
         Admin admin = adminRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
         String encLoginPw = admin.getLoginPw();
-        if (!passwordEncoder.matches(adminRequestDto.getLoginPw(), encLoginPw)) {
+        if (!passwordUtils.getPasswordEncoder().matches(adminRequestDto.getLoginPw(), encLoginPw)) {
             throw new CustomException(ErrorCode.NOT_MATCH_CURRENT_PASSWORD);
         }
 

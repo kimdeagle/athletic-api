@@ -1,8 +1,8 @@
 package com.athletic.api.utils.converter;
 
+import com.athletic.api.auth.util.PasswordUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -10,11 +10,11 @@ import javax.persistence.Converter;
 @Converter
 @RequiredArgsConstructor
 public class PasswordConverter implements AttributeConverter<String, String> {
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordUtils passwordUtils;
 
     @Override
     public String convertToDatabaseColumn(String attribute) {
-        return StringUtils.isNotBlank(attribute) ? passwordEncoder.encode(attribute) : "";
+        return StringUtils.isNotBlank(attribute) ? passwordUtils.getPasswordEncoder().encode(attribute) : "";
     }
 
     @Override
