@@ -1,7 +1,7 @@
 package com.athletic.api.system.admin.dto;
 
 import com.athletic.api.system.admin.entity.Admin;
-import com.athletic.api.auth.util.SecurityUtil;
+import com.athletic.api.security.utils.SecurityUtils;
 import com.athletic.api.utils.code.CodeDetail;
 import com.athletic.api.utils.constant.Const;
 import lombok.AllArgsConstructor;
@@ -52,7 +52,7 @@ public class AdminRequestDto {
                 .loginPw(loginPw)
                 .authorityId(authorityId)
                 .approveStatusCd(approveStatusCd)
-                .modId(SecurityUtil.getCurrentId())
+                .modId(SecurityUtils.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }

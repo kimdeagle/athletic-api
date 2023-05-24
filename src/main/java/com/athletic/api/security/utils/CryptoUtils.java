@@ -1,4 +1,4 @@
-package com.athletic.api.auth.util;
+package com.athletic.api.security.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 @Component
-public class Crypto {
+public class CryptoUtils {
 
     @Value("${crypt.aes256.algorithm}")
     private String algorithm;

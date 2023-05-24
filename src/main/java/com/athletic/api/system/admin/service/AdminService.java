@@ -1,7 +1,7 @@
 package com.athletic.api.system.admin.service;
 
-import com.athletic.api.auth.util.PasswordUtils;
-import com.athletic.api.auth.util.SecurityUtil;
+import com.athletic.api.security.utils.PasswordUtils;
+import com.athletic.api.security.utils.SecurityUtils;
 import com.athletic.api.system.admin.dto.AdminRequestDto;
 import com.athletic.api.system.admin.entity.Admin;
 import com.athletic.api.system.admin.repository.AdminRepository;
@@ -21,7 +21,7 @@ public class AdminService {
     private final PasswordUtils passwordUtils;
 
     public ResponseDto changePassword(AdminRequestDto adminRequestDto) {
-        String id = SecurityUtil.getCurrentId();
+        String id = SecurityUtils.getCurrentId();
 
         Admin admin = adminRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
 
@@ -46,7 +46,7 @@ public class AdminService {
     }
 
     public ResponseDto out(AdminRequestDto adminRequestDto) {
-        String id = SecurityUtil.getCurrentId();
+        String id = SecurityUtils.getCurrentId();
         Admin admin = adminRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ADMIN));
         String encLoginPw = admin.getLoginPw();
         if (!passwordUtils.getPasswordEncoder().matches(adminRequestDto.getLoginPw(), encLoginPw)) {

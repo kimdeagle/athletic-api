@@ -4,6 +4,10 @@ public class ErrorMessage {
     /* Auth */
     public static class Auth {
         public static final String UNAUTHORIZED_TOKEN = "권한이 없는 토큰입니다.";
+        public static final String FAIL_AUTHENTICATION = "인증에 실패했습니다";
+        public static final String FORBIDDEN = "접근이 거부되었습니다.";
+        public static final String NOT_FOUND_TOKEN = "토큰 정보를 찾을 수 없습니다.";
+        public static final String EXPIRED_TOKEN = "토큰이 만료되었습니다.\n다시 로그인 해주시기 바랍니다.";
         public static final String NOT_FOUND_AUTHORITY = "권한 정보를 찾을 수 없습니다.";
         public static final String NOT_FOUND_ADMIN = "계정 정보를 찾을 수 없습니다.";
         public static final String NOT_FOUND_AUTH_AT_SECURITY_CONTEXT = "Security Context에 인증 정보가 없습니다.";

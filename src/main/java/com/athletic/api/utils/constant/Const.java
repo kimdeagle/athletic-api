@@ -1,19 +1,6 @@
 package com.athletic.api.utils.constant;
 
 public class Const {
-    //permit path url list
-    public static final String[] PERMIT_PATH_LIST = {"/auth/login", "/auth/join", "/auth/reset-password", "/auth/re-issue/access"};
-
-    //logout url
-    public static final String LOGOUT_URL = "/auth/logout";
-
-    //auth
-    public static final String AUTHORITIES_KEY = "authorities";
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String BEARER_PREFIX = "Bearer ";
-    public static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
-    public static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24;
-
     //common code
     public static final String DEFAULT_LOCAL_DATE_FORMAT = "yyyy-MM-dd";
     public static final String DEFAULT_LOCAL_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";

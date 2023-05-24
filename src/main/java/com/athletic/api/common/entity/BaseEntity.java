@@ -1,6 +1,6 @@
 package com.athletic.api.common.entity;
 
-import com.athletic.api.auth.util.SecurityUtil;
+import com.athletic.api.security.utils.SecurityUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -27,7 +27,7 @@ public class BaseEntity {
     private LocalDateTime modDt;
 
     public void setModColumnsDefaultValue() {
-        this.modId = SecurityUtil.getCurrentId();
+        this.modId = SecurityUtils.getCurrentId();
         this.modDt = LocalDateTime.now();
     }
 }

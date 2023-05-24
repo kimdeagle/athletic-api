@@ -1,6 +1,6 @@
 package com.athletic.api.system.menu.service;
 
-import com.athletic.api.auth.util.SecurityUtil;
+import com.athletic.api.security.utils.SecurityUtils;
 import com.athletic.api.common.dto.ResponseDto;
 import com.athletic.api.system.menu.dto.MenuResponseDto;
 import com.athletic.api.system.menu.repository.MenuRepository;
@@ -30,7 +30,7 @@ public class MenuSelector {
 
     public ResponseDto getUseMenuList() {
         List<MenuResponseDto> list =
-                menuRepository.findAllByAdminIdAndUseYn(SecurityUtil.getCurrentId(), Const.USE_YN_Y)
+                menuRepository.findAllByAdminIdAndUseYn(SecurityUtils.getCurrentId(), Const.USE_YN_Y)
                         .stream().map(MenuResponseDto::of)
                         .collect(Collectors.toList());
 

@@ -1,6 +1,6 @@
 package com.athletic.api.utils.converter;
 
-import com.athletic.api.auth.util.PasswordUtils;
+import com.athletic.api.security.utils.PasswordUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 

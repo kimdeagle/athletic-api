@@ -27,7 +27,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponseEntity> handleException(Exception e) {
         if (log.isErrorEnabled()) {
-//            e.printStackTrace();
+            e.printStackTrace();
             log.error("Unknown Exception : {}", e.getMessage());
         }
         return handleCustomException(new CustomException(ErrorCode.UNKNOWN));

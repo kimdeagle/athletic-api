@@ -1,6 +1,6 @@
 package com.athletic.api.member.dto;
 
-import com.athletic.api.auth.util.SecurityUtil;
+import com.athletic.api.security.utils.SecurityUtils;
 import com.athletic.api.exception.ErrorMessage;
 import com.athletic.api.member.entity.Member;
 import com.athletic.api.utils.constant.Const;
@@ -48,9 +48,9 @@ public class MemberRequestDto {
                 .address(address)
                 .addressDtl(addressDtl)
                 .joinDt(joinDt)
-                .regId(SecurityUtil.getCurrentId())
+                .regId(SecurityUtils.getCurrentId())
                 .regDt(LocalDateTime.now())
-                .modId(SecurityUtil.getCurrentId())
+                .modId(SecurityUtils.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }
@@ -65,7 +65,7 @@ public class MemberRequestDto {
                 .address(address)
                 .addressDtl(addressDtl)
                 .joinDt(joinDt)
-                .modId(SecurityUtil.getCurrentId())
+                .modId(SecurityUtils.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }

@@ -1,6 +1,6 @@
 package com.athletic.api.dues.dto;
 
-import com.athletic.api.auth.util.SecurityUtil;
+import com.athletic.api.security.utils.SecurityUtils;
 import com.athletic.api.dues.entity.Dues;
 import com.athletic.api.exception.ErrorMessage;
 import com.athletic.api.utils.code.CodeFinder;
@@ -53,9 +53,9 @@ public class DuesRequestDto {
                 .title(title)
                 .description(description)
                 .amount(amount)
-                .regId(SecurityUtil.getCurrentId())
+                .regId(SecurityUtils.getCurrentId())
                 .regDt(LocalDateTime.now())
-                .modId(SecurityUtil.getCurrentId())
+                .modId(SecurityUtils.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }
@@ -70,7 +70,7 @@ public class DuesRequestDto {
                 .title(title)
                 .description(description)
                 .amount(amount)
-                .modId(SecurityUtil.getCurrentId())
+                .modId(SecurityUtils.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }
@@ -84,9 +84,9 @@ public class DuesRequestDto {
                 .title(title)
                 .description(description)
                 .amount(amount)
-                .regId(SecurityUtil.getCurrentId())
+                .regId(SecurityUtils.getCurrentId())
                 .regDt(LocalDateTime.now())
-                .modId(SecurityUtil.getCurrentId())
+                .modId(SecurityUtils.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }

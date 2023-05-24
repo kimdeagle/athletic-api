@@ -18,7 +18,9 @@ public class SuccessMessage {
     public static class Auth {
         public static final String REQUEST_JOIN = "{0}님. 계정생성 요청이 완료되었습니다.";
         public static final String RESET_PASSWORD = "임시 비밀번호를 이메일로 전송했습니다.\n확인 후 로그인하세요.";
+        public static final String LOGIN = "로그인 되었습니다.";
         public static final String LOGOUT = "로그아웃 되었습니다.";
+        public static final String REFRESH = "토큰이 재발급 되었습니다.";
     }
 
     public static class Authority {

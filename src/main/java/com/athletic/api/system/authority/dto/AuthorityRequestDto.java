@@ -1,6 +1,6 @@
 package com.athletic.api.system.authority.dto;
 
-import com.athletic.api.auth.util.SecurityUtil;
+import com.athletic.api.security.utils.SecurityUtils;
 import com.athletic.api.system.authority.entity.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,9 +20,9 @@ public class AuthorityRequestDto {
         return Authority.builder()
                 .name(name)
                 .displayName(displayName)
-                .regId(SecurityUtil.getCurrentId())
+                .regId(SecurityUtils.getCurrentId())
                 .regDt(LocalDateTime.now())
-                .modId(SecurityUtil.getCurrentId())
+                .modId(SecurityUtils.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }
@@ -32,7 +32,7 @@ public class AuthorityRequestDto {
                 .id(id)
                 .name(name)
                 .displayName(displayName)
-                .modId(SecurityUtil.getCurrentId())
+                .modId(SecurityUtils.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }

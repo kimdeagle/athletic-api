@@ -34,6 +34,8 @@ public enum ErrorCode {
     EXIST_ADMIN_HAS_AUTHORITY(926, ErrorMessage.Authority.EXIST_ADMIN_HAS_AUTHORITY),
     EXIST_MENU_HAS_AUTHORITY(927, ErrorMessage.Menu.EXIST_MENU_HAS_AUTHORITY),
     EXIST_AUTHORITY_NAME(928, ErrorMessage.Authority.EXIST_NAME),
+    NOT_FOUND_REFRESH_JWT(929, ErrorMessage.Auth.NOT_FOUND_TOKEN),
+    EXPIRED_TOKEN(930, ErrorMessage.Auth.EXPIRED_TOKEN),
 
     UNKNOWN(999, ErrorMessage.UNKNOWN)
     ;

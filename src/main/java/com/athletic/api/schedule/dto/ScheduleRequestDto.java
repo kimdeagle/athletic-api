@@ -1,6 +1,6 @@
 package com.athletic.api.schedule.dto;
 
-import com.athletic.api.auth.util.SecurityUtil;
+import com.athletic.api.security.utils.SecurityUtils;
 import com.athletic.api.schedule.entity.Schedule;
 import com.athletic.api.utils.code.CodeDetail;
 import com.athletic.api.utils.excel.ExcelUploadColumn;
@@ -40,9 +40,9 @@ public class ScheduleRequestDto {
                 .title(title)
                 .description(description)
                 .bgColorCd(StringUtils.isNotBlank(bgColorCd) ? bgColorCd : CodeDetail.BG_COLOR_BLUE.getCode())
-                .regId(SecurityUtil.getCurrentId())
+                .regId(SecurityUtils.getCurrentId())
                 .regDt(LocalDateTime.now())
-                .modId(SecurityUtil.getCurrentId())
+                .modId(SecurityUtils.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }
@@ -55,7 +55,7 @@ public class ScheduleRequestDto {
                 .title(title)
                 .description(description)
                 .bgColorCd(StringUtils.isNotBlank(bgColorCd) ? bgColorCd : CodeDetail.BG_COLOR_BLUE.getCode())
-                .modId(SecurityUtil.getCurrentId())
+                .modId(SecurityUtils.getCurrentId())
                 .modDt(LocalDateTime.now())
                 .build();
     }

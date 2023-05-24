@@ -1,4 +1,4 @@
-package com.athletic.api.auth.util;
+package com.athletic.api.security.utils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

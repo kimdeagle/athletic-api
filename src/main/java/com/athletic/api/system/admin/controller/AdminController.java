@@ -21,11 +21,6 @@ public class AdminController {
     private final AdminSelector adminSelector;
     private final AdminService adminService;
 
-    @GetMapping("/user")
-    public ResponseEntity<ResponseDto> getUser() {
-        return ResponseEntity.ok(adminSelector.getCurrentUser());
-    }
-
     @PutMapping("/password")
     public ResponseEntity<ResponseDto> changePassword(@RequestBody AdminRequestDto adminRequestDto) {
         return ResponseEntity.ok(adminService.changePassword(adminRequestDto));
