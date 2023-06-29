@@ -1,5 +1,6 @@
 package com.athletic.api.utils.email.handler;
 
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -17,7 +18,7 @@ public class EmailHandler {
     public EmailHandler(JavaMailSender javaMailSender) throws MessagingException {
         this.javaMailSender = javaMailSender;
         mimeMessage = javaMailSender.createMimeMessage();
-        mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+        mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, CharEncoding.UTF_8);
     }
 
     public void setFrom(String from) throws MessagingException {

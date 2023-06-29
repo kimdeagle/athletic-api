@@ -9,7 +9,6 @@ public class Const {
     public static final String USE_YN_Y = "Y";
     public static final String USE_YN_N = "N";
 
-    public static final String DEFAULT_CONTENT_TYPE = "application/json;charset=UTF-8";
     public static final String EXCEL_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
     //regex

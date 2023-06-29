@@ -40,6 +40,9 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	//@Nullable 어노테이션 사용 시 해당 dependency 추가
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
 	// Querydsl 설정
 	implementation "com.querydsl:querydsl-jpa"
 	implementation "com.querydsl:querydsl-core"
