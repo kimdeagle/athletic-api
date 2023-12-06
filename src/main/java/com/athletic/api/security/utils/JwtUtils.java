@@ -33,7 +33,7 @@ public class JwtUtils {
     }
 
     public String getJwtFromHeader(HttpServletRequest request) {
-        String header = request.getHeader(AuthConstant.AUTHORIZATION_HEADER);
+        String header = request.getHeader(AuthConstant.AUTHORIZATION_HEADER_NAME);
         if (StringUtils.hasText(header) && header.startsWith(AuthConstant.BEARER_PREFIX)) {
             return header.substring(AuthConstant.BEARER_PREFIX.length());
         }

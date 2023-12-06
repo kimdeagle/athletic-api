@@ -1,7 +1,10 @@
 package com.athletic.api.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,6 +25,22 @@ public class CustomExceptionHandler {
             log.error("CustomException : {} ({})", name, message);
         }
         return ErrorResponseEntity.toResponseEntity(status, name, message);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    protected ResponseEntity<ErrorResponseEntity> handleAuthenticationException(AuthenticationException e) {
+        if (log.isErrorEnabled()) {
+            log.error("AuthenticationException : {}", e.getMessage());
+        }
+        return ErrorResponseEntity.toResponseEntity(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name(), ErrorMessage.Auth.INVALID_ID_OR_PASSWORD);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    protected ResponseEntity<ErrorResponseEntity> handleAccessDeniedException(AccessDeniedException e) {
+        if (log.isErrorEnabled()) {
+            log.error("AccessDeniedException : {}", e.getMessage());
+        }
+        return ErrorResponseEntity.toResponseEntity(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN.name(), ErrorMessage.Auth.FORBIDDEN);
     }
 
     @ExceptionHandler(Exception.class)
